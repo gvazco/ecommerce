@@ -1,0 +1,120 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4" style="background-image: url('assets/img/jumbo-user.png');background-size: 100%;">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Ordenes</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 text-light mb-0"><span class="czi-package"></span> Mis ordenes</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mb-2 mb-md-3">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0">
+        <app-aside-cuenta></app-aside-cuenta>
+      </aside>
+      <!-- Content  -->
+      <section class="col-lg-8">
+        <!-- Toolbar-->
+        <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-4">
+          <h6 class="font-size-base text-light mb-0">Mis ordenes:</h6>
+          <button class="btn btn-primary btn-sm" (click)="logout()"><i class="czi-sign-out mr-2"></i>Cerrar Sesión</button>
+        </div>
+        <!-- Addresses list-->
+       
+        <hr class="pb-4">
+        <ng-container *ngFor="let item_venta of ventas| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h3 class="product-title font-size-base" style="margin-bottom: 0px;"><a>Compra: N°-{{item_venta._id.toUpperCase()}}</a></h3>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-5">
+                  <div class="font-size-sm"><span class="text-muted mr-2">Fecha:</span>{{ item_venta.createdAt | date:'MMM d, y, h:mm:ss a' }}</div>
+                  <div class="font-size-sm"><span class="text-muted mr-2">Entrega:</span>{{ item_venta.tiempo_estimado }}</div>
+                  <div class="font-size-sm">
+                    <span class="text-muted mr-2">Estado:</span>
+                    <span class="text-accent" *ngIf="item_venta.estado == 'Venta en proceso'">{{item_venta.estado}}</span>
+                    <span class="text-success" *ngIf="item_venta.estado == 'Enviado'">{{item_venta.estado}}</span>
+                    <span class="text-info" *ngIf="item_venta.estado == 'Finalizado'">{{item_venta.estado}}</span>
+                    <span *ngIf="item_venta.estado == 'Cancelado'" style="color: #ff0000">{{item_venta.estado}}</span>
+                    <span *ngIf="item_venta.estado == 'Reembolsado'" style="color: #ff0000">{{item_venta.estado}}</span>
+                  </div>
+                  <div class="font-size-sm"><span class="text-muted mr-2">Tracking:</span>
+                    <span *ngIf="item_venta.tracking_number">{{item_venta.tracking_number}}</span>
+                    <span *ngIf="!item_venta.tracking_number" class="badge badge-dark">No disponible</span>
+                  </div>
+                  <div class="font-size-lg text-accent pt-2"><span class="text-muted mr-2">Total pagado:</span>${{item_venta.total_pagado}}</div>
+
+                  <ng-container *ngIf="item_venta.estado != 'Cancelado' || item_venta.estado != 'Reembolsado'">
+                    <div class="btn-group btn-group mt-4" role="group" aria-label="Small group">
+                      <ng-container *ngIf="item_venta.estado == 'Enviado'">
+                       <ng-container *ngIf="item_venta.tracking_number">
+                        <a class="btn btn-accent" [routerLink]="['/cuenta/ordenes/tracking/',item_venta._id]"><span class="czi-plane"></span> Track</a>
+                       </ng-container>
+                       <ng-container *ngIf="!item_venta.tracking_number">
+                        <button class="btn btn-accent" style="color:white !important" disabled><span class="czi-plane" style="color:white !important"></span> Sin seguimiento</button>
+                       </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="item_venta.estado == 'Venta en proceso' || item_venta.estado == 'Finalizado'">
+                        <button disabled class="btn btn-accent" ><span class="czi-plane"></span> Track</button>
+                      </ng-container>
+          
+                      <a class="btn btn-dark" [routerLink]="['/cuenta/ordenes/detalles/',item_venta._id]"><span class="czi-package"></span> Detalles</a>
+
+                      <!-- <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="czi-settings"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a href="#" class="dropdown-item">Dropdown link</a>
+                          <a href="#" class="dropdown-item">Dropdown link</a>
+                          <a href="#" class="dropdown-item">Dropdown link</a>
+                        </div>
+                      </div> -->
+                      
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row prev-img">
+                      <div class="col-lg-12">
+                        <h3 class="product-title font-size-base mb-2"><a>Productos:</a></h3>
+                      </div>
+ 
+                      <ng-container *ngFor="let item of ordenes; let i_orden = index"> 
+                          <ng-container *ngIf="item_venta._id == item.venta">
+                            <div class="col-lg-3" >
+                             <a [routerLink]="['/producto/',item.producto.slug]">
+                              <img [src]="url+'productos_img_data/resources/thumbnails/'+item.producto.poster" style="width: 100%;" data-toggle="tooltip" data-placement="top" title="{{item.producto.titulo}}">
+                             </a>
+                            </div>
+                          </ng-container>
+                      </ng-container>
+                      
+                    </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+          
+        </ng-container>
+        <ngb-pagination
+                      [(page)]="page"
+                      [pageSize]="pageSize"
+                      [collectionSize]="count_cat"></ngb-pagination>
+      </section>
+    </div>
+  </div>
+  <app-foot></app-foot>

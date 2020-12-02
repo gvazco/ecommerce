@@ -1,0 +1,92 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4" style="background-image: url('assets/img/jumbo-user.png');background-size: 100%;">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item text-nowrap" aria-current="page"><a class="text-nowrap" [routerLink]="['/cuenta/ordenes/detalles/',ticket.venta]">
+              <span class="czi-arrow-right text-nowrap"></span> Ordenes
+            </a></li>
+            <li class="breadcrumb-item text-nowrap" aria-current="page"><a class="text-nowrap" [routerLink]="['/cuenta/ordenes/tickets/',ticket.venta]">
+                <span class="czi-arrow-right text-nowrap"></span> Tickets
+              </a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Chat</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 text-light mb-0"><span class="czi-help"></span> Tickets</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mb-2 mb-md-3">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0">
+        <app-aside-cuenta></app-aside-cuenta>
+      </aside>
+      <!-- Content  -->
+      <section class="col-lg-8">
+        
+        <div class="row">
+            <div class="col-lg-12 form-group" >
+                <div class="card">
+                    <div class="card-header">
+                        <h6 style="margin-bottom: 0px;"><b>Asunto: </b> &nbsp;{{ticket.tema}}</h6>
+                    </div>
+                    <div class="card-body" style="height: 500px;max-height: 500px;
+                    overflow-y: auto;padding-top: 0px;" #scrollMe>
+                        <div class="row">
+                            <ng-container *ngFor="let item of mensajes; let indice = index">
+                                <div class="col-lg-12 p-4" *ngIf="item.de == '5ef640b75ee066601c6ed1c0'" style="background: #ededed;">
+                                    <div class="media border-bottom"><img class="rounded-circle" width="50" [src]="url+'user/data/'+poster_admin">
+                                        <div class="media-body pl-3">
+                                          <h6 class="font-size-md mb-2">Moderador: Michael Davis</h6>
+                                          <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span>
+                                        </div>
+                                      </div>
+                                </div>
+                         
+                                <div class="col-lg-12 p-4 border-bottom" *ngIf="identity._id == item.de" style="background: #f8f8f8;">
+                                    <div class="media">
+                                        
+                                        <div class="media-body pl-3">
+                                         <h6 class="font-size-md mb-2">Yo:</h6>
+                                          <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span>
+                                        </div>
+                                        <img class="rounded-circle" width="50" [src]="url+'user/data/'+identity.perfil">
+                                      </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12" *ngIf="estado_ticket == 1">
+                <form #msmForm="ngForm" (ngSubmit)="sendMessage(msmForm)">
+                    <div class="form-group">
+                      <textarea class="form-control" rows="3" placeholder="Mensaje" required="" name="msm" [(ngModel)]="msm"></textarea>
+                      <div class="invalid-tooltip" *ngIf="msm_error" style="display: block;">Por favor escriba un mensaje!</div>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                      <div class="custom-control custom-checkbox d-block">
+                        <input class="custom-control-input" type="checkbox" id="close-ticket" name="close_ticket" [(ngModel)]="close_ticket">
+                        <label class="custom-control-label" for="close-ticket">Enviar y cerrar el ticket</label>
+                      </div>
+                      <button class="btn btn-primary my-2" type="submit">Enviar</button>
+                    </div>
+                  </form>
+            </div>
+        </div>
+
+
+       
+
+      
+  
+      </section>
+    </div>
+  </div>
+  <app-foot></app-foot>

@@ -1,0 +1,154 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4" style="background-image: url('assets/img/jumbo-user.png');background-size: 100%;">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Mi perfil</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 text-light mb-0"><span class="czi-user-circle"></span> Mi Perfil</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mb-2 mb-md-3">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0">
+        <app-aside-cuenta></app-aside-cuenta>
+      </aside>
+      
+      <!-- Content  -->
+      <section class="col-lg-8">
+        <!-- Toolbar-->
+        <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-3">
+          <h6 class="font-size-base text-light mb-0">Actualiza los datos de tu perfíl:</h6>
+          <button class="btn btn-primary btn-sm" (click)="logout()"><i class="czi-sign-out mr-2"></i>Cerrar Sesión</button>
+        </div>
+        <!-- Profile form-->
+        <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" autocomplete="off">
+          <div class="bg-secondary rounded-lg p-4 mb-4">
+            <div class="media align-items-center">
+                <img [src]="url+'user/data/'+user.perfil" width="90" alt="Susan Gardner">
+              <div class="media-body pl-3">
+                <button class="btn btn-light btn-shadow btn-sm mb-2" type="button"><i class="czi-loading mr-2"></i>Avatar</button>
+                <div class="p mb-0 font-size-ms text-muted">Sube JPG, GIF or PNG.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12" *ngIf="msm_error">
+                  <div class="form-group">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" (click)="close_alert()">
+                        <span class="font-weight-medium">Error:</span> Por favor complete el formulario correctamente.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-12" *ngIf="msm_success" >
+                <div class="form-group">
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <span class="font-weight-medium">Mensaje:</span> Se actualizó sus datos correctamente.
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="account-fn">Nombres completos</label>
+                <input class="form-control" type="text" #first_name="ngModel" name="first_name" [(ngModel)]="user.first_name" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="account-ln">Apellidos Completos</label>
+                <input class="form-control" type="text" #last_name="ngModel" name="last_name" [(ngModel)]="user.last_name" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="account-email">Correo Electrónico</label>
+                <input class="form-control" type="email" readonly  value="{{user.email}}">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="account-phone">Telefono</label>
+                <input class="form-control" type="text" #telefono="ngModel" name="telefono" [(ngModel)]="user.telefono" required>
+              </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-phone">País</label>
+                  <select class="form-control" #pais="ngModel" name="pais" [(ngModel)]="user.pais" required>
+                      <option value="" selected disabled>SELECCIONAR</option>
+                      <option value="{{item}}" *ngFor="let item of data_paises">{{item}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="account-phone">Número de documento</label>
+                  <input autocomplete="off" class="form-control" type="number" #numdoc="ngModel" name="numdoc" [(ngModel)]="user.numdoc">
+                </div>
+              </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="account-pass">Nueva contraseña</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="password" name="new_password" [(ngModel)]="new_password" placeholder="Nueva contraseña">
+                  <label class="password-toggle-btn">
+                    <input class="custom-control-input" type="button" (click)="view_password();" autocomplete="nope">
+                    <i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                  </label>
+                  <div class="invalid-feedback" *ngIf="pass_error">Las contraseñas no coinciden.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="account-confirm-pass">Confirmar contraseña</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="password_dos" name="comfirm_password" [(ngModel)]="comfirm_password" placeholder="Repita la contraseña">
+                  <label class="password-toggle-btn">
+                    <input class="custom-control-input" (click)="view_password2();" type="checkbox"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Show password</span>
+                  </label>
+                  <div class="invalid-feedback" *ngIf="pass_error">Las contraseñas no coinciden.</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="cz-file-drop-area">
+                        <div class="cz-file-drop-preview img-thumbnail rounded">
+                            <img [src]="imgSelect || url+'user/data/'+user.perfil" alt="04.jpg">
+                        </div>
+                        <span class="cz-file-drop-message">Suelta la imagen aquí</span>
+                        <input type="file" class="cz-file-drop-input" (change)="imgSelected($event)">
+                        
+                    </div>
+                </div>
+              </div>
+            <div class="col-12">
+              <hr class="mt-2 mb-3">
+              <div class="d-flex flex-wrap justify-content-between align-items-center">
+                <div class="custom-control custom-checkbox d-block">
+                  
+                </div>
+                <button class="btn btn-primary mt-3 mt-sm-0" type="submit">Actualizar perfíl</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+<app-foot></app-foot>

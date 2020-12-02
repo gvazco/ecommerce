@@ -1,0 +1,208 @@
+<header class="box-shadow-sm">
+    <!-- Topbar-->
+    <div class="topbar topbar-dark bg-dark">
+      <div class="container">
+        <div>
+          
+          <div class="topbar-text text-nowrap d-none d-md-inline-block border-left border-light pl-3 ml-3"><span class="text-muted mr-1">Atención 24/7 al</span><a class="topbar-link" href="tel:{{general.telefono_uno}}">{{general.telefono_uno}}</a></div>
+        </div>
+        <div class="topbar-text dropdown d-md-none ml-auto"><a class="topbar-link dropdown-toggle" href="#" data-toggle="dropdown">Deseos / Carrito / Ordenes</a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            
+            <li *ngIf="identity && identity.role == 'USER'"><a class="dropdown-item" [routerLink]="['/cuenta/shop-cart']" ><i class="czi-compare text-muted mr-2"></i>Carrito</a></li>
+            <li *ngIf="identity && identity.role == 'USER'"><a class="dropdown-item" [routerLink]="['/cuenta/ordenes']"><i class="czi-location text-muted mr-2"></i>Ordenes</a></li>
+            <li *ngIf="identity && identity.role == '12$MAhAAdPTi92gVknt8QyKIuEzcRYM6pa8.3RwTjFMfMwJvs2Jube'"><a class="dropdown-item"
+              [routerLink]="['/dashboard']"><i class="czi-user-circle text-muted mr-2"></i>Modo Admin</a></li>
+            <li *ngIf="identity"><a class="dropdown-item" style="padding-left: 15px;"><button (click)="logout()" style="
+            border: none;
+            background: none;
+            color:#4b566b !important"><i class="czi-user text-muted mr-2"></i>Cerrar sesión</button></a></li>
+          </ul>
+        </div>
+        <div class="d-none d-md-block ml-3 text-nowrap">
+         
+          <a class="topbar-link ml-3 pl-3 border-left border-light d-none d-md-inline-block" [routerLink]="['/cuenta/shop-cart']" *ngIf="identity && identity.role == 'USER'">
+            <i class="czi-cart mt-n1"></i>Carrito
+          </a>
+          <a class="topbar-link ml-3 border-left border-light pl-3 d-none d-md-inline-block" [routerLink]="['/cuenta/ordenes']" *ngIf="identity && identity.role == 'USER'">
+            <i class="czi-user-circle mt-n1"></i>Ordenes
+          </a>
+          <a class="topbar-link ml-3 border-left border-light pl-3 d-none d-md-inline-block" [routerLink]="['/dashboard']" *ngIf="identity && identity.role == '12$MAhAAdPTi92gVknt8QyKIuEzcRYM6pa8.3RwTjFMfMwJvs2Jube'">
+            <i class="czi-location mt-n1"></i>Modo Admin
+          </a>
+          <a class="topbar-link ml-3 border-left border-light pl-3 d-none d-md-inline-block" *ngIf="identity">
+            <button (click)="logout()" style="
+            border: none;
+            background: none;
+            color: rgba(255,255,255,0.65)"><i class="czi-user mt-n1" style="margin-right: 6px;color:#fe696a"></i>Cerrar sesión</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
+    <div class="navbar-sticky bg-light">
+      <div class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand d-none d-sm-block mr-3 flex-shrink-0" [routerLink]="['/']" style="min-width: 7rem;">
+            <img width="142" [src]="url+'congeneral/resources/thumbnails/'+general.logo" alt="Cartzilla"/>
+          </a>
+          <a class="navbar-brand d-sm-none mr-2" [routerLink]="['/']" style="min-width: 4.625rem;">
+            <img width="74" src="../../../assets/img/logo-icon.png" alt="Cartzilla"/>
+          </a>
+          <!-- Search-->
+          <div class="input-group-overlay d-none d-lg-block mx-4">
+            <div class="input-group-prepend-overlay">
+              <button class="input-group-text" (click)="search_by_filter()">
+                <i class="czi-search"></i>
+              </button>
+            </div>
+            <input class="form-control prepended-form-control appended-form-control" type="text" placeholder="Buscar productos" id="search-producto" name="filter" [(ngModel)]="filter" (keyup.enter)="search_by_filter()">
+            <div class="input-group-append-overlay">
+              <select class="custom-select" [(ngModel)]="select_categoria" (change)="select_cat()">
+                <option value="" selected disabled>Categorias</option>
+                <option value="{{cat.nombre.toLowerCase().trim()}}" *ngFor="let cat of categorias">{{cat.nombre}}</option>
+                
+              </select>
+            </div>
+          </div>
+          <!-- Toolbar-->
+          <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+              <span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-tool navbar-stuck-toggler" (click)="show_menu()" style="cursor: pointer;">
+              <span class="navbar-tool-tooltip">Expandir menú</span>
+              <div class="navbar-tool-icon-box">
+                <i class="navbar-tool-icon czi-menu"></i>
+              </div>
+            </a>
+            <a class="navbar-tool ml-1 ml-lg-0 mr-n1 mr-lg-2" [routerLink]="['/login']">
+              <div class="navbar-tool-icon-box">
+                <i class="navbar-tool-icon czi-user"></i>
+              </div>
+              <div *ngIf="identity" class="navbar-tool-text ml-n3">
+                <small>Hola</small>{{identity.first_name}}
+              </div>
+              <div *ngIf="!identity" class="navbar-tool-text ml-n3">
+                <small>Hola</small>Iniciar Sesión
+              </div>
+            </a>
+            <div *ngIf="identity" class="navbar-tool dropdown ml-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" [routerLink]="['/cuenta/shop-cart']"><span class="navbar-tool-label">{{carrito.length}}</span><i class="navbar-tool-icon czi-cart"></i></a><a class="navbar-tool-text" [routerLink]="['/cuenta/shop-cart']"><small>Mi carrito</small>${{subtotal}}</a>
+              <!-- Cart dropdown-->
+              <div class="dropdown-menu dropdown-menu-right" style="width: 20rem;" *ngIf="carrito.length != 0">
+                <div class="widget widget-cart px-3 pt-2 pb-3">
+                  <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+                    <div class="widget-cart-item pb-2 border-bottom" *ngFor="let item of carrito">
+                      <button class="close text-danger" type="button" aria-label="Remove" (click)="remove_producto(item._id)">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <div class="media align-items-center"><a class="d-block mr-2" [routerLink]="['/producto/',item.producto.slug]"><img width="64" [src]="url+'productos_img_data/resources/thumbnails/'+item.producto.poster" alt="Product"/></a>
+                        <div class="media-body">
+                          <h6 class="widget-product-title"><a [routerLink]="['/producto/',item.producto.slug]">{{item.producto.titulo.substr(0,25)}}</a></h6>
+                          <div class="widget-product-meta"><span class="text-accent mr-2">${{item.precio}}</span><span class="text-muted">x {{item.cantidad}}</span></div>
+                        </div>
+                      </div>
+                    </div>
+              
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                    <div class="font-size-sm mr-2 py-2">
+                      <span class="text-muted">
+                        Subtotal:
+                      </span>
+                      <span class="text-accent font-size-base ml-1">
+                        ${{subtotal}}
+                      </span>
+                    </div>
+                   
+                  </div><a class="btn btn-primary btn-sm btn-block" [routerLink]="['/cuenta/shop-cart']" >
+                    <i class="czi-card mr-2 font-size-base align-middle"></i>Carrito completo
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!identity" class="navbar-tool dropdown ml-3"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle" ><span class="navbar-tool-label">0</span><i class="navbar-tool-icon czi-cart"></i></a><a class="navbar-tool-text" ><small>Mi carrito</small>$0</a>
+              <!-- Cart dropdown-->
+              <div class="dropdown-menu dropdown-menu-right text-center py-4 px-3" style="width: 16rem;"><img class="d-inline-block mb-2" src="assets/img/cart.png" width="40" alt="Empty cart">
+              <p class="font-size-sm text-muted mb-0">Debes iniciar sesión</p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-expand-lg navbar-light navbar-stuck-menu mt-n2 pt-0 pb-2" id="menubar">
+        <div class="container">
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Search-->
+            <div class="input-group-overlay d-lg-none my-3">
+              <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="czi-search"></i></span></div>
+              <input class="form-control prepended-form-control" type="text" placeholder="Buscar producto">
+            </div>
+            <!-- Departments menu-->
+            <ul class="navbar-nav mega-nav pr-lg-2 mr-lg-2">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle pl-0" href="#" data-toggle="dropdown"><i class="czi-menu align-middle mt-n1 mr-2"></i>Departamentos</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown mega-dropdown" *ngFor="let cat of categorias">
+                    <a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i class="{{cat.icono}} opacity-60 font-size-lg mt-n1 mr-2"></i>{{cat.nombre}}</a>
+                    <div class="dropdown-menu p-0">
+                      <div class="d-flex flex-wrap flex-md-nowrap px-2">
+                        <div class="mega-dropdown-column py-4 px-3">
+                          <div class="widget widget-links">
+                            <h6 class="font-size-base mb-3">Subcategorías</h6>
+                            <ul class="widget-list">
+                              <ng-container  *ngFor="let sub of data_subcategorias">
+                                <li class="widget-list-item pb-1" *ngIf="cat._id == sub._id">
+                                  <a class="widget-list-link" [routerLink]="['/productos/'+cat.nombre.toLowerCase().trim()+'/subcategoria/',sub.subcategoria.toLowerCase().trim()]">{{sub.subcategoria}}</a>
+                                </li>
+                              </ng-container>
+                              
+                             
+                            </ul>
+                          </div>
+                        </div>
+                       
+                        <!-- <div class="mega-dropdown-column d-none d-lg-block py-4 text-center"><a class="d-block mb-2" href="#"><img src="img/shop/departments/07.jpg" alt="Computers & Accessories"/></a>
+                          <div class="font-size-sm mb-3">Starting from <span class='font-weight-medium'>$149.<small>80</small></span></div><a class="btn btn-primary btn-shadow btn-sm" href="#">See offers<i class="czi-arrow-right font-size-xs ml-1"></i></a>
+                        </div> -->
+                      </div>
+                    </div>
+                  </li>
+            
+                </ul>
+              </li>
+            </ul>
+            <!-- Primary menu-->
+            <ul class="navbar-nav">
+           
+              <li class="nav-item dropdown" *ngIf="identity"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><span class="czi-user-circle"></span> Mi cuenta</a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown">
+                    <a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown">
+                      <span class="czi-user"></span>&nbsp; Cuenta</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" [routerLink]="['/cuenta/perfil']">Perfil</a></li>
+                      
+                    </ul>
+                  </li>
+                  
+                  <li><a class="dropdown-item" [routerLink]="['/cuenta/direcciones']">
+                    <span class="czi-home"></span>&nbsp; Direcciones</a></li>
+                  <li><a class="dropdown-item" [routerLink]="['/cuenta/ordenes']">
+                    <span class="czi-package"></span> &nbsp;
+                    Ordenes</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" [routerLink]="['/productos']" routerLinkActive="active" data-toggle="dropdown"><span class="czi-basket"></span> Productos</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" [routerLink]="['/contacto']" routerLinkActive="active"  data-toggle="dropdown"><span class="czi-earphones"></span> Contacto</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>

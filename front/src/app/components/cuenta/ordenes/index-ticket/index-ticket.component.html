@@ -1,0 +1,121 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4" style="background-image: url('assets/img/jumbo-user.png');background-size: 100%;">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item text-nowrap" aria-current="page"><a class="text-nowrap" [routerLink]="['/cuenta/ordenes/detalles/',id]">
+              <span class="czi-arrow-right text-nowrap"></span> Ordenes
+            </a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Tickets</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 text-light mb-0"><span class="czi-help"></span> Tickets</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mb-2 mb-md-3">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0">
+        <app-aside-cuenta></app-aside-cuenta>
+      </aside>
+      <!-- Content  -->
+      <section class="col-lg-8">
+        <!-- Toolbar-->
+        <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-4">
+          <h6 class="font-size-base text-light mb-0">Mis tickets:</h6>
+          <button class="btn btn-primary btn-sm" data-toggle="modal" [attr.data-target]="'#form-modal'"><i class="czi-add-document mr-2"></i>Crear nuevo ticket</button>
+        </div>
+        <!-- Addresses list-->
+
+        <div class="modal fade" [attr.id]="'form-modal'" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Nuevo ticket</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <div class="bg-secondary py-grid-gutter px-grid-gutter rounded-lg">
+                  <form #ticketForm="ngForm" (ngSubmit)="createTicket(ticketForm)">
+                    <div class="form-group" *ngIf="msm_error_review">
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                       {{msm_error_review}}
+                        <button type="button" class="close" (click)="close_alert()" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="review-text">Tema de apertura<span class="text-danger">*</span></label>
+                      <textarea class="form-control" rows="5" required="" name="data_titulo" [(ngModel)]="data_titulo" placeholder="Dinos el tema de su problema."></textarea>
+                      
+                    </div>
+                   
+                    <button class="btn btn-primary btn-shadow btn-block" type="submit">Abrir un ticket</button>
+                  </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+       
+
+        <div class="table-responsive font-size-md">
+          <table class="table table-hover mb-0">
+            <thead class="thead-dark">
+              <tr>
+                <th>Tema</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Estado</th>
+                <th>Chat</th>
+              </tr>
+            </thead>
+            <ng-container *ngIf="tickets.length != 0">
+              <tbody *ngFor="let item of tickets">
+                <tr>
+                   <td>{{item.tema}}</td>
+                   <td>{{item.createdAt | date:'EEEE, MMMM d, y' }}</td>
+                   <td>
+                     <span class="badge badge-success" *ngIf="item.estado == 1">Abierto</span>
+                     <span class="badge badge-primary" *ngIf="item.estado == 0">Cerrado</span>
+                   </td>
+                   <td>
+                     <ng-container *ngIf="item.estado == 1">
+                      <span class="badge badge-accent" *ngIf="item.status == '0'"> <span class="czi-message"></span> &nbsp; Espera de respuesta</span>
+                      <span class="badge badge-danger" *ngIf="item.status == '1'"> <span class="czi-message"></span> &nbsp; Nuevo mensaje</span>
+                     </ng-container>
+                     <ng-container *ngIf="item.estado == 0">
+                      <span class="badge badge-primary" *ngIf="item.estado == 0">Cerrado</span>
+                     </ng-container>
+                   </td>
+                   <td class="text-center"><a [routerLink]="['/cuenta/ordenes/chat/',item._id]" routerLinkActive="router-link-active" ><span class="czi-message"></span></a></td>
+                </tr>
+
+              </tbody>
+            </ng-container>
+            <ng-container *ngIf="tickets.length == 0">
+              <tbody>
+                <tr>
+                    <td class="text-center" colspan="4">No hay ningún ticket abierto.</td>
+                </tr>
+
+              </tbody>
+            </ng-container>
+          </table>
+        </div>
+  
+      </section>
+    </div>
+  </div>
+  <app-foot></app-foot>

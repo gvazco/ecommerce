@@ -1,0 +1,73 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-2">
+                      <h1 class="mt-lg-4">Mensajes</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Mensajeria del apartado de contacto.</p>
+                       
+                      </div>
+                      
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-12 form-group" *ngFor="let item of mensajes| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                          <div class="card">
+                              <div class="card-body">
+                                <div class="media pb-4"><img class="rounded-circle" width="50" 
+                                    src="../../../../assets/img/user.png" >
+                                    <div class="media-body pl-3">
+                                      <h6 class="font-size-md mb-2">{{item.nombres}}</h6>
+                                      <h6 class="font-size-md mb-2 text-accent">Tema: {{item.tema}}</h6>
+                                      <p class="font-size-md mb-1 text-justify">{{item.mensaje}}</p>
+                                      <span class="font-size-ms text-muted">
+                                        <i class="czi-phone align-middle mr-2"></i>
+                                        {{item.telefono}}
+                                      </span><br>
+                                      <span class="font-size-ms text-muted">
+                                        <i class="czi-wechat align-middle mr-2"></i>
+                                        {{item.correo}}
+                                      </span><br>
+                                      <span class="font-size-ms text-muted">
+                                          <i class="czi-time align-middle mr-2"></i>
+                                          {{item.createdAt|date :'MMM d, y, h:mm:ss a'}}
+                                        </span>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12">
+                        <ngb-pagination
+                        [(page)]="page"
+                        [pageSize]="pageSize"
+                        [collectionSize]="count_cat"></ngb-pagination>
+                      </div>
+                  </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

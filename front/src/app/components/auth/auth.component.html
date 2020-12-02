@@ -1,0 +1,138 @@
+<app-nav></app-nav>
+
+<div class="container py-4 py-lg-5 my-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card border-0 box-shadow">
+          <div class="card-body">
+            <h2 class="h4 mb-1">Iniciar Sesión</h2>
+            <div class="py-3">
+              <h3 class="d-inline-block align-middle font-size-base font-weight-semibold mb-2 mr-2">Sesión con:</h3>
+              <div class="d-inline-block align-middle">
+                <a class="social-btn sb-google mr-2 mb-2" data-toggle="tooltip" title="Sesión con Google" style="background-color: #ea4335;
+                box-shadow: 0 0.5rem 1.125rem -0.5rem rgba(234,67,53,0.9);color:white !important" (click)="signInWithGoogle();">
+                  <i class="czi-google"></i>
+                </a>
+                <a class="social-btn sb-facebook mr-2 mb-2" data-toggle="tooltip" title="Sesión con Facebook" style="background-color: #3b5998;
+                box-shadow: 0 0.5rem 1.125rem -0.5rem rgba(59,89,152,0.9);color: white !important" (click)="signInWithFB()">
+                  <i class="czi-facebook"></i>
+                </a>
+               
+              </div>
+            </div>
+            <hr>
+            <h3 class="font-size-base pt-4 pb-2">O con tus credenciales</h3>
+
+            <div *ngIf="data_error" class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{data_error}}
+              <button class="close" (click)="close_alert()" type="button" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+
+            <form class="needs-validation" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+              <div class="input-group-overlay form-group">
+                <div class="input-group-prepend-overlay">
+                  <span class="input-group-text">
+                      <i class="czi-mail"></i>
+                  </span>
+                </div>
+                <input class="form-control prepended-form-control" type="email" placeholder="Correo electrónico" required autocomplete="off" #email="ngModel" name="email" [(ngModel)]="user.email">
+              </div>
+              <div class="input-group-overlay form-group">
+                <div class="input-group-prepend-overlay"><span class="input-group-text"><i class="czi-locked"></i></span></div>
+                <div class="password-toggle">
+                  <input class="form-control prepended-form-control" id="password" type="password" placeholder="Password" required="" #password="ngModel" name="password" [(ngModel)]="user.password">
+                  <label class="password-toggle-btn">
+                    <input class="custom-control-input" (click)="view_password();" type="button"><i class="czi-eye password-toggle-indicator"></i><span class="sr-only">Ver contraseña</span>
+                   
+                  </label>
+                </div>
+              </div>
+              <div class="d-flex flex-wrap justify-content-between">
+                <div class="custom-control custom-checkbox">
+                  
+                </div><a class="nav-link-inline font-size-sm" [routerLink]="['/restablecer-contraseña']" routerLinkActive="router-link-active" >Olvidó su contraseña?</a>
+              </div>
+              <hr class="mt-4">
+              <div class="text-right pt-4">
+                <button class="btn btn-primary" type="submit"><i class="czi-sign-in mr-2 ml-n21"></i>Ingresar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 pt-4 mt-3 mt-md-0">
+        <h2 class="h4 mb-3">No tienes cuenta? Registrate!</h2>
+        <p class="font-size-sm text-muted mb-4">Ingresa tus datos para poder registrate.</p>
+
+        <div *ngIf="error_reg" class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{error_reg}}
+          <button class="close" (click)="close_alert()" type="button" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div *ngIf="success_reg" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{success_reg}}
+          <button type="button" (click)="close_alert()" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form #registroForm="ngForm" (ngSubmit)="registro(registroForm)">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="reg-fn">Nombres completos</label>
+                <input class="form-control" type="text" required  #first_name="ngModel" name="first_name" [(ngModel)]="usertwo.first_name">
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="reg-ln">Apellidos completos</label>
+                <input class="form-control" type="text" required  #last_name="ngModel" name="last_name" [(ngModel)]="usertwo.last_name">
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="reg-email">Correo electónico</label>
+                <input class="form-control" type="email" required #email="ngModel" name="email" [(ngModel)]="usertwo.email">
+             
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="reg-phone">Telefono</label>
+                <input class="form-control" type="text" required  #telefono="ngModel" name="telefono" [(ngModel)]="usertwo.telefono">
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="reg-password">Contraseña</label>
+                <input class="form-control" type="password" required id="reg-password" #password="ngModel" name="password" [(ngModel)]="usertwo.password">
+               
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="reg-password-confirm">Confirmar Contraseña</label>
+                <input class="form-control" type="password" required id="reg-password-confirm" name="password_confirm" [(ngModel)]="password_confirm">
+              
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <button class="btn btn-primary" type="submit"><i class="czi-user mr-2 ml-n1"></i>Registrarme</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+<app-foot></app-foot>

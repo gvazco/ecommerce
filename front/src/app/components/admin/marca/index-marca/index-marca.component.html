@@ -1,0 +1,138 @@
+<app-aside></app-aside>
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+            <div class="toast-container toast-bottom-right">
+              <div class="toast mb-3 fade hide" id="dark-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-accent text-white"><i class="czi-time mr-2"></i>
+                  <h6 class="font-size-sm text-white mb-0 mr-auto">Notificación</h6>
+                  <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close" (click)="close_toast()"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="toast-body text-accent">Se eliminó corractamente el registro.</div>
+              </div>
+            </div>
+      
+          
+      
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-2 mb-5">
+                      <h1 class="mt-lg-4">Modulo de marcas</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Marcas registradas del e-commerce.</p>
+                       
+                      </div>
+                      <div class="btn-toolbar" role="toolbar" aria-label="Settings toolbar">
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Settings group">
+                            <a [routerLink]="['/admin/marcas/registro']" class="btn btn-dark btn-icon">
+                              <i class="czi-add-document"></i> &nbsp;Nueva marca
+                            </a>
+                            
+                          </div>
+                         <form #searchForm="ngForm" (keyup)="search(searchForm)">
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                              <input type="text" class="form-contorl" name="filtro" [(ngModel)]="filtro" style="padding-left: 10px;">
+                              <button type="submit" class="btn btn-info">
+                                  <i class="czi-search"></i>
+                              </button>
+                          </div>
+                         </form>
+                          <div class="btn-group mb-2" role="group" aria-label="Delete settings">
+                            <button type="button" (click)="resetSearch()" class="btn bg-faded-danger btn-icon" title="Resetear filtro">
+                              <i class="czi-reply"></i>
+                            </button>
+                          </div>
+                        </div>
+                  </div>
+      
+                  <div class="table-responsive">
+                      <table class="table table-striped table-sm">
+                        <thead>
+                          <tr>
+                            <th>Logo</th>
+                            <th>Marca</th>
+                            <th>Fecha de creación</th>
+                            <th>Opciones</th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="count_cat >= 1">
+                          <tr *ngFor="let item of marcas | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                            <td><img [src]="url+'marca/resources/thumbnails/'+item.banner" class="rounded-lg" style="    width: 100px;"></td>
+                            <td>{{item.nombre}}</td>
+                            
+                            <td>{{ item.createdAt | date:'MMM d, y, h:mm:ss a' }}</td>
+                            <td>
+                              <div class="btn-group">
+                                  <button type="button" class="btn btn-primary">
+                                      <span class="czi-settings"></span>
+                                  </button>
+                                  <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <span class="sr-only">Toggle dropdown</span>
+                                  </button>
+                                  <div class="dropdown-menu">
+                                      <a class="dropdown-item" [routerLink]="['/admin/marcas/',item._id]" ><span class="czi-edit-alt"></span> Modificar</a>
+                                      <a class="dropdown-item" style="cursor:pointer" data-toggle="modal" [attr.data-target]="'#modal-'+item._id"><span class="czi-trash"></span> Eliminar</a>
+                                      
+                                  </div>
+                                </div>
+                            </td>
+      
+      
+                            <div class="modal fade" [attr.id]="'modal-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Confirmación</h4>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p class="font-size-sm">¿Desea eliminar definitivamente el regsitro?</p>
+                                    <span class="font-size-sm text-muted"><b>Código:</b> {{item.nombre}} - {{item._id}}</span>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="eliminar(item._id)">Suprimir</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+      
+                          </tr>
+                          
+                        </tbody>
+                        <tbody *ngIf="count_cat <= 0">
+                          <tr>
+                            <td colspan="6" class="text-center">No se encontró ningún dato, vuelva a intentar.</td>
+                            
+                          </tr>
+                          
+                        </tbody>
+                        
+                      </table>
+                      <ngb-pagination
+                      [(page)]="page"
+                      [pageSize]="pageSize"
+                      [collectionSize]="marcas.length"></ngb-pagination>
+                  </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<app-foot></app-foot>

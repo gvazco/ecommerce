@@ -1,0 +1,218 @@
+<app-aside></app-aside>
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="border-bottom mt-lg-2 pb-2">
+                <h2 class="mt-lg-4">Orden N° {{ id.toUpperCase() }}</h2>
+                <div
+                  class="d-flex flex-wrap flex-md-nowrap justify-content-between"
+                >
+                  <p class="text-muted">Detalles de esta venta.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 mt-4">
+              <!-- Steps based on media tabs -->
+              <ul class="nav nav-tabs media-tabs nav-justified">
+                <li class="nav-item">
+                  <div class="nav-link active">
+                    <div class="media align-items-center">
+                      <div class="media-tab-media mr-3">
+                        <i class="czi-paypal"></i>
+                      </div>
+                      <div class="media-body">
+                        <div
+                          class="media-tab-subtitle text-muted font-size-xs mb-1"
+                        >
+                          Metodo
+                        </div>
+                        <h6 class="media-tab-title text-nowrap mb-0">
+                          {{ venta.metodo_pago }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div
+                    class="nav-link"
+                    [ngClass]="{ completed: venta.estado == 'Enviado' }"
+                  >
+                    <div class="media align-items-center">
+                      <div class="media-tab-media mr-3">
+                        <i class="czi-bag"></i>
+                      </div>
+                      <div class="media-body">
+                        <div
+                          class="media-tab-subtitle text-muted font-size-xs mb-1"
+                        >
+                          Estatus
+                        </div>
+                        <h6 class="media-tab-title text-nowrap mb-0">
+                          {{ venta.estado }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="nav-item">
+                  <div class="nav-link">
+                    <div class="media align-items-center">
+                      <div class="media-tab-media mr-3">
+                        <i class="czi-dollar"></i>
+                      </div>
+                      <div class="media-body">
+                        <div
+                          class="media-tab-subtitle text-muted font-size-xs mb-1"
+                        >
+                          Total pagado
+                        </div>
+                        <h6 class="media-tab-title text-nowrap mb-0">
+                          {{ venta.total_pagado }} MXN
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-7 pt-4">
+              <div class="card mb-2" *ngFor="let item of detalle">
+                <div class="row no-gutters">
+                  <div class="col-sm-4">
+                    <a [routerLink]="['/producto/', item.producto.slug]">
+                      <img
+                        [src]="
+                          url +
+                          'productos_img_data/resources/thumbnails/' +
+                          item.producto.poster
+                        "
+                        class="rounded-left"
+                        alt="Card image"
+                      />
+                    </a>
+                  </div>
+                  <div class="col-sm-8">
+                    <div class="card-body">
+                      <h6 class="card-title" style="font-size: 15.2px">
+                        {{ item.producto.titulo.substr(0, 30) }}..
+                      </h6>
+                      <div class="font-size-sm">
+                        <span class="text-muted mr-2">Cantidad:</span
+                        >{{ item.cantidad }}
+                      </div>
+                      <div class="font-size-sm">
+                        <span class="text-muted mr-2"
+                          >{{ item.producto.nombre_selector }}:</span
+                        >{{ item.selector }}
+                      </div>
+                      <div class="font-size-sm">
+                        <span class="text-muted mr-2">Color:</span>
+                        <span
+                          [ngStyle]="{
+                            background: item.color,
+                            color: item.color
+                          }"
+                          style="font-weight: 900"
+                          >||||||||||||||||||||</span
+                        >
+                      </div>
+
+                      <div class="font-size-sm">
+                        <span class="text-muted mr-2">Precio unitario:</span>${{
+                          item.precio
+                        }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-5 pt-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-lg-12">
+                    <h3 class="product-title font-size-base">
+                      <a>Etiqueta de envío:</a>
+                    </h3>
+                    <hr />
+                    <div class="media-body pt-2 mb-4">
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Destinatario:</span><br />
+                        <span>{{ venta.destinatario }}</span>
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Dirección:</span><br />
+                        <span>{{ venta.direccion }}</span>
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Referencia:</span><br />
+                        <span>{{ venta.referencia }}</span>
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">País / Ciudad:</span
+                        ><br />
+                        <span>{{ venta.pais }} / {{ venta.ciudad }}</span>
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">ZIP:</span><br />
+                        <span>{{ venta.zip }}</span>
+                      </div>
+                    </div>
+                    <h3 class="product-title font-size-base">
+                      <a>Médio postal:</a>
+                    </h3>
+                    <hr />
+                    <div class="media-body pt-2">
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Envio:</span><br />
+                        <span>{{ venta.tipo_envio }}</span>
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Tiempo estimado:</span
+                        ><br />
+                        <span>{{ venta.tiempo_estimado }}</span>
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Tracking:</span><br />
+                        <span *ngIf="venta.tracking_number">{{
+                          venta.tracking_number
+                        }}</span>
+                        <span
+                          *ngIf="!venta.tracking_number"
+                          class="badge badge-dark"
+                          >Sin tracking</span
+                        >
+                      </div>
+                      <div class="font-size-sm content-txt-pb">
+                        <span class="text-muted mr-2">Precio:</span><br />
+                        <span>${{ venta.precio_envio }}MXN</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

@@ -1,0 +1,77 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+              <div class="col-lg-12">
+                <div class="col-lg-12 form-group" >
+                    <div class="card">
+                        <div class="card-header">
+                            <h6 style="margin-bottom: 0px;"><b>Asunto: </b> &nbsp;{{ticket.tema}} </h6>
+                        </div>
+                        <div class="card-body" style="height: 500px;max-height: 500px;
+                        overflow-y: auto;padding-top: 0px;" #scrollMe>
+                            <div class="row">
+                                <ng-container *ngFor="let item of mensajes; let indice = index">
+                                    <div class="col-lg-12 p-4" *ngIf="item.de == usuario._id" style="background: #ededed;">
+                                        <div class="media border-bottom"><img class="rounded-circle" width="50" [src]="url+'user/data/'+poster_admin">
+                                            <div class="media-body pl-3">
+                                              <h6 class="font-size-md mb-2">{{usuario.first_name}} {{usuario.last_name}}</h6>
+                                              <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span>
+                                            </div>
+                                          </div>
+                                    </div>
+                             
+                                    <div class="col-lg-12 p-4 border-bottom" *ngIf="'5ef640b75ee066601c6ed1c0' == item.de" style="background: #f8f8f8;">
+                                        <div class="media">
+                                            
+                                            <div class="media-body pl-3">
+                                             <h6 class="font-size-md mb-2">Yo:</h6>
+                                              <p class="font-size-md mb-1">{{item.msm}}</p><span class="font-size-ms text-muted"><i class="czi-time align-middle mr-2"></i>{{item.createdAt | dateAgo}}</span>
+                                            </div>
+                                            <img class="rounded-circle" width="50" [src]="url+'user/data/'+identity.perfil">
+                                          </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12" *ngIf="estado_ticket == 1">
+                    <form #msmForm="ngForm" (ngSubmit)="sendMessage(msmForm)">
+                        <div class="form-group">
+                          <textarea class="form-control" rows="3" placeholder="Mensaje" required="" name="msm" [(ngModel)]="msm"></textarea>
+                          <div class="invalid-tooltip" *ngIf="msm_error" style="display: block;">Por favor escriba un mensaje!</div>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center">
+                          <div class="custom-control custom-checkbox d-block">
+                            <input class="custom-control-input" type="checkbox" id="close-ticket" name="close_ticket" [(ngModel)]="close_ticket">
+                            <label class="custom-control-label" for="close-ticket">Enviar y cerrar el ticket</label>
+                          </div>
+                          <button class="btn btn-primary my-2" type="submit">Enviar</button>
+                        </div>
+                      </form>
+                </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

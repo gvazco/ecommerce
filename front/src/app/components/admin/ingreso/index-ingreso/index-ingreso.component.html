@@ -1,0 +1,245 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+   
+      
+          
+      
+              <div class="col-lg-12">
+                <div class="border-bottom mt-lg-2 pb-2">
+                    <h2 class="mt-lg-4">Historial de ingresos</h2>
+                    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                      <p class="text-muted">Todos los ingresos registrados en el ecommerce.</p>
+                      
+                    </div> 
+                </div>
+  
+              </div>
+
+              <div class="col-lg-12 pt-4">
+                <div class="card">
+                  <div class="card-body">
+                    <!-- Nav pills -->
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link active" id="pills-home1" data-toggle="pill" role="tab" aria-controls="home1" aria-selected="true" (click)="pills('home1')">
+                          <i class="czi-bookmark mr-2"></i>
+                          Fechas
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link" id="pills-messages1" data-toggle="pill" role="tab" aria-controls="messages1" aria-selected="false" (click)="pills('messages1')">
+                          <i class="czi-key mr-2"></i>
+                          Código
+                        </a>
+                      </li>
+                    </ul>
+
+                    <!-- Pills content -->
+                    <div class="tab-content">
+                      <div id="home1" class="tab-pane fade show active" role="tabpanel" aria-labelledby="pills-home1">
+                        <div class="btn-toolbar pt-2" role="toolbar" aria-label="Settings toolbar">
+                         <form #searchForm="ngForm" (ngSubmit)="search('fecha',null)">
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
+                                 Año
+                              </span>
+                            </div>
+                            <select name="" class="form-control custom-select" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px" name="year" [(ngModel)]="year">
+                              <option value="" selected disabled>Seleccionar</option>
+                              <option value="2019" >2019</option>
+                              <option value="2020" >2020</option>
+            
+                            </select>
+                              
+                          </div>
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
+                                 Mes
+                              </span>
+                            </div>
+                            <select name="" class="form-control custom-select" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px" name="mes" [(ngModel)]="mes">
+                              <option value="0" selected>Todos</option>
+                              <option value="1">Enero</option>
+                              <option value="2">Febrero</option>
+                              <option value="3">Marco</option>
+                              <option value="4">Abril</option>
+                              <option value="5">Mayo</option>
+                              <option value="6">Junio</option>
+                              <option value="7">Julio</option>
+                              <option value="8">Agosto</option>
+                              <option value="9">Septiembre</option>
+                              <option value="10">Octubre</option>
+                              <option value="11">Noviembre</option>
+                              <option value="12">Diciembre</option>
+                            </select>
+                              
+                          </div>
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
+                                Día
+                              </span>
+                            </div>
+                            <input type="number" class="form-control" max="31" min="0" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px" name="dia" [(ngModel)]="dia">
+                          </div> 
+                       
+                          
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Settings group">
+                            <button class="btn btn-dark btn-icon" type="submit">
+                              <i class="czi-search"></i>
+                            </button>
+                            
+                          </div>
+                         </form>
+                          
+                        </div>
+                      </div>
+                    
+                      <div id="messages1" class="tab-pane fade" role="tabpanel" aria-labelledby="pills-messages1">
+                        <div class="btn-toolbar pt-2" role="toolbar" aria-label="Settings toolbar">
+                          <form #searchForm="ngForm" (ngSubmit)="search('codigo',null)">
+                           <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                             <div class="input-group-prepend">
+                               <span class="input-group-text" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
+                                  Código
+                               </span>
+                             </div>
+                             <input type="text" class="form-control" placeholder="Código de venta" name="codigo" [(ngModel)]="codigo">
+                           </div>
+                        
+                           <div class="btn-group mr-2 mb-2" role="group" aria-label="Settings group">
+                            <button class="btn btn-dark btn-icon" type="submit">
+                              <i class="czi-search"></i>
+                            </button>
+                           </div>
+                          </form>
+                           
+                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12 mt-4">
+                <div class="card">
+                  <div class="card-header">
+                      <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings" style="margin-bottom: 0px !important;">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" style="border-top-right-radius: 0px;border-bottom-right-radius: 0px">
+                            <span class="czi-arrows-vertical"></span> &nbsp; Orden
+                          </span>
+                        </div>
+                        <select name="" class="form-control custom-select" style="border-top-left-radius: 0px;border-bottom-left-radius: 0px" name="orden" [(ngModel)]="orden" (change)="search(tipo,orden)">
+                          <option value="fecha+" selected>Fecha (+ to -)</option>
+                          <option value="pagado+">Total pagado (+ to -)</option>
+                          <option value="fecha-">Fecha (- to +)</option>
+                          <option value="pagado-">Total pagado (- to +)</option>
+                        </select>
+                        <button type="button" class="btn btn-accent" (click)="init_data()"><span class="czi-filter"></span> Restaurar filtro</button>    
+                      </div>
+                      <div class="btn-group" role="group" aria-label="Solid button group">
+                        <a [routerLink]="['/admin/ingresos/registro']" routerLinkActive="router-link-active"  class="btn btn-success"><span class="czi-cloud-upload"></span>&nbsp; Nuevo ingreso</a>
+                       
+                        
+                      </div>
+                      
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-12 pb-2" *ngFor="let item of ingresos| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="product-title font-size-base" style="margin-bottom: 0px;">
+                              
+                              <a>Ingreso: N°-{{item._id.toUpperCase()}}</a>  </h3>
+                           
+                          </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-lg-7">
+                                <div class="media-body pt-2">
+                                  <div class="font-size-sm"><span class="text-muted mr-2">Encargado:</span>
+                                    {{item.user.first_name}} {{item.user.last_name}}
+                                  </div>
+                                  <div class="font-size-sm"><span class="text-muted mr-2">Proveeedor:</span>
+                                    {{item.proveedor}}
+                                  </div>
+                                  <div class="font-size-sm"><span class="text-muted mr-2">Fecha:</span>
+                                    {{ item.createdAt | date:'MMM d, y, h:mm:ss a' }}
+                                  </div>
+                                  <div class="font-size-lg text-accent pt-2"><span class="text-muted mr-2">Total pagado:</span>${{item.total_pagado}}</div>
+                                </div>
+                              </div>
+
+                              <div class="col-lg-5">
+                                <div class="btn-toolbar" role="toolbar" aria-label="Settings toolbar" >
+                                  <div class="btn-group mr-2 mb-2" role="group" aria-label="Settings group">
+                                    <a [routerLink]="['/admin/ingresos/detalle/',item._id]" class="btn btn-dark btn-icon">
+                                      <i class="czi-basket"></i> &nbsp; Detalles
+                                    </a>
+                                    <a target="_blank" [attr.href]="url+'ingreso/factura/'+item.factura" class="btn btn-accent btn-icon">
+                                        <i class="czi-document"></i> &nbsp; Factura
+                                      </a>
+                                    
+                                  </div>
+                                  <!-- <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                                    <button type="button" class="btn btn-info">
+                                      <i class="czi-check mr-2"></i>
+                                      Apply
+                                    </button>
+                                  </div> -->
+                                  
+                                </div>
+                               
+                              </div>
+                            </div>
+                            
+                          
+                        
+                          </div>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                 
+                  
+              
+
+                </div>
+                
+              </div>
+              <div class="col-lg-12 mt-2">
+                <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="ingresos.length"></ngb-pagination>
+              </div>
+          </div>
+          
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

@@ -1,0 +1,16 @@
+.breadcrumb-light .breadcrumb-item::before {
+    display: none !important;
+}
+.postal thead th{
+    font-size: 13px;
+}
+.postal tbody tr td{
+    font-size: 13px;
+}
+.blockquote-footer::before{
+    display: none;
+}
+.dt-w{
+    color: #fe696a !important;
+    font-weight: 500;
+}

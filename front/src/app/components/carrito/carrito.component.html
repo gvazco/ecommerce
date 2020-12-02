@@ -1,0 +1,385 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4">
+  <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+    <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+      <nav aria-label="breadcrumb">
+        <ol
+          class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start"
+        >
+          <li class="breadcrumb-item">
+            <a
+              class="text-nowrap"
+              [routerLink]="['/']"
+              routerLinkActive="router-link-active"
+              ><i class="czi-home"></i>Inicio</a
+            >
+          </li>
+          <li class="breadcrumb-item text-nowrap">
+            <a
+              [routerLink]="['/productos']"
+              routerLinkActive="router-link-active"
+              ><span class="czi-arrow-right text-nowrap"></span> Productos</a
+            >
+          </li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">
+            <span class="czi-arrow-right text-nowrap"></span> Carrito
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+      <h1 class="h3 text-light mb-0">
+        <span class="czi-cart"></span> Mi carrito
+      </h1>
+    </div>
+  </div>
+</div>
+<!-- Page Content-->
+<div class="container pb-5 mb-2 mb-md-4">
+  <div class="row">
+    <!-- List of items-->
+    <section class="col-lg-8">
+      <div
+        class="d-flex justify-content-between align-items-center pt-3 pb-2 pb-sm-5 mt-1"
+      >
+        <h2 class="h6 text-light mb-0">Productos</h2>
+        <a
+          class="btn btn-outline-primary btn-sm pl-2"
+          [routerLink]="['/productos']"
+          routerLinkActive="router-link-active"
+          ><i class="czi-arrow-left mr-2"></i>Continuar comprando</a
+        >
+      </div>
+      <!-- Item-->
+      <div
+        class="alert alert-danger alert-with-icon"
+        role="alert"
+        *ngIf="error_stock"
+      >
+        <div class="alert-icon-box">
+          <i class="alert-icon czi-close-circle"></i>
+        </div>
+        Algun producto de su carrito de compras no tiene stock.
+      </div>
+
+      <ng-container *ngIf="carrito.length != 0">
+        <div
+          *ngFor="let item of carrito"
+          class="d-sm-flex justify-content-between align-items-center my-4 pb-3 border-bottom"
+        >
+          <div
+            class="media media-ie-fix d-block d-sm-flex align-items-center text-center text-sm-left"
+          >
+            <a
+              class="d-inline-block mx-auto mr-sm-4"
+              [routerLink]="['/producto/', item.producto.slug]"
+              style="width: 10rem"
+              ><img
+                [src]="
+                  url +
+                  'productos_img_data/resources/thumbnails/' +
+                  item.producto.poster
+                "
+                alt="Product"
+            /></a>
+            <div class="media-body pt-2">
+              <h3 class="product-title font-size-base mb-2">
+                <a [routerLink]="['/producto/', item.producto.slug]">{{
+                  item.producto.titulo
+                }}</a>
+              </h3>
+
+              <ng-container *ngIf="item.producto.stock > 0">
+                <div class="font-size-sm">
+                  <span class="text-muted mr-2"
+                    >{{ item.producto.nombre_selector }}:</span
+                  >{{ item.selector }}
+                </div>
+                <div class="font-size-sm">
+                  <span class="text-muted mr-2">COLOR:</span>
+                  <span
+                    [ngStyle]="{ background: item.color, color: item.color }"
+                    style="font-weight: 900"
+                    >||||||||||||||||||||</span
+                  >
+                </div>
+                <div class="font-size-lg text-accent pt-2">
+                  ${{ item.precio }}
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.producto.stock == 0">
+                <span class="badge badge-danger"
+                  >No hay stock del producto</span
+                >
+              </ng-container>
+            </div>
+          </div>
+          <div
+            class="pt-2 pt-sm-0 pl-sm-3 mx-auto mx-sm-0 text-center text-sm-left"
+            style="max-width: 9rem"
+          >
+            <div class="form-group mb-0">
+              <label class="font-weight-medium" for="quantity1">Cantidad</label>
+              <input
+                class="form-control"
+                type="number"
+                id="quantity1"
+                readonly
+                [value]="item.cantidad"
+              />
+            </div>
+            <button
+              class="btn btn-link px-0 text-danger"
+              type="button"
+              (click)="remove_producto(item._id)"
+            >
+              <i class="czi-close-circle mr-2"></i
+              ><span class="font-size-sm">Eliminar</span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="carrito.length == 0" class="my-4 pb-3 border-bottom">
+        <!-- Alert with bakground image -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div
+              class="alert alert-bg-image alert-dismissible fade show text-center py-5"
+              style="
+                background-image: url(https://demo.createx.studio/cartzilla/img/components/alerts/alert-bg.jpg);
+              "
+              role="alert"
+            >
+              <i
+                class="czi-time d-block text-white my-4"
+                style="font-size: 3rem"
+              ></i>
+              <h2 class="text-white text-shadow">
+                Tu carrito actualmente esta vacío!
+              </h2>
+              <h4 class="text-white font-weight-normal text-shadow mb-4 pb-2">
+                :'(
+              </h4>
+              <a [routerLink]="['/productos']" class="btn btn-primary mb-3"
+                >Ir a comprar</a
+              >
+              <button
+                type="button"
+                class="close text-white"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Sidebar-->
+    <aside class="col-lg-4 pt-4 pt-lg-0">
+      <div class="cz-sidebar-static rounded-lg box-shadow-lg ml-lg-auto">
+        <div class="text-center mb-4 pb-3 border-bottom">
+          <h2 class="h6 mb-3 pb-1">Subtotal</h2>
+          <h3 class="font-weight-normal">${{ subtotal }}</h3>
+        </div>
+        <div class="card mb-4 cart-data-venta" style="padding-left: 8px">
+          <div class="card-body">
+            <h3 style="font-size: 1rem; margin-bottom: 0px">Medio postal</h3>
+          </div>
+          <table class="postal">
+            <thead>
+              <th>OP</th>
+              <th>Medio postal</th>
+              <th>Precio</th>
+            </thead>
+            <tbody *ngFor="let item of postales">
+              <tr>
+                <td *ngIf="item._id == radio_postal">
+                  <input
+                    type="radio"
+                    class="form-control"
+                    style="height: 25px; width: 15px"
+                    [attr.id]="'postal-' + item._id"
+                    name="radio"
+                    (change)="select_postal($event, item)"
+                    value="{{ item._id }}"
+                    checked
+                  />
+                </td>
+                <td *ngIf="item._id != radio_postal">
+                  <input
+                    type="radio"
+                    class="form-control"
+                    style="height: 25px; width: 15px"
+                    [attr.id]="'postal-' + item._id"
+                    name="radio"
+                    (change)="select_postal($event, item)"
+                    value="{{ item._id }}"
+                  />
+                </td>
+                <td>
+                  <!-- Blockquote -->
+                  <blockquote class="blockquote" style="margin-bottom: 0.4rem">
+                    <p style="font-size: 13px; margin-bottom: 0px !important">
+                      {{ item.titulo }}
+                    </p>
+                    <footer class="blockquote-footer">
+                      {{ item.tiempo }}
+                    </footer>
+                  </blockquote>
+                </td>
+                <td>${{ item.precio }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="accordion mb-4 cart-data-venta"
+          id="order-options"
+          *ngIf="carrito.length != 0"
+        >
+          <div class="card">
+            <div class="card-header">
+              <h3 class="accordion-heading">
+                <a
+                  href="#promo-code"
+                  role="button"
+                  data-toggle="collapse"
+                  aria-expanded="true"
+                  aria-controls="promo-code"
+                  >Aplicar promoción<span class="accordion-indicator"></span
+                ></a>
+              </h3>
+            </div>
+            <div
+              class="collapse show"
+              id="promo-code"
+              data-parent="#order-options"
+            >
+              <form class="card-body needs-validation" method="post" novalidate>
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Cupón"
+                    name="cupon"
+                    maxlength="13"
+                    [(ngModel)]="cupon"
+                    (keyup)="get_data_cupon($event, cupon)"
+                  />
+                  <div class="invalid-feedback" *ngIf="msm_error_cupon">
+                    Este cupón no esta disponible.
+                  </div>
+                  <div
+                    class="valid-feedback"
+                    *ngIf="msm_success_cupon"
+                    style="display: block"
+                  >
+                    Cupón aplicado exitosamente!
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="accordion-heading">
+                <a
+                  class="collapsed"
+                  href="#shipping-estimates"
+                  role="button"
+                  data-toggle="collapse"
+                  aria-expanded="true"
+                  aria-controls="shipping-estimates"
+                  >Dirección de envío<span class="accordion-indicator"></span
+                ></a>
+              </h3>
+            </div>
+            <div
+              class="collapse"
+              id="shipping-estimates"
+              data-parent="#order-options"
+            >
+              <div class="card-body">
+                <div class="form-group">
+                  <select
+                    class="form-control custom-select"
+                    required
+                    (change)="get_direccion()"
+                    [(ngModel)]="id_direccion"
+                  >
+                    <option value="" selected disabled>Selecciona</option>
+                    <option>Pasaje Moneda #19</option>
+                    <ng-container *ngFor="let item of direcciones">
+                      <option value="{{ item._id }}">
+                        {{ item.direccion }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="invalid-feedback" style="display: block" *ngIf="msm_error">
+          {{ msm_error }}
+        </div>
+
+        <button
+          class="btn btn-primary btn-shadow btn-block mt-4 mb-4"
+          *ngIf="carrito.length != 0"
+          id="btn-verify-data"
+          (click)="verify_data()"
+        >
+          <i class="czi-card font-size-lg mr-2"></i>Proceder a pagar
+        </button>
+
+        <button
+          class="btn btn-primary btn-shadow btn-block mt-4 mb-4"
+          id="btn-back-data"
+          (click)="back_data()"
+        >
+          <i class="czi-reply font-size-lg mr-2"></i>Regresar
+        </button>
+
+        <div
+          class="bg-secondary rounded-lg px-4 pt-4 pb-2 mb-4"
+          id="card-data-envio"
+        >
+          <div class="row">
+            <div class="col-sm-12">
+              <h4 class="h6">Detalles de envío:</h4>
+              <ul class="list-unstyled font-size-sm">
+                <li>
+                  <span class="text-muted dt-w">Destinatario:&nbsp; <br /></span
+                  >{{ data_direccion.nombres_completos }}
+                </li>
+                <li>
+                  <span class="text-muted dt-w">Dirección:&nbsp; <br /></span
+                  >{{ data_direccion.direccion }}
+                </li>
+                <li>
+                  <span class="text-muted dt-w"
+                    >País - Ciudad - ZIP:&nbsp; <br
+                  /></span>
+                  {{ data_direccion.pais }} <span> - </span>
+                  {{ data_direccion.ciudad }} <span> - </span>
+                  {{ data_direccion.zip }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="card-pay">
+          <div class="card-header">
+            <h3 style="font-size: 1rem; margin-bottom: 0px">Pagos</h3>
+          </div>
+          <div #paypal></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+<app-foot></app-foot>

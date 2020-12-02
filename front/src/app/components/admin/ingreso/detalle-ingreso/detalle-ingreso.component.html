@@ -1,0 +1,96 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-2">
+                      <h1 class="mt-lg-4">Detalles de ingreso</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Datos especificos de un ingreso.</p>
+                       
+                      </div>
+                      
+                  </div>
+                  <div class="row mt-4">
+                     <div class="col-lg-12 form-group">
+                        <div class="bg-secondary rounded-lg px-4 pt-4 pb-2">
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <h4 class="h6">Detalles:</h4>
+                                <ul class="list-unstyled font-size-sm">
+                                  <li><span class="text-muted">Encargado:&nbsp;</span>{{ingreso.user.first_name}} {{ingreso.user.last_name}}</li>
+                                  <li><span class="text-muted">Total pagado:&nbsp;</span>${{ingreso.total_pagado}}</li>
+                                  <li><span class="text-muted">Proveedor:&nbsp;</span>{{ingreso.proveedor}}</li>
+                                  <li><span class="text-muted">Fecha:&nbsp;</span>{{ ingreso.createdAt | date:'MMM d, y, h:mm:ss a' }}</li>
+                                </ul>
+                              </div>
+                              <div class="col-sm-6">
+                                <h4 class="h6">Nota:</h4>
+                                <ul class="list-unstyled font-size-sm">
+                                    <p>{{ingreso.nota}}</p>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                     </div>
+                     <div class="col-lg-5">
+                         <div class="card">
+                             <img [src]="url+'ingreso/factura/'+ingreso.factura" alt="">
+                             <div class="card-footer">
+                                 <a [attr.href]="url+'ingreso/factura/'+ingreso.factura" class="btn btn-success btn-block btn-sm">Descargar</a>
+                             </div>
+                         </div>
+                         
+                     </div>
+                     <div class="col-lg-7">
+                         <div class="row">
+                             <div class="col-lg-12 form-group" *ngFor="let item of detalle">
+                                 <!-- Horizontal card layout -->
+                                <div class="card">
+                                    <div class="row no-gutters">
+                                    <div class="col-sm-4">
+                                        <img [src]="url+'productos_img_data/resources/thumbnails/'+item.producto.poster" class="rounded-left" alt="Card image">
+                                    </div>
+                                        <div class="col-sm-8">
+                                            <div class="card-body">
+                                                <h6 class="card-title" style="font-size: 15.2px;">{{item.producto.titulo.substr(0,30)}}..</h6>
+                                                <div class="font-size-sm">
+                                                    <span class="text-muted mr-2">Cantidad:</span>{{item.cantidad}}
+                                                </div>
+                                                <div class="font-size-sm">
+                                                    <span class="text-muted mr-2">Precio comprado:</span>${{item.precio_compra}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                         </div> 
+                     </div>
+                  </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

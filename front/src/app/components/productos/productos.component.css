@@ -1,0 +1,11 @@
+.active{
+    color: #fe696a !important;
+}
+
+.noUi-tooltip {
+    font-size: 11px !important;
+}
+
+.breadcrumb-light .breadcrumb-item::before {
+    display: none !important;
+}

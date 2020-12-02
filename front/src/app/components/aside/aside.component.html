@@ -1,0 +1,78 @@
+<header class="bg-light box-shadow-sm navbar-sticky">
+  <div class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+          <a *ngIf="general" class="navbar-brand d-none d-sm-block mr-4 order-lg-1"  style="min-width: 7rem;" [routerLink]="['/']"><img width="142" [src]="url+'congeneral/resources/thumbnails/'+general.logo" alt="Cartzilla" /></a>
+          <a class="navbar-brand d-sm-none mr-2 order-lg-1"  style="min-width: 4.625rem;"><img width="74" src="../../../assets/img/logo-icon.png" alt="Cartzilla" /></a>
+          <!-- Toolbar-->
+          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
+              
+             
+              <div class="navbar-tool dropdown ml-2">
+                  <a class="navbar-tool-icon-box border dropdown-toggle" ><img width="32" src="../../../assets/img/user.png" alt="Createx Studio" /></a>
+                  <a class="navbar-tool-text ml-n1"><small>Hola, </small>{{identity.first_name}}</a>
+                  <div class="dropdown-menu dropdown-menu-right" style="min-width: 14rem;">
+                      <h6 class="dropdown-header">Cuenta</h6>
+                      <a class="dropdown-item d-flex align-items-center" [routerLink]="['/']" routerLinkActive="router-link-active" >
+                          <i class="czi-user opacity-60 mr-2"></i>Modo cliente
+                      </a>
+                      <a class="dropdown-item d-flex align-items-center" [routerLink]="['/admin/ventas/modulo']" ><i class="czi-basket opacity-60 mr-2"></i>Ventas</a>
+                      <a class="dropdown-item d-flex align-items-center" [routerLink]="['/admin/productos']"><i class="czi-apple opacity-60 mr-2"></i>Productos</a>
+                      <div class="dropdown-divider"></div>
+                      <h6 class="dropdown-header">Logistica</h6>
+                     
+                      <a class="dropdown-item d-flex align-items-center" [routerLink]="['/admin/medios-postales']" ><i class="czi-package opacity-60 mr-2"></i>Medios postales</a>
+                      <a class="dropdown-item d-flex align-items-center" [routerLink]="['/admin/categorias']"><i class="czi-bookmark opacity-60 mr-2"></i>Categorias</a>
+                      <a class="dropdown-item d-flex align-items-center" [routerLink]="['/admin/marcas']"><i class="czi-lable opacity-60 mr-2"></i>Marcas</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item d-flex align-items-center" (click)="logout()" style="cursor: pointer;"><i class="czi-sign-out opacity-60 mr-2"></i>Cerrar sesión</a>
+                  </div>
+              </div>
+              
+          </div>
+          <div class="collapse navbar-collapse mr-auto order-lg-2" id="navbarCollapse">
+              <!-- Search-->
+              <div class="input-group-overlay d-lg-none my-3">
+                  <div class="input-group-prepend-overlay">
+                      <span class="input-group-text"><i class="czi-search"></i></span>
+                  </div>
+                  <input class="form-control prepended-form-control" type="text" placeholder="Search marketplace" />
+              </div>
+              <!-- Categories dropdown-->
+              <ul class="navbar-nav mega-nav pr-lg-2 mr-lg-2">
+                 <!--  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle pl-0" href="#" data-toggle="dropdown"><i class="czi-menu align-middle mt-n1 mr-2"></i>Categories</a>
+                      <ul class="dropdown-menu py-1">
+                          <li class="dropdown">
+                              <a class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown">Photos</a>
+                              <ul class="dropdown-menu">
+                                  <li class="dropdown-item product-title font-weight-medium">
+                                      <a href="#">All Photos<i class="czi-arrow-right font-size-xs ml-1"></i></a>
+                                  </li>
+                                  <li class="dropdown-divider"></li>
+                                  <li><a class="dropdown-item" href="#">Abstract</a></li>
+                                  <li><a class="dropdown-item" href="#">Animals</a></li>
+                                  <li><a class="dropdown-item" href="#">Architecture</a></li>
+                                  <li><a class="dropdown-item" href="#">Beauty &amp; Fashion</a></li>
+                                  <li><a class="dropdown-item" href="#">Business</a></li>
+                                  <li><a class="dropdown-item" href="#">Education</a></li>
+                                  <li><a class="dropdown-item" href="#">Food &amp; Drink</a></li>
+                                  <li><a class="dropdown-item" href="#">Holidays</a></li>
+                                  <li><a class="dropdown-item" href="#">Industrial</a></li>
+                                  <li><a class="dropdown-item" href="#">People</a></li>
+                                  <li><a class="dropdown-item" href="#">Sports</a></li>
+                                  <li><a class="dropdown-item" href="#">Technology</a></li>
+                              </ul>
+                          </li>
+                         
+                      </ul>
+                  </li> -->
+              </ul>
+              <!-- Primary menu-->
+             
+          </div>
+      </div>
+  </div>
+  
+</header>
+

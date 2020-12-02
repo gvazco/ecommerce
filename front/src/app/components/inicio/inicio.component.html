@@ -1,0 +1,1059 @@
+<app-nav></app-nav>
+
+<section class="bg-secondary py-4 pt-md-5">
+  <div class="container py-xl-2">
+    <div class="row">
+      <!-- Slider     -->
+      <div class="col-xl-8 pt-xl-4 order-xl-2">
+        <div class="cz-carousel">
+          <div
+            class="cz-carousel-inner"
+            data-carousel-options="{items: 1, controls: false, loop: false}"
+          >
+            <div>
+              <div class="row align-items-center" *ngIf="sliders[0]">
+                <div class="col-md-6 order-md-2">
+                  <img
+                    class="d-block mx-auto"
+                    [src]="
+                      url +
+                      'congeneral/resources/thumbnails/' +
+                      sliders[0].imagen
+                    "
+                    alt="VR Collection"
+                  />
+                </div>
+                <div
+                  class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-left"
+                >
+                  <h2 class="font-weight-light pb-1 from-bottom">
+                    {{ sliders[0].titulo_uno }}
+                  </h2>
+                  <h1 class="display-4 from-bottom delay-1">
+                    {{ sliders[0].titulo_dos }}
+                  </h1>
+                  <h5 class="font-weight-light pb-3 from-bottom delay-2">
+                    {{ sliders[0].subtitulo }}
+                  </h5>
+                  <a
+                    class="btn btn-primary btn-shadow scale-up delay-4"
+                    href="shop-grid-ls.html"
+                    >Shop Now<i class="czi-arrow-right ml-2 mr-n1"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row align-items-center" *ngIf="sliders[1]">
+                <div class="col-md-6 order-md-2">
+                  <img
+                    class="d-block mx-auto"
+                    [src]="
+                      url +
+                      'congeneral/resources/thumbnails/' +
+                      sliders[1].imagen
+                    "
+                    alt="VR Collection"
+                  />
+                </div>
+                <div
+                  class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-left"
+                >
+                  <h2 class="font-weight-light pb-1 from-bottom">
+                    {{ sliders[1].titulo_uno }}
+                  </h2>
+                  <h1 class="display-4 from-bottom delay-1">
+                    {{ sliders[1].titulo_dos }}
+                  </h1>
+                  <h5 class="font-weight-light pb-3 from-bottom delay-2">
+                    {{ sliders[1].subtitulo }}
+                  </h5>
+                  <a
+                    class="btn btn-primary btn-shadow scale-up delay-4"
+                    href="shop-grid-ls.html"
+                    >Shop Now<i class="czi-arrow-right ml-2 mr-n1"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row align-items-center" *ngIf="sliders[2]">
+                <div class="col-md-6 order-md-2">
+                  <img
+                    class="d-block mx-auto"
+                    [src]="
+                      url +
+                      'congeneral/resources/thumbnails/' +
+                      sliders[2].imagen
+                    "
+                    alt="VR Collection"
+                  />
+                </div>
+                <div
+                  class="col-lg-5 col-md-6 offset-lg-1 order-md-1 pt-4 pb-md-4 text-center text-md-left"
+                >
+                  <h2 class="font-weight-light pb-1 from-bottom">
+                    {{ sliders[2].titulo_uno }}
+                  </h2>
+                  <h1 class="display-4 from-bottom delay-1">
+                    {{ sliders[2].titulo_dos }}
+                  </h1>
+                  <h5 class="font-weight-light pb-3 from-bottom delay-2">
+                    {{ sliders[2].subtitulo }}
+                  </h5>
+                  <a
+                    class="btn btn-primary btn-shadow scale-up delay-4"
+                    href="shop-grid-ls.html"
+                    >Shop Now<i class="czi-arrow-right ml-2 mr-n1"></i
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Banner group-->
+      <div class="col-xl-4 order-xl-1 pt-4 mt-3 mt-xl-0 pt-xl-0">
+        <div class="table-responsive" [attr.data-simplebar]>
+          <div class="d-flex d-xl-block">
+            <ng-container *ngFor="let item of categorias">
+              <a
+                class="media w-100 align-items-center bg-faded-info rounded-lg pt-2 pl-2 mb-4 mr-4 mr-xl-0"
+                href="#"
+                style="min-width: 16rem"
+              >
+                <img
+                  [src]="url + 'categoria/resources/thumbnails/' + item.banner"
+                  width="125"
+                  alt="Banner"
+                />
+                <div class="media-body py-4 px-2">
+                  <h5 class="mb-2"><br />{{ item.nombre }}</h5>
+                  <div class="text-info font-size-sm">
+                    <a
+                      [routerLink]="[
+                        '/productos/' +
+                          item.nombre.toLowerCase().trim() +
+                          '/subcategoria/todo'
+                      ]"
+                      >Comprar
+                      <br />
+                      ahora
+                      <i class="czi-arrow-right font-size-xs ml-1"></i
+                    ></a>
+                  </div>
+                </div>
+              </a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Products grid (Trending products)-->
+<section class="container pt-5">
+  <!-- Heading-->
+  <div
+    class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4"
+  >
+    <h2 class="h3 mb-0 pt-3 mr-2">Lo mas vendido</h2>
+    <div class="pt-3">
+      <a class="btn btn-outline-accent btn-sm" [routerLink]="['/productos']"
+        >Mas productos<i class="czi-arrow-right ml-1 mr-n1"></i
+      ></a>
+    </div>
+  </div>
+  <!-- Grid-->
+  <div class="row pt-2 mx-n2">
+    <!-- Product-->
+
+    <div
+      class="col-lg-3 col-md-4 col-sm-6 px-2 mb-4"
+      *ngFor="let item of best_sellers"
+    >
+      <div class="card product-card">
+        <div class="product-card-actions d-flex align-items-center">
+          <button
+            class="btn-wishlist btn-sm"
+            type="button"
+            data-toggle="tooltip"
+            data-placement="left"
+            title="Add to wishlist"
+          >
+            <i class="czi-heart"></i>
+          </button>
+        </div>
+        <a
+          class="card-img-top d-block overflow-hidden"
+          [routerLink]="['/producto/', item.slug]"
+          ><img
+            [src]="
+              url + 'productos_img_data/resources/thumbnails/' + item.poster
+            "
+            alt="Product"
+        /></a>
+        <div class="card-body py-2">
+          <a class="product-meta d-block font-size-xs pb-1" href="#"
+            >{{ item.categoria.nombre }} - {{ item.subcategoria }}</a
+          >
+          <h3 class="product-title font-size-sm">
+            <a [routerLink]="['/producto/', item.slug]"
+              >{{ item.titulo.substr(0, 60) }}...</a
+            >
+          </h3>
+          <div class="d-flex justify-content-between">
+            <div class="product-price">
+              <span class="text-accent">${{ item.precio_antes }}</span>
+            </div>
+            <div class="star-rating">
+              <i class="sr-star czi-star-filled active"></i
+              ><i class="sr-star czi-star-filled active"></i
+              ><i class="sr-star czi-star-filled active"></i
+              ><i class="sr-star czi-star-filled active"></i
+              ><i class="sr-star czi-star-filled active"></i>
+            </div>
+          </div>
+        </div>
+        <div class="card-body card-body-hidden">
+          <div class="text-center">
+            <a
+              class="tn btn-primary btn-sm btn-block mb-2"
+              (click)="get_galeria(item)"
+              style="cursor: pointer"
+              data-toggle="modal"
+              [attr.data-target]="'#preview-' + item._id"
+              ><i class="czi-eye align-middle mr-1"></i>Vista previa</a
+            >
+          </div>
+        </div>
+      </div>
+      <hr class="d-sm-none" />
+
+      <div
+        class="modal-quick-view modal fade"
+        [attr.id]="'preview-' + item._id"
+        tabindex="-1"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title product-title">
+                <a
+                  data-toggle="tooltip"
+                  data-placement="right"
+                  title="Go to product page"
+                  >{{ item.titulo
+                  }}<i class="czi-arrow-right font-size-lg ml-2"></i
+                ></a>
+              </h4>
+              <button
+                class="close"
+                type="button"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <!-- Product gallery-->
+                <div class="col-lg-7 pr-lg-0">
+                  <div class="cz-product-gallery">
+                    <div class="cz-preview order-sm-2">
+                      <div class="cz-preview-item active" id="first">
+                        <img
+                          class="cz-image-zoom"
+                          id="active_img_thumb"
+                          [src]="
+                            url + '/galeria/resources/thumbnails/' + first_img
+                          "
+                          [attr.data-zoom]="
+                            url + '/galeria/resources/thumbnails/' + first_img
+                          "
+                          alt="Product image"
+                        />
+                        <div class="cz-image-zoom-pane"></div>
+                      </div>
+                    </div>
+                    <div class="cz-thumblist order-sm-1">
+                      <ng-container
+                        *ngFor="
+                          let imagen of galeria;
+                          let primero = first;
+                          let indice = index
+                        "
+                      >
+                        <a
+                          class="cz-thumblist-item active"
+                          [attr.id]="'img_' + indice"
+                          (click)="click_img(imagen.imagen, 'img_' + indice)"
+                          *ngIf="primero"
+                        >
+                          <img
+                            class="thumb-show"
+                            [src]="
+                              url +
+                              '/galeria/resources/thumbnails/' +
+                              imagen.imagen
+                            "
+                            alt="Product thumb"
+                          />
+                        </a>
+                        <a
+                          class="cz-thumblist-item"
+                          [attr.id]="'img_' + indice"
+                          (click)="click_img(imagen.imagen, 'img_' + indice)"
+                          *ngIf="!primero"
+                        >
+                          <img
+                            class="thumb-show"
+                            [src]="
+                              url +
+                              '/galeria/resources/thumbnails/' +
+                              imagen.imagen
+                            "
+                            alt="Product thumb"
+                          />
+                        </a>
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+                <!-- Product details-->
+                <div class="col-lg-5 pt-4 pt-lg-0 cz-image-zoom-pane">
+                  <div class="product-details ml-auto pb-3">
+                    <div class="mb-2">
+                      <div class="star-rating" *ngIf="raiting_puntos == 5">
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                      </div>
+                      <div
+                        class="star-rating"
+                        *ngIf="raiting_puntos >= 4 && raiting_puntos < 5"
+                      >
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                      </div>
+                      <div
+                        class="star-rating"
+                        *ngIf="raiting_puntos >= 3 && raiting_puntos < 4"
+                      >
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                      </div>
+                      <div
+                        class="star-rating"
+                        *ngIf="raiting_puntos >= 2 && raiting_puntos < 3"
+                      >
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                      </div>
+                      <div
+                        class="star-rating"
+                        *ngIf="raiting_puntos >= 1 && raiting_puntos < 2"
+                      >
+                        <i class="sr-star czi-star-filled active"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                      </div>
+                      <div
+                        class="star-rating"
+                        *ngIf="raiting_puntos >= 0 && raiting_puntos < 1"
+                      >
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                        <i class="sr-star czi-star-filled"></i>
+                      </div>
+                      <span
+                        class="d-inline-block font-size-sm text-body align-middle mt-1 ml-1"
+                        >{{ comentarios.length }}
+                        <span *ngIf="comentarios.length == 1">Reseña</span>
+                        <span *ngIf="comentarios.length != 1">Reseñas</span>
+                      </span>
+                    </div>
+                    <div class="h3 font-weight-normal text-accent mb-3 mr-1">
+                      ${{ item.precio_ahora }}
+                    </div>
+                    <div class="font-size-sm">
+                      <span class="text-heading font-weight-medium mr-1">
+                        Colores:</span
+                      >
+                      <span class="text-muted" id="colorOption">
+                        <ng-container
+                          *ngFor="let color of colores; let indice = first"
+                        >
+                          <ng-container *ngIf="indice">{{
+                            color.titulo
+                          }}</ng-container>
+                          <ng-container *ngIf="!indice">
+                            / {{ color.titulo }}</ng-container
+                          >
+                        </ng-container>
+                      </span>
+                    </div>
+                    <div class="font-size-sm mb-4">
+                      <span class="text-heading font-weight-medium mr-1">
+                        Stock:</span
+                      >
+                      <span class="text-muted">
+                        {{ item.stock }}
+                      </span>
+                    </div>
+                    <div class="position-relative mr-n4 mb-3">
+                      <ng-container
+                        *ngFor="let color of colores; let indice = index"
+                      >
+                        <div
+                          class="custom-control custom-option custom-control-inline mb-2"
+                        >
+                          <ng-container *ngIf="color.color == color_to_cart">
+                            <span class="czi-check"></span>
+                            <input
+                              class="custom-control-input"
+                              type="radio"
+                              name="color_to_cart"
+                              [attr.id]="'color-' + color._id"
+                              data-label="colorOption"
+                              checked
+                              (change)="get_color($event, color)"
+                            />
+                            <label
+                              class="custom-option-label rounded-circle"
+                              [attr.for]="'color-' + color._id"
+                              ><span
+                                class="custom-option-color rounded-circle"
+                                [ngStyle]="{ background: color.color }"
+                              ></span
+                            ></label>
+                          </ng-container>
+                          <ng-container *ngIf="color.color != color_to_cart">
+                            <input
+                              class="custom-control-input"
+                              type="radio"
+                              name="color_to_cart"
+                              [attr.id]="'color-' + color._id"
+                              data-label="colorOption"
+                              (change)="get_color($event, color)"
+                            />
+                            <label
+                              class="custom-option-label rounded-circle"
+                              [attr.for]="'color-' + color._id"
+                              ><span
+                                class="custom-option-color rounded-circle"
+                                [ngStyle]="{ background: color.color }"
+                              ></span
+                            ></label>
+                          </ng-container>
+                        </div>
+                      </ng-container>
+
+                      <div class="product-badge product-available mt-n1">
+                        <i class="czi-security-check"></i>Compra segura
+                      </div>
+                    </div>
+                    <form
+                      class="mb-grid-gutter"
+                      #carritoForm="ngForm"
+                      (ngSubmit)="add_to_cart(carritoForm)"
+                    >
+                      <div class="form-group">
+                        <div
+                          class="d-flex justify-content-between align-items-center pb-1"
+                        >
+                          <label class="font-weight-medium" for="product-size"
+                            >{{ item.nombre_selector }}:</label
+                          >
+                          <a
+                            class="nav-link-style font-size-sm"
+                            *ngIf="item.subcategoria == 'Calzado'"
+                            data-toggle="modal"
+                            data-target="#sizes-modal"
+                            style="cursor: pointer"
+                            ><i
+                              class="czi-ruler lead align-middle mr-1 mt-n1"
+                            ></i
+                            >Formato de tallas</a
+                          >
+                        </div>
+                        <select
+                          class="custom-select"
+                          required=""
+                          id="product-size"
+                          name="selector_to_cart"
+                          [(ngModel)]="selector_to_cart"
+                        >
+                          <option value=" " selected disabled>
+                            Selecciona
+                          </option>
+                          <option
+                            value="{{ selector.titulo }}"
+                            *ngFor="let selector of selectores"
+                          >
+                            {{ selector.titulo }}
+                          </option>
+                        </select>
+                        <div
+                          class="invalid-tooltip"
+                          style="display: block"
+                          *ngIf="selector_error"
+                        >
+                          Selecciona alguna opción por favor.
+                        </div>
+                      </div>
+                      <div class="form-group d-flex align-items-center">
+                        <input
+                          type="number"
+                          class="form-control mr-3"
+                          min="1"
+                          [attr.max]="item.stock"
+                          name="cantidad_to_cart"
+                          [(ngModel)]="cantidad_to_cart"
+                          style="width: 5rem"
+                        />
+                        <button
+                          class="btn btn-primary btn-shadow btn-block"
+                          disabled
+                          *ngIf="!identity"
+                          type="submit"
+                        >
+                          <i class="czi-cart font-size-lg mr-2"></i>Agregar al
+                          carrito
+                        </button>
+                        <button
+                          class="btn btn-primary btn-shadow btn-block"
+                          *ngIf="identity"
+                          type="submit"
+                        >
+                          <i class="czi-cart font-size-lg mr-2"></i>Agregar al
+                          carrito
+                        </button>
+                      </div>
+                    </form>
+                    <div
+                      class="invalid-feedback"
+                      *ngIf="err_stock"
+                      style="display: block"
+                    >
+                      {{ err_stock }}
+                    </div>
+
+                    <h5 class="h6 mb-3 py-2 border-bottom">
+                      <i
+                        class="czi-announcement text-muted font-size-lg align-middle mt-n1 mr-2"
+                      ></i
+                      >Detalles
+                    </h5>
+                    <p class="text-justify" style="font-size: 14px">
+                      {{ item.info_short.substr(0, 200) }}...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Product-->
+  </div>
+</section>
+<!-- Promo banner-->
+<section class="container mt-4 mb-grid-gutter" *ngIf="promocion.estado">
+  <div class="bg-faded-info rounded-lg py-4">
+    <div class="row align-items-center">
+      <div class="col-md-5">
+        <div class="px-4 pr-sm-0 pl-sm-5">
+          <span class="badge badge-danger">{{ promocion.etiqueta }}</span>
+          <h3 class="mt-4 mb-1 text-body font-weight-light">
+            {{ promocion.first_title }}
+          </h3>
+          <h2 class="mb-1">{{ promocion.producto_title }}</h2>
+          <p class="h5 text-body font-weight-light">
+            {{ promocion.subtitulo }}
+          </p>
+          <div
+            class="cz-countdown py-2 h4"
+            data-countdown="07/01/2021 07:00:00 PM"
+          >
+            <div class="cz-countdown-days">
+              <span class="cz-countdown-value" id="count_dias"></span>
+              <span class="cz-countdown-label text-muted">d</span>
+            </div>
+            <div class="cz-countdown-hours">
+              <span class="cz-countdown-value" id="count_horas"></span>
+              <span class="cz-countdown-label text-muted">h</span>
+            </div>
+            <div class="cz-countdown-minutes">
+              <span class="cz-countdown-value" id="count_min"></span>
+              <span class="cz-countdown-label text-muted">m</span>
+            </div>
+            <div class="cz-countdown-seconds">
+              <span class="cz-countdown-value" id="count_seg"></span>
+              <span class="cz-countdown-label text-muted">s</span>
+            </div>
+          </div>
+          <a
+            class="btn btn-accent"
+            [routerLink]="['/producto/', promocion.enlace]"
+            >Ver oferta<i class="czi-arrow-right font-size-ms ml-1"></i
+          ></a>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <img
+          [src]="url + 'congeneral/resources/thumbnails/' + promocion.banner"
+          alt="iPad Pro Offer"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Brands carousel-->
+<section class="container mb-5" [ngClass]="{ 'mt-5': !promocion.estado }">
+  <div class="cz-carousel border-right">
+    <div class="cz-carousel-inner slider-marcas" data-carousel-options="">
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[0]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[0].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[1]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[1].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[2]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[2].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[3]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[3].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[4]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[4].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[5]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[5].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[6]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[6].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+      <div>
+        <a
+          class="d-block bg-white border py-4 py-sm-5 px-2"
+          style="margin-right: -0.0625rem"
+        >
+          <img
+            *ngIf="marcas[7]"
+            class="d-block mx-auto"
+            [src]="url + 'marca/resources/thumbnails/' + marcas[7].banner"
+            style="width: 165px"
+            alt="Brand"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Product widgets-->
+
+<section class="container pb-4 pb-md-5">
+  <div class="row">
+    <!-- Bestsellers-->
+    <div class="col-lg-4 col-md-6 mb-2 py-3">
+      <div class="widget">
+        <h3 class="widget-title">Mas vendidos</h3>
+        <ng-container
+          *ngFor="let item of productos_best_sellers; let indice = index"
+        >
+          <div
+            class="media align-items-center pb-2 border-bottom"
+            *ngIf="indice < 4"
+          >
+            <a class="d-block mr-2" [routerLink]="['/producto/', item.slug]">
+              <img
+                width="64"
+                [src]="
+                  url + 'productos_img_data/resources/thumbnails/' + item.poster
+                "
+                alt="Product"
+            /></a>
+            <div class="media-body">
+              <h6 class="widget-product-title">
+                <a [routerLink]="['/producto/', item.slug]"
+                  >{{ item.titulo.substr(0, 30) }}...</a
+                >
+              </h6>
+              <div class="widget-product-meta">
+                <span class="text-accent">${{ item.precio_ahora }}</span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- <p class="mb-0">...</p><a class="font-size-sm" href="shop-grid-ls.html">View more<i class="czi-arrow-right font-size-xs ml-1"></i></a> -->
+      </div>
+    </div>
+    <!-- New arrivals-->
+    <div class="col-lg-4 col-md-6 mb-2 py-3">
+      <div class="widget">
+        <h3 class="widget-title">Nuevos productos</h3>
+        <ng-container *ngFor="let item of productos_newest; let indice = index">
+          <div
+            class="media align-items-center pb-2 border-bottom"
+            *ngIf="indice < 4"
+          >
+            <a class="d-block mr-2" [routerLink]="['/producto/', item.slug]"
+              ><img
+                width="64"
+                [src]="
+                  url + 'productos_img_data/resources/thumbnails/' + item.poster
+                "
+                alt="Product"
+            /></a>
+            <div class="media-body">
+              <h6 class="widget-product-title">
+                <a [routerLink]="['/producto/', item.slug]"
+                  >{{ item.titulo.substr(0, 30) }}...</a
+                >
+              </h6>
+              <div class="widget-product-meta">
+                <span class="text-accent">${{ item.precio_ahora }}</span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- <p class="mb-0">...</p><a class="font-size-sm" href="shop-grid-ls.html">View more<i class="czi-arrow-right font-size-xs ml-1"></i></a> -->
+      </div>
+    </div>
+    <!-- Top rated-->
+    <div class="col-lg-4 col-md-6 mb-2 py-3">
+      <div class="widget">
+        <h3 class="widget-title">Populares</h3>
+        <ng-container
+          *ngFor="let item of productos_populares; let indice = index"
+        >
+          <div
+            class="media align-items-center pb-2 border-bottom"
+            *ngIf="indice < 4"
+          >
+            <a class="d-block mr-2" [routerLink]="['/producto/', item.slug]"
+              ><img
+                width="64"
+                [src]="
+                  url + 'productos_img_data/resources/thumbnails/' + item.poster
+                "
+                alt="Product"
+            /></a>
+            <div class="media-body">
+              <h6 class="widget-product-title">
+                <a [routerLink]="['/producto/', item.slug]"
+                  >{{ item.titulo.substr(0, 30) }}...</a
+                >
+              </h6>
+              <div class="widget-product-meta">
+                <span class="text-accent">${{ item.precio_ahora }}</span>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <!--  <p class="mb-0">...</p><a class="font-size-sm" href="shop-grid-ls.html">View more<i class="czi-arrow-right font-size-xs ml-1"></i></a> -->
+      </div>
+    </div>
+  </div>
+</section>
+<!-- YouTube feed-->
+<!-- <section class="container pb-5 mb-md-3">
+  
+</section> -->
+<section
+  class="container py-5 bg-light rounded-lg px-3 px-sm-4 mb-4"
+  style="padding-top: 0px !important"
+>
+  <h2 class="h3 py-4 text-center">Ultimas reseñas</h2>
+  <div class="cz-carousel mb-3">
+    <div class="row">
+      <div class="col mb-2" *ngFor="let item of last_reviews">
+        <div class="card border-0">
+          <span class="cz-testimonial-mark"></span>
+          <div class="card-body px-3 font-size-md text-muted">
+            <div class="mb-2">
+              <div class="star-rating mr-2" *ngIf="item.estrellas == 5">
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+              </div>
+              <div
+                class="star-rating mr-2"
+                *ngIf="item.estrellas >= 4 && item.estrellas < 5"
+              >
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+              </div>
+              <div
+                class="star-rating mr-2"
+                *ngIf="item.estrellas >= 3 && item.estrellas < 4"
+              >
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+              </div>
+              <div
+                class="star-rating mr-2"
+                *ngIf="item.estrellas >= 2 && item.estrellas < 3"
+              >
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+              </div>
+              <div
+                class="star-rating mr-2"
+                *ngIf="item.estrellas >= 1 && item.estrellas < 2"
+              >
+                <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+              </div>
+              <div
+                class="star-rating mr-2"
+                *ngIf="item.estrellas >= 0 && item.estrellas < 1"
+              >
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+                <i class="czi-star font-size-sm text-muted mr-1"></i>
+              </div>
+            </div>
+            {{ item.comentario }}
+          </div>
+        </div>
+        <footer class="d-flex justify-content-center pt-4">
+          <div class="media align-items-center">
+            <img
+              class="rounded-circle"
+              width="50"
+              [src]="url + 'user/data/' + item.user.perfil"
+              alt="Richard Davis"
+            />
+            <div class="media-body pl-3">
+              <h6 class="font-size-sm mb-n1">
+                {{ item.user.first_name }} {{ item.user.last_name }}
+              </h6>
+              <span class="font-size-ms text-muted opacity-75">{{
+                item.createdAt | date: "MMM d, y"
+              }}</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Blog + Instagram info cards-->
+<section class="container px-0">
+  <section class="cz-carousel mb-4 mb-sm-5">
+    <div class="cz-carousel-inner slider-foot">
+      <!-- Slide 1-->
+      <div>
+        <div
+          class="rounded-lg px-md-5 text-center text-xl-left"
+          style="background-color: #59c879"
+        >
+          <div
+            class="d-xl-flex justify-content-between align-items-center px-4 px-sm-5 mx-auto"
+            style="max-width: 1226px"
+          >
+            <div class="py-5 mr-xl-4 mx-auto mx-xl-0" style="max-width: 490px">
+              <h2 class="h1 text-light">Compra com seguridad</h2>
+              <p class="text-light pb-4">
+                Ordene cualquier producto de nuestra tienda en línea y se lo
+                entregaremos en su puerta en un momento conveniente para usted.
+              </p>
+              <h5 class="text-light pb-3">
+                ¿Muy activo? Prueba nuestra aplicación móvil
+              </h5>
+              <div
+                class="d-flex flex-wrap justify-content-center justify-content-xl-start"
+              >
+                <a class="btn-market btn-apple mr-2 mb-2" href="#" role="button"
+                  ><span class="btn-market-subtitle">Descargar en</span
+                  ><span class="btn-market-title">App Store</span></a
+                ><a class="btn-market btn-google mb-2" href="#" role="button"
+                  ><span class="btn-market-subtitle">Descargar en</span
+                  ><span class="btn-market-title">Google Play</span></a
+                >
+              </div>
+            </div>
+            <div><img src="../../../assets/img/slide01.jpg" alt="Image" /></div>
+          </div>
+        </div>
+      </div>
+      <!-- Slide 2-->
+      <div>
+        <div
+          class="rounded-lg px-md-5 text-center text-xl-left"
+          style="background-color: #1a6fb0"
+        >
+          <div
+            class="d-xl-flex justify-content-between align-items-center px-4 px-sm-5 mx-auto"
+            style="max-width: 1226px"
+          >
+            <div class="py-5 mr-xl-4 mx-auto mx-xl-0" style="max-width: 490px">
+              <h2 class="h1 text-light">24/7 Servicio de delivery</h2>
+              <p class="text-light pb-4">
+                Ordene cualquier producto de nuestra tienda en línea y se lo
+                entregaremos en su puerta en un momento conveniente para usted.
+              </p>
+              <h5 class="text-light pb-3">
+                ¿Muy activo? Prueba nuestra aplicación móvil
+              </h5>
+              <div
+                class="d-flex flex-wrap justify-content-center justify-content-xl-start"
+              >
+                <a class="btn-market btn-apple mr-2 mb-2" href="#" role="button"
+                  ><span class="btn-market-subtitle">Descargar en</span
+                  ><span class="btn-market-title">App Store</span></a
+                ><a class="btn-market btn-google mb-2" href="#" role="button"
+                  ><span class="btn-market-subtitle">Descargar en</span
+                  ><span class="btn-market-title">Google Play</span></a
+                >
+              </div>
+            </div>
+            <div><img src="../../../assets/img/slide02.jpg" alt="Image" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+<!-- Toast: Added to Cart-->
+<div class="toast-container toast-bottom-center">
+  <div
+    class="toast mb-3"
+    id="cart-toast"
+    data-delay="5000"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="toast-header bg-success text-white">
+      <i class="czi-check-circle mr-2"></i>
+      <h6 class="font-size-sm text-white mb-0 mr-auto">Added to cart!</h6>
+      <button
+        class="close text-white ml-2 mb-1"
+        type="button"
+        data-dismiss="toast"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body">This item has been added to your cart.</div>
+  </div>
+</div>
+
+<app-foot></app-foot>

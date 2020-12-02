@@ -1,0 +1,212 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+
+              <div class="col-lg-12">
+                  <div class="mt-lg-2 pb-2">
+                      <h2 class="mt-lg-4">Panel administrador</h2>
+                     
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-12 form-group">
+                          <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-body" style="padding-bottom: 12px;">
+                                            <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                                <div class="display-2 font-weight-normal border-color mr-4">
+                                                    <span class="czi-dollar-circle"></span>
+                                                </div>
+                                                <div class="pl-2">
+                                                    <h6 style="margin-bottom: 0px;">${{total_mes}}
+                                                        <ng-container *ngIf="total_mes > total_ganado_ant">
+                                                            <span class="text-success" style="font-size: 10px;">+{{total_mes - total_ganado_ant}}</span>&nbsp;
+                                                            
+                                                        </ng-container>
+                                                        <ng-container *ngIf="total_mes <= total_ganado_ant">
+                                                            <span class="text-danger" style="font-size: 10px;">-{{total_ganado_ant - total_mes}}</span>&nbsp;
+                                                           
+                                                        </ng-container>
+                                                    </h6>
+                                                  <p class="mb-3 pt-1" style="font-size: 14px;">{{current_month}}</p>
+                                                </div>
+                                              </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-body" style="padding-bottom: 12px;">
+                                            <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                                <div class="display-2 font-weight-normal border-color mr-4">
+                                                    <span class="czi-basket-alt"></span>
+                                                </div>
+                                                <div class="pl-2">
+                                                    <h6 style="margin-bottom: 0px;">{{total_ventas}} 
+                                                        <ng-container *ngIf="total_ventas > total_ventas_ant">
+                                                            <span class="text-success" style="font-size: 10px;">+{{total_ventas - total_ventas_ant}}</span>&nbsp;
+                                                            
+                                                        </ng-container>
+                                                        <ng-container *ngIf="total_ventas <= total_ventas_ant">
+                                                            <span class="text-danger" style="font-size: 10px;">-{{total_ventas_ant - total_ventas}}</span>&nbsp;
+                                                            
+                                                        </ng-container>
+                                                    </h6>
+                                                  <p class="mb-3 pt-1" style="font-size: 14px;">Ventas {{current_month}}</p>
+                                                </div>
+                                              </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-body" style="padding-bottom: 12px;">
+                                            <div class="d-flex align-items-center mx-auto py-3 px-3" style="padding: 0px !important;">
+                                                <div class="display-2 font-weight-normal border-color mr-4">
+                                                    <span class="czi-user"></span>
+                                                </div>
+                                                <div class="pl-2">
+                                                    <h6 style="margin-bottom: 0px;">{{num_user}}</h6>
+                                                  <p class="mb-3 pt-1" style="font-size: 14px;">Usuarios</p>
+                                                </div>
+                                              </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12 form-group">
+                          <div class="card">
+                              <div class="card-body">
+                                <canvas id="myChart"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card">
+                              <div class="card-body" style="max-height: 520px;
+                              overflow-y: auto;">
+                                    <div class="widget">
+                                        <h3 class="widget-title">Ultimas ventas <a style="cursor: pointer;" class="ml-2" (click)="data_ventas()"><span class="czi-compare"></span></a></h3>
+                                    
+                                        <!-- Item -->
+                                        <div class="media align-items-center pb-2 border-bottom" *ngFor="let item of last_sellers">
+                                            <a class="d-block mr-2" *ngIf="item.producto">
+                                                <img width="64" [src]="url+'productos_img_data/resources/thumbnails/'+item.producto.poster" alt="Product"/>
+                                            </a>
+                                            <div class="media-body">
+                                                <h6 class="card-title pt-4" *ngIf="item.producto" style="font-size: 15.2px;margin-bottom: 0px;">{{item.producto.titulo.substr(0,30)}}..</h6>
+                                                <div class="font-size-sm">
+                                                    <span class="text-muted mr-2">Cantidad:</span>{{item.cantidad}}
+                                                </div>
+                                                <div class="font-size-sm" *ngIf="item.producto"><span class="text-muted mr-2">{{item.producto.nombre_selector}}:</span>{{item.selector}}</div>
+                                                <div class="font-size-sm"><span class="text-muted mr-2">Color:</span>
+                                                    <span [ngStyle]="{'background': item.color,'color': item.color}" style="font-weight: 900;">||||||||||||||||||||</span>
+                                                </div>
+                                            
+                                                <div class="font-size-sm">
+                                                    <span class="text-muted mr-2">Precio unitario:</span>${{item.precio}}
+                                                </div>
+                                                        
+                                                
+                                           
+                                            </div>
+                                        </div>
+                                 
+                                    </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <div class="card">
+                              <div class="card-header">
+
+                              </div>
+                              <table class="table">
+                                <thead class="thead-dark table-bordered table-sm ">
+                                    <tr>
+                                      <th class="text-center">Dato</th>
+                                      <th class="text-center">Valor</th> 
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                        <tr>
+                                            <td>Total ganado</td>
+                                            <td class="text-center">${{dinero_ganado}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mes anterior</td>
+                                            <td class="text-center">${{total_ganado_ant}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mes actual</td>
+                                            <td class="text-center" *ngIf="total_mes > total_ganado_ant">${{total_mes}} 
+                                                <i class="fas fa-caret-up text-success"></i>
+                                            </td>
+                                            <td class="text-center" *ngIf="total_mes <= total_ganado_ant">${{total_mes}}
+                                                <i class="fas fa-caret-down text-danger"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Productos</td>
+                                            <td class="text-center">{{num_productos}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ventas totales</td>
+                                            <td class="text-center">{{num_ventas}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ventas {{current_month}}</td>
+                                            <td class="text-center" *ngIf="total_ventas > total_ventas_ant">{{total_ventas}}
+                                                <i class="fas fa-caret-up text-success"></i>
+                                            </td>
+                                            <td class="text-center" *ngIf="total_ventas <= total_ventas_ant">{{total_ventas}}
+                                                <i class="fas fa-caret-down text-danger"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ventas {{last_month}}</td>
+                                            <td class="text-center">{{total_ventas_ant}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Usuarios</td>
+                                            <td class="text-center">{{num_user}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Regeneraciones</td>
+                                            <td class="text-center">{{num_comentarios}}</td>
+                                        </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

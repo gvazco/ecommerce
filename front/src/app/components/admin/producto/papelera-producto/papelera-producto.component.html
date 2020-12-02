@@ -1,0 +1,135 @@
+<app-aside></app-aside>
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+     
+      
+          
+      
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-2 mb-5">
+                      <h1 class="mt-lg-4">Modulo de productos</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Productos disponibles en el e-commerce.</p>
+                       
+                      </div>
+                      <div class="btn-toolbar" role="toolbar" aria-label="Settings toolbar">
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Settings group">
+                            <a [routerLink]="['/admin/productos/registro']" class="btn btn-dark btn-icon">
+                              <i class="czi-add-document"></i> &nbsp;Nuevo producto
+                            </a>
+                            <a [routerLink]="['/admin/productos']" class="btn btn-accent btn-icon">
+                              <i class="czi-view-grid"></i> &nbsp;Entradas
+                            </a>
+                            
+                          </div>
+                         <form #searchForm="ngForm" (keyup)="search(searchForm)">
+                          <div class="btn-group mr-2 mb-2" role="group" aria-label="Apply settings">
+                              <button type="submit" class="btn btn-info">
+                                  <i class="czi-search"></i>
+                              </button>
+                              <input type="text" class="form-contorl" name="filtro" [(ngModel)]="filtro" style="padding-left: 10px;">
+                              <select class="form-control" name="search_categoria" [(ngModel)]="search_categoria" (change)="search_cat()">
+                                <option value="" selected disabled>Categoría</option>
+                                <option [value]="item._id" *ngFor="let item of categorias">{{item.nombre}}</option>
+                              </select>
+                              
+                          </div>
+                         </form>
+                          <div class="btn-group mb-2" role="group" aria-label="Delete settings">
+                            <button type="button" (click)="resetSearch()" class="btn bg-faded-danger btn-icon" title="Resetear filtro">
+                              <i class="czi-reply"></i>
+                            </button>
+                          </div>
+                        </div>
+                  </div>
+      
+                  <div class="card-check">
+                      <div class="row">
+                        <div class="col-lg-12 mb-4" *ngIf="count_cat == 0">
+                          <div class="alert alert-dark alert-with-icon mb-0" role="alert" >
+                            <div class="alert-icon-box"><i class="alert-icon czi-security-announcement"></i></div>No hay ningún elemento en la papelera de reciclaje.
+                          </div>
+                        </div>
+                          <div class="col-lg-12 mb-4" *ngFor="let item of productos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                            <div class="card">
+                                <div class="row no-gutters">
+                                  <div class="col-sm-4">
+                                    <img [src]="url+'productos_img_data/resources/thumbnails/'+item.poster" class="rounded-left" alt="Card image">
+                                  </div>
+                                  <div class="col-sm-8">
+                                    <div class="card-body">
+                                      <h5 class="card-title">{{item.titulo}}</h5>
+                                      <div class="h3 font-weight-normal text-accent mb-3 mr-1">
+                                          ${{item.precio_ahora}}<small></small>
+                                          <del class="font-size-sm text-muted" style="padding-left: 10px;"><small style="font-size: 18px;">{{item.precio_antes}}</small></del>
+
+                                            <div class="font-size-sm mb-4">
+                                              <span class="text-heading font-weight-medium mr-1">Estado:</span>
+                                              <span class="badge badge-dark badge-shadow" *ngIf="item.status == 'Papelera'">{{item.status}}</span>
+                                             
+                                            </div>
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-accent" *ngIf="item.status == 'Papelera'" data-toggle="modal" [attr.data-target]="'#mover-'+item._id" >Mover a entradas</button>
+
+                                            <div class="modal fade" [attr.id]="'mover-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h4 class="modal-title">Confirmación</h4>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <p class="font-size-sm">Al aceptar, estás confirmando que el producto regresará a las entradas en estado <b>DESACTIVADO</b>.</p>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="desactivar(item._id)">Aceptar</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                        </div>
+        <br>
+                                        <span class="text-muted" *ngIf="item.status == 'Papelera'" style="font-size: 13px;">Este producto aún no está disponible en la tienda.</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+              
+                          </div>
+                         <div class="col-lg-12">
+                            <ngb-pagination
+                            [(page)]="page"
+                            [pageSize]="pageSize"
+                            [collectionSize]="count_cat"></ngb-pagination>
+                         </div>
+                          
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<app-foot></app-foot>

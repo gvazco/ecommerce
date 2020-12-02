@@ -1,0 +1,7 @@
+.hide-menu{
+    display: none !important;
+}
+
+.show-menu{
+    display: block !important;
+}

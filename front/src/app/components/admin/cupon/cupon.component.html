@@ -1,0 +1,149 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+            <div class="col-lg-5 form-group">
+                <form #cuponForm="ngForm" (ngSubmit)="onSubmit(cuponForm)">
+                <div class="card">
+                    <div class="card-header">
+                        <b>Nuevo cupón</b>
+                    </div>
+                    <div class="card-body">
+                       
+                            <div class="row">
+                                <div class="col-lg-12 form-group">
+                                    <label for="normal-input">Tipo</label>
+                                    <select class="form-control" name="tipo" [(ngModel)]="cupon.tipo" (change)="select_tipo($event,cupon.tipo)" required>
+                                        <option value="" selected disabled>SELECCIONAR</option>
+                                        <option value="categoria">Categoria</option>
+                                        <option value="subcategoria">Subcategoria</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 form-group">
+                                    <label for="normal-input">Generar cupón</label>
+                                    <div class="input-group form-group">
+                                        <input class="form-control" type="text" name="codigo" [(ngModel)]="cupon.codigo" required>
+                                        <div class="input-group-append">
+                                          <button class="btn btn-primary" (click)="generar_cupon()" type="button"><span class="czi-compare"></span></button>
+                                        </div>
+                                      </div>
+                                </div>
+                                <div class="col-lg-12 form-group" >
+                                    <label for="normal-input">Porcentaje</label>
+                                    <input class="form-control" type="number" min="0" max="100" name="descuento" [(ngModel)]="cupon.descuento" required>
+                                </div>
+                                <div class="col-lg-12 form-group" id="fm-cat" style="display: none;">
+                                    <label for="normal-input">Categoria</label>
+                                    <select class="form-control custom-select" [(ngModel)]="cupon.categoria" id="in_cat" name="categoria">
+                                        <option selected disabled value="">SELECCIONAR</option>
+                                        <option *ngFor="let item of categorias" [value]="item._id">{{item.nombre}}</option>
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 form-group" id="fm-sub" style="display: none">
+                                    <label for="normal-input">Subcategoria</label>
+                                    <select class="form-control custom-select" id="in_sub" [(ngModel)]="cupon.subcategoria" name="subcategoria">
+                                        <option selected disabled value="">SELECCIONAR</option>
+                                        <option *ngFor="let item of subcategorias" [value]="item.subcategoria">{{item.subcategoria}}</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">Crear</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="col-lg-7 form-group">
+                <div class="row">
+                    <div class="col-lg-12" *ngIf="msm_error">
+                        <div class="alert alert-primary alert-danger fade show" role="alert">
+                            <span class="font-weight-medium">Mensaje:</span> {{msm_error}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                              <thead class="thead-dark">
+                                <tr>
+                             
+                                  <th>Código</th>
+                                  <th>Productos</th>
+                                  <th>Eliminar</th>
+                                </tr>
+                              </thead>
+                              <tbody *ngFor="let item of cupones">
+                                <tr>
+                               
+                                    <td>
+                                        <blockquote class="blockquote">
+                                            <p class="mb-2" style="margin-bottom: 0px !important;">{{item.codigo}}</p>
+                                            <footer class="blockquote-footer">
+                                                {{item.tipo}} del {{item.descuento}}%
+                                            </footer>
+                                        </blockquote>
+                                    </td>
+                                  <td *ngIf="item.categoria" style="font-size: 13px;">
+                                    {{item.categoria.nombre}}
+                                  </td>
+                                  <td *ngIf="item.subcategoria" style="font-size: 13px;">
+                                    {{item.subcategoria}}
+                                  </td>
+                                  <td>
+                                      <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" [attr.data-target]="'#modal-'+item._id"><span class="czi-trash"></span></button>
+
+                                      <div class="modal fade" [attr.id]="'modal-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title">Confirmación</h4>
+                                              <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <p class="font-size-sm">¿Desea eliminar definitivamente el cupón?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                              <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="eliminar(item._id)">Eliminar</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </td>
+                                </tr>
+                                
+                              </tbody>
+                            </table>
+                          </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

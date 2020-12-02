@@ -1,0 +1,180 @@
+<app-aside></app-aside>
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="border-bottom mt-lg-2 pb-2 mb-5">
+                        <h1 class="mt-lg-4">Edición de producto</h1>
+                        <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                          <p class="text-muted">Complete correctamente el formulario.</p>
+                        
+                        </div>
+                    </div>
+        
+                    <div *ngIf="msm_error" (click)="close_alert()" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{msm_error}}
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      </div>
+        
+                      <div *ngIf="msm_success" (click)="close_alert()" class="alert alert-success alert-dismissible fade show" role="alert">
+                          {{msm_success}}
+                        <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      </div>
+                    <form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)">
+                        <div class="card border-0 box-shadow">
+                            <div class="card-header">
+                                <a class="btn btn-accent mb-2 mr-1" [routerLink]="['/admin/productos']"><span class="czi-arrow-left"></span>    Regresar</a>
+                                <button class="btn btn-primary mb-2 mr-1" type="submit">Actualzar</button>
+                               
+                            </div>
+                            <div class="card-body" >
+                                <div class="tab-content" style="margin-top: 20px;">
+                                    <div class="tab-pane fade active show">
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Titulo</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" type="text" placeholder="Titulo de la entrada" #titulo="ngModel" name="titulo" [(ngModel)]="producto.titulo" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Banner</label>
+                                            <div class="col-md-10">
+                                                <!-- Drag and drop file upload -->
+                                                <div class="cz-file-drop-area">
+                                                    <div class="cz-file-drop-preview img-thumbnail rounded">
+                                                        <img [src]="imgSelect || url+'productos_img_data/resources/thumbnails/'+producto.poster" alt="04.jpg">
+                                                    </div>
+                                                    <span class="cz-file-drop-message">Suelta la imagen aquí</span>
+                                                    <input type="file" class="cz-file-drop-input" (change)="imgSelected($event)">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Enlace del video</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" type="text" placeholder="Codigo de insercion de vídeo." #video_review="ngModel" name="video_review" [(ngModel)]="producto.video_review" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Descripción</label>
+                                            <div class="col-md-10">
+                                                <tinymce #detalle="ngModel" [(ngModel)]="producto.detalle" required name="detalle" 
+                                                 [config]="config"></tinymce>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="textarea-input">Descripción corta</label>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control" id="textarea-input" rows="5" placeholder="Detalle corto del producto." #info_short="ngModel" name="info_short" [(ngModel)]="producto.info_short" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Detalles</label>
+                                            <div class="col-md-10">
+                                               <div class="row">
+                                                   <div class="col-lg-4">
+                                                    <input class="form-control" type="number" placeholder="Stock del producto" #stock="ngModel" name="stock" min="0" [(ngModel)]="producto.stock" readonly>
+                                                   </div>
+                                                   <div class="col-lg-4">
+                                                    <input class="form-control" type="number" placeholder="Precio actual" #precio_ahora="ngModel" name="precio_ahora" min="0" [(ngModel)]="producto.precio_ahora" required>
+                                                   </div>
+                                                   <div class="col-lg-4">
+                                                    <input class="form-control" type="number" placeholder="Precio antes" #precio_antes="ngModel" name="precio_antes" min="0" [(ngModel)]="producto.precio_antes" required>
+                                                   </div>
+                                               </div>
+                                            </div>
+                                        </div>
+        
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Categorías</label>
+                                            <div class="col-md-10">
+                                               <div class="row">
+                                                   <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="select-input">Categoría</label>
+                                                            <select class="form-control custom-select" (change)="select_categoria()" id="select-input" [(ngModel)]="producto.categoria" name="categoria" required>
+                                                                <option selected disabled value="">SELECCIONAR</option>
+                                                                <option *ngFor="let item of data_categorias" [value]="item._id">{{item.categoria}}</option>
+                                                                
+                                                            </select>
+                                                        </div>
+                                                   </div>
+                                                   <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="select-input">Subcategoría</label>
+                                                            <select  class="form-control custom-select" id="select-sub" #subcategoria="ngModel" [(ngModel)]="producto.subcategoria" name="subcategoria" required>
+                                                                <option selected disabled value="">SELECCIONAR</option>
+                                                                <option *ngFor="let item of data_subcategorias" [value]="item">{{item}}</option>
+                                                               
+                                                            </select>
+                                                        </div>
+                                                   </div>
+                                                  
+                                               </div>
+                                            </div>
+                                        </div>
+        
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Marca</label>
+                                            <div class="col-md-10">
+                                               <div class="row">
+                                                   <div class="col-lg-6">
+                                                        <select class="form-control custom-select" id="select-input" [(ngModel)]="producto.marca" name="marca" required>
+                                                            <option selected disabled value="">SELECCIONAR</option>
+                                                            <option *ngFor="let item of data_marcas" [value]="item._id">{{item.nombre}}</option>
+                                                            
+                                                        </select>
+                                                   </div>
+                                                   <div class="col-lg-6">
+                                                        <span class="text-muted">Selecciona la <b>MARCA</b></span>
+                                                   </div>
+                                                  
+                                               </div>
+                                            </div>
+                                        </div>
+        
+                                        <div class="form-group row align-items-center">
+                                            <label class="col-md-2 col-form-label font-weight-medium" for="text-input">Tipo</label>
+                                            <div class="col-md-10">
+                                               <div class="row">
+                                                   <div class="col-lg-6">
+                                                    <input class="form-control" type="text" placeholder="Nombre del selector" #nombre_selector="ngModel" name="nombre_selector" min="0" [(ngModel)]="producto.nombre_selector" required>
+                                                   </div>
+                                                   <div class="col-lg-6">
+                                                        <span class="text-muted">Por ejemplo: Para calzados el selector es <b>TALLAS</b></span>
+                                                   </div>
+                                                  
+                                               </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>   
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<app-foot></app-foot>

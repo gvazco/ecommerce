@@ -1,0 +1,194 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-4">
+                      <h1 class="mt-lg-4">Detalles de solicitud</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Detalles completos de la venta.</p>
+                       
+                      </div>
+                      
+                  </div>
+              </div>
+              <div class="col-lg-12 form-group mt-4">
+                  <!-- Media tabs: Icon -->
+                    <ul class="nav nav-tabs media-tabs nav-justified" role="tablist">
+                        <li class="nav-item">
+                        <a class="nav-link disabled" href="#" data-toggle="tab" role="tab">
+                            <div class="media align-items-center">
+                            <div class="media-tab-media mr-3"><i class="czi-paypal"></i></div>
+                            <div class="media-body">
+                                <div class="media-tab-subtitle text-muted font-size-xs mb-1">Metodo</div>
+                                <h6 class="media-tab-title text-nowrap mb-0">Paypal</h6>
+                            </div>
+                            </div>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link active" href="#" data-toggle="tab" role="tab">
+                            <div class="media align-items-center">
+                            <div class="media-tab-media mr-3"><i class="czi-wallet"></i></div>
+                            <div class="media-body">
+                                <div class="media-tab-subtitle text-muted font-size-xs mb-1">Estado</div>
+                                <h6 class="media-tab-title text-nowrap mb-0">{{cancelacion.estado}}</h6>
+                            </div>
+                            </div>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="tab" role="tab">
+                            <div class="media align-items-center">
+                            <div class="media-tab-media mr-3"><i class="czi-dollar"></i></div>
+                            <div class="media-body" *ngIf="cancelacion.venta">
+                                <div class="media-tab-subtitle text-muted font-size-xs mb-1">Monto total</div>
+                                <h6 class="media-tab-title text-nowrap mb-0">${{cancelacion.venta.total_pagado}}</h6>
+                            </div>
+                            </div>
+                        </a>
+                        </li>
+                     
+                    </ul>
+              </div>
+              <div class="col-lg-12 form-group mt-4" *ngIf="result_soli">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{result_soli}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-12 form-group mt-4" *ngIf="result_soli_error">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{result_soli_error}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-12 form-group">
+                <div class="bg-secondary rounded-lg px-4 pt-4 pb-2">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h4 class="h6"><span class="czi-home"></span> Envio:</h4>
+                      <ul class="list-unstyled font-size-sm" >
+                        <li *ngIf="cancelacion.user"><span class="text-muted">Usuario:&nbsp;</span><br>{{cancelacion.user.first_name}} {{cancelacion.user.last_name}}</li>
+                        <li *ngIf="cancelacion.venta"><span class="text-muted">Precio envio:&nbsp;</span><br>${{cancelacion.venta.precio_envio}}</li>
+                        <li *ngIf="cancelacion.venta"><span class="text-muted">País/Ciudad/ZIP:&nbsp;</span><br>{{cancelacion.venta.pais}}/{{cancelacion.venta.ciudad}}/{{cancelacion.venta.zip}}</li>
+                      </ul>
+                    </div>
+                    <div class="col-sm-6">
+                      <h4 class="h6"><span class="czi-plane"></span> Medio postal:</h4>
+                      <ul class="list-unstyled font-size-sm" *ngIf="cancelacion">
+                        <li *ngIf="cancelacion.venta"><span class="text-muted">Empresa:&nbsp;</span><br>{{cancelacion.venta.tipo_envio}}</li>
+                        <li *ngIf="cancelacion.venta"><span class="text-muted">Entrega:&nbsp;</span><br>{{cancelacion.venta.tiempo_estimado}}</li>
+                        <li *ngIf="cancelacion.venta"><span class="text-muted">Número de track:&nbsp;</span><br>
+                          <span *ngIf="cancelacion.venta.tracking_number">{{cancelacion.venta.tracking_number}}</span>
+                        <span *ngIf="!cancelacion.venta.tracking_number" class="badge badge-dark">No disponible</span>
+                        </li>
+                      </ul>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 form-group">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="widget">
+                            <h3 class="widget-title">Productos</h3>
+                            <div class="media align-items-center py-2 border-bottom" *ngFor="let item of detalle">
+                                <a class="d-block mr-2" [routerLink]="['/producto/',item.producto.slug]">
+                                    <img width="64" [src]="url+'productos_img_data/resources/thumbnails/'+item.producto.poster"/>
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="widget-product-title"><a [routerLink]="['/producto/',item.producto.slug]">{{item.producto.titulo}}</a></h6>
+                                    <div class="widget-product-meta">
+                                        <span class="text-accent mr-2">${{item.precio}} x {{item.cantidad}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-lg-6 form-group">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 style="margin-bottom: 0px;">Motivo:</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-justify" style="font-size: 15px;margin-bottom: 0px;" *ngIf="cancelacion.mensaje">
+                            {{cancelacion.mensaje}}
+                        </p>
+                    </div>
+                    <div class="card-footer" *ngIf="cancelacion.estado == 'En espera'">
+                        <div class="btn-group" role="group" aria-label="Solid button group" style="width: 100%;">
+                            <button type="button" class="btn btn-accent" data-toggle="modal" data-target="#reembolsar-modal"><span class="czi-paypal"></span> &nbsp;Reembolsar</button>
+
+                            <div class="modal fade" id="reembolsar-modal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title">Confirmación</h4>
+                                      <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p class="font-size-sm">Al confimar se emitirá un reembolso completo al usuario.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                      <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="reembolsar()">Reembolsar</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                         
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#denegar-modal"><span class="czi-close-circle"></span> &nbsp;Denegar</button>
+
+                            <div class="modal fade" id="denegar-modal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">Confirmación</h4>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p class="font-size-sm">Al confimar se denegara la cancelación y la venta procederá.</p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cerrar</button>
+                                    <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="denegar()">Denegar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

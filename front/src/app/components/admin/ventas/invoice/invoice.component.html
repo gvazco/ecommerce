@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HostingNice - Factura nº46670</title>
+
+    <link href="/templates/six/css/all.min.css" rel="stylesheet" />
+    <link href="/assets/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="/templates/six/css/invoice.css" rel="stylesheet" />
+    <script src="/templates/six/js/scripts.min.js?v=a0a674"></script>
+  </head>
+
+  <body>
+    <div class="container-fluid invoice-container" style="padding: 20px">
+      <div class="row">
+        <div class="col-lg-6">
+          <a (click)="imprimir()" class="btn btn-default">Descargar</a>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid invoice-container" id="contdiv">
+      <div class="row invoice-header">
+        <div class="invoice-col">
+          <h3 class="invoice-status" style="padding-bottom: 8px">
+            Factura N°:
+          </h3>
+          <span>{{ id.toUpperCase() }}</span>
+        </div>
+        <div class="invoice-col text-right">
+          <div class="invoice-status">
+            <span class="unpaid">Fecha</span>
+          </div>
+
+          <div class="small-text">
+            {{ venta.createdAt | date: "EEEE, MMMM d, y" }}
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-lg-6">
+          <strong>Facturado a</strong>
+          <address class="small-text">
+            <strong>Cliente: </strong>{{ venta.user.first_name }}
+            {{ venta.user.last_name }}<br />
+            <strong>Monto: </strong> ${{ venta.total_pagado }}<br />
+            <strong>Correo: </strong> {{ venta.user.email }}<br />
+            <strong>Transaccion: </strong> {{ venta.idtransaccion.toUpperCase()
+            }}<br />
+          </address>
+        </div>
+        <div class="col-lg-6 text-right">
+          <strong>Envio:</strong>
+          <address class="small-text">
+            {{ venta.direccion }}<br />
+            {{ venta.pais }} / {{ venta.ciudad }} / {{ venta.zip }}<br />
+            {{ venta.tipo_envio }}<br />
+            {{ venta.tiempo_estimado }}<br />
+          </address>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <strong>Método de Pago</strong><br />
+          <span class="small-text"> {{ venta.metodo_pago }}<br /><br /> </span>
+        </div>
+        <div class="col-lg-6 text-right">
+          <strong>Precio de envio:</strong><br />
+          <span class="small-text">
+            ${{ venta.precio_envio }}<br /><br />
+          </span>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><strong>Productos</strong></h3>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <td><strong>Descripción</strong></td>
+                  <td width="20%" class="text-center">
+                    <strong>Importe</strong>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of detalle">
+                  <td>{{ item.producto.titulo }} x {{ item.cantidad }}</td>
+                  <td class="text-center">
+                    ${{ item.precio * item.cantidad }} MXN
+                  </td>
+                </tr>
+                <tr>
+                  <td class="total-row text-right"><strong>Envio</strong></td>
+                  <td class="total-row text-center">
+                    ${{ venta.precio_envio }} MXN
+                  </td>
+                </tr>
+                <tr>
+                  <td class="total-row text-right"><strong>Total</strong></td>
+                  <td class="total-row text-center">
+                    ${{ venta.total_pagado }} MXN
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="transactions-container small-text">
+        <div class="table-responsive">
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <td class="text-center"><strong>Fecha Transacción</strong></td>
+                <td class="text-center"><strong>Método/Gateway</strong></td>
+                <td class="text-center"><strong>ID Transacción</strong></td>
+                <td class="text-center"><strong>Total</strong></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center" colspan="4">
+                  No se encontraron transacciones relacionadas
+                </td>
+              </tr>
+              <tr>
+                <td class="text-right" colspan="3"><strong>Balance</strong></td>
+                <td class="text-center">${{ venta.total_pagado }} MXN</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

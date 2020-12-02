@@ -1,0 +1,50 @@
+<!-- Account menu toggler (hidden on screens larger 992px)-->
+<div class="d-block d-lg-none p-4"><a class="btn btn-outline-accent d-block" href="#account-menu" data-toggle="collapse"><i class="czi-menu mr-2"></i>Menú lateral</a></div>
+<!-- Actual menu-->
+<div class="cz-sidebar-static h-100 p-0">
+  <div class="secondary-nav collapse border-right" id="account-menu">
+    <div class="bg-secondary p-4">
+      <h3 class="font-size-sm mb-0 text-muted">General</h3>
+    </div>
+    <ul class="list-unstyled mb-0">
+      <li class="border-bottom mb-0">
+        <a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/dashboard']" routerLinkActive="active" >
+          <i class="czi-home opacity-60 mr-2"></i> Dashboard
+        </a>
+      </li>
+      <li class="border-bottom mb-0">
+        <a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/ingresos']" routerLinkActive="active" >
+          <i class="czi-cashier opacity-60 mr-2"></i> Inventario
+        </a>
+      </li>
+    </ul>
+    <div class="bg-secondary p-4">
+      <h3 class="font-size-sm mb-0 text-muted">Logistica</h3>
+    </div>
+    <ul class="list-unstyled mb-0">
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/categorias']" routerLinkActive="active" ><i class="czi-bookmark opacity-60 mr-2"></i>Categorías</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/marcas']" routerLinkActive="active" ><i class="czi-lable opacity-60 mr-2"></i>Marcas</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/productos']" routerLinkActive="active"><i class="czi-package opacity-60 mr-2"></i>Productos<span class="font-size-sm text-muted ml-auto">5</span></a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/cupones']" routerLinkActive="active"><i class="czi-currency-exchange opacity-60 mr-2"></i>Cupones</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/medios-postales']" routerLinkActive="active"><i class="czi-plane opacity-60 mr-2"></i>Medios postales</a></li>
+    </ul>
+    <div class="bg-secondary p-4">
+      <h3 class="font-size-sm mb-0 text-muted">Tienda</h3>
+    </div>
+    <ul class="list-unstyled mb-0">
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/tikets/modulo']" routerLinkActive="active" ><i class="czi-help opacity-60 mr-2"></i>Tickets</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/cancelacion/modulo']" routerLinkActive="active" ><i class="czi-bell opacity-60 mr-2"></i>Cancelaciones</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/ventas/modulo']" routerLinkActive="active" ><i class="czi-paypal opacity-60 mr-2"></i>Ordenes</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/mensajes']" routerLinkActive="active" ><i class="czi-chat opacity-60 mr-2"></i>Mensajes</a></li>
+    </ul>
+    <div class="bg-secondary p-4">
+      <h3 class="font-size-sm mb-0 text-muted">Configuraciones</h3>
+    </div>
+    <ul class="list-unstyled mb-0">
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/configuracion/general']" routerLinkActive="active" ><i class="czi-laptop opacity-60 mr-2"></i>General</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/configuracion/promocion']" routerLinkActive="active" ><i class="czi-star opacity-60 mr-2"></i>Promoción</a></li>
+      <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3" [routerLink]="['/admin/slider']" routerLinkActive="active" ><i class="czi-play opacity-60 mr-2"></i>Slider</a></li>
+     
+    </ul>
+  </div>
+</div>

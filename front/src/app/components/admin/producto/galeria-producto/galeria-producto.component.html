@@ -1,0 +1,136 @@
+<app-aside></app-aside>
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+            <div class="toast-container toast-bottom-right">
+              <div class="toast mb-3 fade hide" id="dark-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-accent text-white"><i class="czi-time mr-2"></i>
+                  <h6 class="font-size-sm text-white mb-0 mr-auto">Notificación</h6>
+                  <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close" (click)="close_toast()"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="toast-body text-accent">Se eliminó corractamente el registro.</div>
+              </div>
+            </div>
+      
+            <div class="col-lg-12">
+                <div  class="border-bottom mt-lg-2 pb-2 mb-4">
+                    <h1 class="mt-lg-4">Galería del producto</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Imagenes disponibles del producto.</p>
+                        <div class="btn-group" role="group" aria-label="Solid button group">
+                          <button class="btn btn-accent btn-sm" data-toggle="modal" data-target="#addimg"> <span class="czi-image"></span> Nuevas imagenes</button>
+                          <a [routerLink]="['/admin/productos']" class="btn btn-dark btn-sm" style="    padding-top: 10px;"> <span class="czi-reply"></span> Regresar</a>
+                        </div>
+                        
+                      </div>
+                      
+
+                      <div class="modal fade" id="addimg" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                        <form #galeriaForm="ngForm" (ngSubmit)="onSubmit(galeriaForm)">
+                          <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 700px;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Subir imagenes</h4>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">×</span></button>
+                              </div>
+                              <div class="modal-body">
+                                <div *ngIf="msm_error" class="alert alert-danger alert-dismissible fade show" role="alert">
+                                  <span class="font-weight-medium">Error!:</span> Por favor ingrese al menos dos imagenes.
+                                  <button type="button" (click)="close_alert()" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                                  <ngx-dropzone-label>
+                                      <div>
+                                          <h2>Arrastra las imagenes aquí</h2>
+                                      </div>
+                                  </ngx-dropzone-label>
+                                  <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                                      
+                                  </ngx-dropzone-image-preview>
+                              </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-primary btn-shadow btn-sm" type="submit">Subir</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12" *ngIf="imagenes.length == '0'">
+                        <div class="alert alert-dark alert-with-icon" role="alert">
+                            <div class="alert-icon-box">
+                              <i class="alert-icon czi-security-announcement"></i>
+                            </div>
+                            No hay ninguna imagenen en este producto, <a [routerLink]="['/admin/productos']" class="alert-link">regrasar al inicio.</a>. 
+                          </div>
+                    </div>
+
+              
+                   
+                    <div class="col-lg-4 mb-4" *ngFor="let item of imagenes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+                        <div class="card">
+                            <img [src]="url+'/galeria/resources/thumbnails/'+item.imagen" style="width: 100%;">
+                            <button class="btn btn-accent btn-sm" style="border-radius: 0px;" data-toggle="modal" [attr.data-target]="'#modal-'+item._id"><span class="czi-trash"></span> &nbsp; Eliminar</button>
+                        </div>
+
+                        <div class="modal fade" [attr.id]="'modal-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Confirmación</h4>
+                                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                              </div>
+                              <div class="modal-body">
+                                <p class="font-size-sm">¿Desea eliminar definitivamente el regsitro?</p>
+                                <span class="font-size-sm text-muted"><b>Código:</b> {{item.nombre}} - {{item._id}}</span>
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="eliminar(item._id)">Suprimir</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 mt-4">
+                      
+                        <ngb-pagination
+                        [(page)]="page"
+                        [pageSize]="pageSize"
+                        [collectionSize]="count_img"></ngb-pagination>
+                     
+                    </div>
+                </div>
+            </div>
+      
+              
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<app-foot></app-foot>

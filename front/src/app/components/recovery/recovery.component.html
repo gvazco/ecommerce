@@ -1,0 +1,79 @@
+<app-nav></app-nav>
+
+<div class="container py-4 py-lg-5 my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+                <div class="alert alert-secondary alert-dismissible fade show" role="alert" *ngIf="msm_error">
+                    {{msm_error}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()"> 
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <ng-container  *ngIf="state == 1">
+                    <h2 class="h3 mb-4">¿Olvidaste tu contraseña?</h2>
+                    <p class="font-size-md">Cambie su contraseña en tres sencillos pasos. Esto ayuda a mantener segura su nueva contraseña.</p>
+                    <ol class="list-unstyled">
+                        <li class="text-primary"><span class='font-weight-medium text-accent'>1. </span> Complete su dirección de correo electrónico abajo.</li>
+                        <li><span class='font-weight-medium text-accent'>2. </span> Te enviaremos un código temporal por correo electrónico.</li>
+                        <li><span class='font-weight-medium text-accent'>3. </span> Utilice el código para cambiar su contraseña en nuestro sitio web seguro.</li>
+                    </ol>
+                    <div class="card py-2 mt-4">
+                        <form class="card-body" #recoveryForm="ngForm" (ngSubmit)="recovery(recoveryForm)">
+                            <div class="wizard-body pt-4">
+                                <label for="email-for-pass">Ingrese su dirección de correo electrónico</label>
+                                <input class="form-control" type="email" required  placeholder="youremail@email.com" name="email" [(ngModel)]="email">
+                            </div>
+                            <div class="wizard-footer py-3">
+                                <button class="btn btn-primary" type="submit">Enviar al correo</button>
+                            </div>
+                        </form>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="state == 2">
+                    <h2 class="h3 mb-4">Ingrese el código que recibió a <span class="text-primary">{{email}}</span>.</h2>
+                    <p class="font-size-md">Cambie su contraseña en tres sencillos pasos. Esto ayuda a mantener segura su nueva contraseña.</p>
+                    <ol class="list-unstyled">
+                        <li><span class='font-weight-medium text-accent'>1. </span> Complete su dirección de correo electrónico abajo.</li>
+                        <li class="text-primary"><span class='font-weight-medium text-accent'>2. </span> Te enviaremos un código temporal por correo electrónico.</li>
+                        <li><span class='font-weight-medium text-accent'>3. </span> Utilice el código para cambiar su contraseña en nuestro sitio web seguro.</li>
+                    </ol>
+                    <div class="card py-2 mt-4">
+                        <form class="card-body" #verifyForm="ngForm" (ngSubmit)="verify(verifyForm)">
+                            <div class="wizard-body pt-4">
+                                <label for="email-for-pass">Ingrese el código</label>
+                                <input class="form-control" type="number" required placeholder="123456" name="codigo" [(ngModel)]="codigo">
+                            </div>
+                            <div class="wizard-footer py-3">
+                                <button class="btn btn-primary" type="submit">Verificar</button>
+                            </div>
+                        </form>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="state == 3">
+                    <h2 class="h3 mb-4">Verificación aprovada a <span class="text-primary">{{email}}</span>.</h2>
+                    <p class="font-size-md">Cambie su contraseña en tres sencillos pasos. Esto ayuda a mantener segura su nueva contraseña.</p>
+                    <ol class="list-unstyled">
+                        <li><span class='font-weight-medium text-accent'>1. </span> Complete su dirección de correo electrónico abajo.</li>
+                        <li><span class='font-weight-medium text-accent'>2. </span> Te enviaremos un código temporal por correo electrónico.</li>
+                        <li class="text-primary"><span class='font-weight-medium text-accent'>3. </span> Utilice el código para cambiar su contraseña en nuestro sitio web seguro.</li>
+                    </ol>
+                    <div class="card py-2 mt-4">
+                        <form class="card-body" #passwordForm="ngForm" (ngSubmit)="change_password(passwordForm)">
+                            <div class="wizard-body pt-4">
+                                <label for="email-for-pass">Nueva contraseña</label>
+                                <input class="form-control" type="password" min="8" required placeholder="Ingrese su nueva contraseña" name="new_password" [(ngModel)]="new_password">
+                            </div>
+                            <div class="wizard-footer py-3">
+                                <button class="btn btn-primary" type="submit">Verificar</button>
+                            </div>
+                        </form>
+                    </div>
+                </ng-container>
+        </div>
+    </div>
+</div>
+
+<app-foot></app-foot>

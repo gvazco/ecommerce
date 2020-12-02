@@ -1,0 +1,200 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-2">
+                      <h1 class="mt-lg-4">Nuevo ingreso</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Ingreso de productos al invetario.</p>
+                       
+                      </div>
+                      
+                  </div>
+                  <div class="row mt-4">
+                      <div class="col-lg-12" *ngIf="error_msm_form">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{error_msm_form}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                      </div>
+                      <div class="col-lg-12 form-group">
+                          <form #ingresoForm="ngForm" (ngSubmit)="onSubmit(ingresoForm)">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span><span class="czi-user-circle" style="font-size: 20px;"></span> {{identity.first_name}} {{identity.last_name}} - {{identity._id.toUpperCase()}}</span> 
+                                </div>
+                                <div class="card-body">
+                                  <div class="row">
+                                      <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-12 form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                      <span class="input-group-text font-weight-semibold fondo-b-n">Monto</span>
+                                                    </div>
+                                                    <input class="form-control" type="number" placeholder="Usuario activo" name="total_pagado" [(ngModel)]="ingreso.total_pagado" required>
+                                                  
+                                                  </div>
+                                            </div>
+                                            <div class="col-lg-12 form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                      <span class="input-group-text font-weight-semibold fondo-b-n">Proveedor</span>
+                                                    </div>
+                                                    <input class="form-control" type="text" placeholder="Razon social proveedor" name="proveedor" [(ngModel)]="ingreso.proveedor" required>
+                                                    
+                                                  </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                              <div class="input-group">
+                                                  <div class="input-group-prepend">
+                                                    <span class="input-group-text fondo-b-n">
+                                                      <i class="czi-message"></i>
+                                                    </span>
+                                                  </div>
+                                                  <textarea class="form-control" placeholder="Detalles de la compra." rows="5" name="nota" [(ngModel)]="ingreso.nota"></textarea>
+                                                </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-6">
+                                        <div class="cz-file-drop-area" style="height: 100% !important;">
+                                            <div class="cz-file-drop-icon czi-cloud-upload"></div>
+                                            <span class="cz-file-drop-message">Suelta la imagen aquí</span>
+                                            <input type="file" class="cz-file-drop-input" (change)="imgSelected($event)">   
+                                        </div>
+                                      </div>
+                                  </div>
+                                
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-accent btn-sm" type="submit">Registrar ingreso</button>
+                                </div>
+                            </div>
+                          </form>
+                      </div>
+                      <div class="col-lg-6 form-group">
+                          <div class="card">
+                            <table class="table table-sm" >
+                                <thead class="thead-dark">
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm" placeholder="Buscar" (keyup)="filtro_productos()" [(ngModel)]="filtro">
+                                    </th>
+                                </thead>
+                                <div class="card-body" style="max-height: 300px;
+                                overflow-y: auto;">
+                                    <tbody *ngFor="let item of productos" >
+                                        <tr *ngIf="producto_seleccionado.id == item._id" style="color: white;
+                                        background: #ff9819;">
+                                            <td class="font-size-sm">{{item.titulo.substr(0,35)}}..</td>
+                                            <td>
+                                                <a ><span class="czi-check" style="cursor:pointer" (click)="select_producto(item)"></span></a>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="producto_seleccionado.id != item._id">
+                                            <td class="font-size-sm">{{item.titulo.substr(0,35)}}..</td>
+                                            <td>
+                                                <a ><span class="czi-check" style="cursor:pointer" (click)="select_producto(item)"></span></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </div>
+                               
+                            </table>
+                          </div>
+                      </div>
+                      <div class="col-lg-6 form-group">
+                          <div class="card">
+                              <div class="card-body">
+                                <div class="row form-group">
+                                    <div class="col">
+                                        <label><b>Stock actual</b></label>
+                                        <input class="form-control" type="number" [(ngModel)]="producto_seleccionado.cantidad" required readonly>
+                                    </div>
+                                    <div class="col">
+                                        <label><b>Precio venta</b></label>
+                                        <input class="form-control" type="number" [(ngModel)]="producto_seleccionado.precio_ahora" required readonly>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    
+                                    <div class="col">
+                                        <label><b>Cantidad</b></label>
+                                        <input class="form-control" type="number" [(ngModel)]="detalle.cantidad" required >
+                                    </div>
+                                    <div class="col">
+                                        <label><b>Precio compra</b></label>
+                                        <input class="form-control" type="number" [(ngModel)]="detalle.precio_compra" required >
+                                    </div>
+                                </div>
+                               
+                            
+                                <div class="row form-group">
+                                    <div class="col">
+                                        <textarea class="form-control" placeholder="Detalle (OPCIONAL)" [(ngModel)]="producto_seleccionado.detalle"></textarea>
+                                        <span class="text-danger font-size-sm mt-2 text-center" *ngIf="error_msm">
+                                            Complete los todos los campos.
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col">
+                                        <button class="btn btn-accent btn-sm btn-block" (click)="save_ingreso()">Registrar</button>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-12 form-group">
+                          <div class="card">
+                              <table class="table table-sm table-bordered">
+                                <thead class="thead-dark">
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Precio unitario</th>
+                                    <th class="text-center">#</th>
+                                </thead>
+                                <tbody *ngFor="let item of data_ingreso; let idx = index">
+                                    <tr>
+                                        <td>{{item.titulo_producto}}</td>
+                                        <td class="text-center">{{item.cantidad}}</td>
+                                        <td class="text-center">${{item.precio_compra}}</td>
+                                        <td class="text-center"><a style="cursor: pointer;" (click)="remove_row(idx)" ><span class="czi-close"></span></a></td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

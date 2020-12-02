@@ -1,0 +1,145 @@
+<footer class="bg-dark pt-5">
+    <div class="container">
+      <div class="row pb-2">
+        <div class="col-md-4 col-sm-6">
+          <div class="widget widget-links widget-light pb-2 mb-4">
+            <h3 class="widget-title text-light">Departamentos</h3>
+            <ul class="widget-list">
+             
+                <ng-container *ngFor="let cat of categorias">
+                  <li class="widget-list-item" >
+                    <a class="widget-list-link" [routerLink]="['/productos/'+cat.nombre.toLowerCase().trim()+'/subcategoria/todo']">
+                      <span class="{{cat.icono}}"></span> &nbsp; {{cat.nombre}}
+                    </a>
+                  </li>
+                </ng-container>
+             
+             
+              
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="widget widget-links widget-light pb-2 mb-4">
+            <h3 class="widget-title text-light">Mi cuenta</h3>
+            <ul class="widget-list">
+              <li class="widget-list-item"><a class="widget-list-link" [routerLink]="['/cuenta/perfil']" >Mi perfil</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" [routerLink]="['/cuenta/direcciones']" >Mis direcciones</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" [routerLink]="['/cuenta/ordenes']">Mis ordenes</a></li>
+             
+            </ul>
+          </div>
+          
+        </div>
+        <div class="col-md-4">
+          <div class="widget pb-2 mb-4">
+            <h3 class="widget-title text-light pb-1">Stay informed</h3>
+            <form class="validate" action="https://studio.us12.list-manage.com/subscribe/post-json?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126&amp;c=?" method="get" name="mc-embedded-subscribe-form" id="mc-embedded-subscribe-form">
+              <div class="input-group input-group-overlay flex-nowrap">
+                <div class="input-group-prepend-overlay"><span class="input-group-text text-muted font-size-base"><i class="czi-mail"></i></span></div>
+                <input class="form-control prepended-form-control" type="email" name="EMAIL" id="mce-EMAIL" value="" placeholder="Your email" required>
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit" name="subscribe" id="mc-embedded-subscribe">Subscribe*</button>
+                </div>
+              </div>
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+              </div><small class="form-text text-light opacity-50" id="mc-helper">*Subscribe to our newsletter to receive early discount offers, updates and new products info.</small>
+              <div class="subscribe-status"></div>
+            </form>
+          </div>
+          <div class="widget pb-2 mb-4">
+            <h3 class="widget-title text-light pb-1">Descarga móvil (Proximamente)</h3>
+            <div class="d-flex flex-wrap">
+              <div class="mr-2 mb-2"><a class="btn-market btn-apple" role="button"><span class="btn-market-subtitle">Descargar en </span><span class="btn-market-title"> Apple Store</span></a></div>
+              <div class="mb-2"><a class="btn-market btn-google" role="button"><span class="btn-market-subtitle">Descargar en </span><span class="btn-market-title">Google Play</span></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-5 bg-darker">
+      <div class="container">
+        <div class="row pb-3">
+          <div class="col-md-3 col-sm-6 mb-4">
+            <div class="media"><i class="czi-rocket text-primary" style="font-size: 2.25rem;"></i>
+              <div class="media-body pl-3">
+                <h6 class="font-size-base text-light mb-1">
+                  Entrega rápida y gratuita</h6>
+                <p class="mb-0 font-size-ms text-light opacity-50">Entrega gratuita para todos los pedidos superiores a $ 200.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-4">
+            <div class="media"><i class="czi-currency-exchange text-primary" style="font-size: 2.25rem;"></i>
+              <div class="media-body pl-3">
+                <h6 class="font-size-base text-light mb-1">Garantía de reembolso</h6>
+                <p class="mb-0 font-size-ms text-light opacity-50">Devolvemos el dinero dentro de los 30 días.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-4">
+            <div class="media"><i class="czi-support text-primary" style="font-size: 2.25rem;"></i>
+              <div class="media-body pl-3">
+                <h6 class="font-size-base text-light mb-1">24/7 customer support</h6>
+                <p class="mb-0 font-size-ms text-light opacity-50">Atención al cliente amigable 24/7</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-4">
+            <div class="media"><i class="czi-card text-primary" style="font-size: 2.25rem;"></i>
+              <div class="media-body pl-3">
+                <h6 class="font-size-base text-light mb-1">Pago seguro en línea</h6>
+                <p class="mb-0 font-size-ms text-light opacity-50">Contamos con certificado SSL / Secure</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="hr-light pb-4 mb-3">
+        <div class="row pb-2">
+          <div class="col-md-6 text-center text-md-left mb-4">
+            <div class="text-nowrap mb-4"><a class="d-inline-block align-middle mt-n1 mr-3" style="    color: white;
+              font-weight: 500;
+              font-size: 20px;">{{general.titulo}}</a>
+              
+            </div>
+            <div class="widget widget-links widget-light">
+              <ul class="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
+                <li class="widget-list-item mr-4"><a class="widget-list-link" [routerLink]="['/']">Inicio</a></li>
+                <li class="widget-list-item mr-4"><a class="widget-list-link" [routerLink]="['/contacto']">Contacto</a></li>
+                
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 text-center text-md-right mb-4">
+            <div class="mb-3">
+              <a class="social-btn sb-light sb-twitter ml-2 mb-2" target="_blank" href="{{general.twitter}}">
+                <i class="czi-twitter"></i>
+              </a>
+              <a class="social-btn sb-light sb-facebook ml-2 mb-2" target="_blank" href="{{general.facebook}}">
+                <i class="czi-facebook"></i>
+              </a>
+              <a class="social-btn sb-light sb-instagram ml-2 mb-2" target="_blank" href="{{general.instagram}}">
+                <i class="czi-instagram"></i>
+              </a>
+             
+              <a class="social-btn sb-light sb-youtube ml-2 mb-2" target="_blank" href="{{general.youtube}}">
+                <i class="czi-youtube"></i>
+              </a>
+            </div>
+            <img class="d-inline-block" width="187" src="../../../assets/img/cards-alt.png" alt="Payment methods"/>
+          </div>
+        </div>
+        <div class="pb-4 font-size-xs text-light opacity-50 text-center text-md-left">{{general.cr}} <a class="text-light"  target="_blank" rel="noopener">{{general.titulo}}</a></div>
+      </div>
+    </div>
+  </footer>
+  <!-- Toolbar for handheld devices-->
+  <div class="cz-handheld-toolbar" *ngIf="identity">
+    <div class="d-table table-fixed w-100">
+      <a class="d-table-cell cz-handheld-toolbar-item" [routerLink]="['/cuenta/perfil']" >
+        <span class="cz-handheld-toolbar-icon"><i class="czi-user"></i></span><span class="cz-handheld-toolbar-label">Mi perfil</span></a><a class="d-table-cell cz-handheld-toolbar-item" href="#navbarCollapse" data-toggle="collapse" onclick="window.scrollTo(0, 0)"><span class="cz-handheld-toolbar-icon"><i class="czi-menu"></i></span><span class="cz-handheld-toolbar-label">Menu</span></a><a class="d-table-cell cz-handheld-toolbar-item" [routerLink]="['/cuenta/shop-cart']"><span class="cz-handheld-toolbar-icon"><i class="czi-cart"></i><span class="badge badge-primary badge-pill ml-1">4</span></span><span class="cz-handheld-toolbar-label">${{subtotal}}</span></a>
+    </div>
+  </div>
+  <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted font-size-sm mr-2">Top</span><i class="btn-scroll-top-icon czi-arrow-up">   </i></a>

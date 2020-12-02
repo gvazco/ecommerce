@@ -1,0 +1,694 @@
+<app-nav></app-nav>
+<div
+  class="page-title-overlap bg-dark pt-4"
+  style="
+    background-image: url('assets/img/jumbo-user.png');
+    background-size: 100%;
+  "
+>
+  <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+    <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+      <nav aria-label="breadcrumb">
+        <ol
+          class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start"
+        >
+          <li class="breadcrumb-item">
+            <a
+              class="text-nowrap"
+              [routerLink]="['/']"
+              routerLinkActive="router-link-active"
+              ><i class="czi-home"></i>Inicio</a
+            >
+          </li>
+          <li class="breadcrumb-item">
+            <a
+              class="text-nowrap"
+              [routerLink]="['/cuenta/ordenes']"
+              routerLinkActive="router-link-active"
+              ><i class="czi-arrow-right text-nowrap"></i>Ordenes</a
+            >
+          </li>
+          <li class="breadcrumb-item text-nowrap active" aria-current="page">
+            <span class="czi-arrow-right text-nowrap"></span> Detalle
+          </li>
+        </ol>
+      </nav>
+    </div>
+    <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+      <h1 class="h3 text-light mb-0">
+        <span class="czi-book"></span> Detalle de orden
+      </h1>
+    </div>
+  </div>
+</div>
+<!-- Page Content-->
+<div class="container pb-5 mb-2 mb-md-3">
+  <div class="row">
+    <!-- Sidebar-->
+    <aside class="col-lg-4 pt-4 pt-lg-0">
+      <app-aside-cuenta></app-aside-cuenta>
+    </aside>
+    <!-- Content  -->
+    <section class="col-lg-8">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col-lg-6">
+                  <b>N° {{ venta._id.toUpperCase() }}</b>
+                </div>
+                <div class="col-lg-6 text-right">
+                  <span>{{ venta.createdAt | date: "EEEE, MMMM d, y" }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <!-- Steps based on media tabs -->
+                  <ul class="nav nav-tabs media-tabs nav-justified">
+                    <li class="nav-item">
+                      <div class="nav-link active">
+                        <div class="media align-items-center">
+                          <div class="media-tab-media mr-3">
+                            <i class="czi-paypal"></i>
+                          </div>
+                          <div class="media-body">
+                            <div
+                              class="media-tab-subtitle text-muted font-size-xs mb-1"
+                            >
+                              Metodo
+                            </div>
+                            <h6 class="media-tab-title text-nowrap mb-0">
+                              {{ venta.metodo_pago }}
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="nav-item">
+                      <div
+                        class="nav-link"
+                        [ngClass]="{ completed: venta.estado == 'Enviado' }"
+                      >
+                        <div class="media align-items-center">
+                          <div class="media-tab-media mr-3">
+                            <i class="czi-bag"></i>
+                          </div>
+                          <div class="media-body">
+                            <div
+                              class="media-tab-subtitle text-muted font-size-xs mb-1"
+                            >
+                              Estatus
+                            </div>
+                            <h6 class="media-tab-title text-nowrap mb-0">
+                              {{ venta.estado }}
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <li class="nav-item">
+                      <div class="nav-link">
+                        <div class="media align-items-center">
+                          <div class="media-tab-media mr-3">
+                            <i class="czi-dollar"></i>
+                          </div>
+                          <div class="media-body">
+                            <div
+                              class="media-tab-subtitle text-muted font-size-xs mb-1"
+                            >
+                              Total pagado
+                            </div>
+                            <h6 class="media-tab-title text-nowrap mb-0">
+                              {{ venta.total_pagado }} MXN
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-lg-12">
+                  <div
+                    class="btn-toolbar"
+                    role="toolbar"
+                    aria-label="Settings toolbar"
+                  >
+                    <div
+                      class="btn-group mr-2 mb-2"
+                      role="group"
+                      aria-label="Settings group"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-dark btn-icon"
+                        *ngIf="
+                          venta.estado == 'Venta en proceso' && !btn_cancelar
+                        "
+                        data-toggle="modal"
+                        [attr.data-target]="'#sol_cancelar'"
+                      >
+                        <i class="czi-paypal"></i> &nbsp; Solicitar reembolso
+                      </button>
+
+                      <div
+                        class="modal fade"
+                        [attr.id]="'sol_cancelar'"
+                        tabindex="-1"
+                        role="dialog"
+                        style="display: none"
+                        aria-hidden="true"
+                      >
+                        <div
+                          class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                          role="document"
+                        >
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Cancelación</h5>
+                              <button
+                                class="close"
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div
+                                class="bg-secondary py-grid-gutter px-grid-gutter rounded-lg"
+                              >
+                                <form
+                                  #cancelarForm="ngForm"
+                                  (ngSubmit)="cancelar(cancelarForm)"
+                                >
+                                  <div
+                                    class="form-group"
+                                    *ngIf="msm_error_cancelar"
+                                  >
+                                    <div
+                                      class="alert alert-danger alert-dismissible fade show"
+                                      role="alert"
+                                    >
+                                      {{ msm_error_cancelar }}
+                                      <button
+                                        type="button"
+                                        class="close"
+                                        (click)="close_alert()"
+                                        data-dismiss="alert"
+                                        aria-label="Close"
+                                      >
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <label for="review-text"
+                                      >Motivo de la cancelacion?<span
+                                        class="text-danger"
+                                        >*</span
+                                      ></label
+                                    >
+                                    <textarea
+                                      class="form-control"
+                                      rows="5"
+                                      required=""
+                                      name="mensaje"
+                                      [(ngModel)]="cancelacion.mensaje"
+                                      placeholder="Escribenos por qué estas solicitando la cancelación."
+                                    ></textarea>
+                                  </div>
+
+                                  <button
+                                    class="btn btn-primary btn-shadow btn-block"
+                                    type="submit"
+                                  >
+                                    Solicitar
+                                  </button>
+                                </form>
+                              </div>
+                            </div>
+                            <div class="modal-footer"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <ng-container
+                        *ngIf="
+                          venta.estado == 'Enviado' ||
+                          venta.estado == 'Venta en proceso' ||
+                          venta.estado == 'Finalizado'
+                        "
+                      >
+                        <a
+                          [routerLink]="['/cuenta/ordenes/tickets/', venta._id]"
+                          type="button"
+                          class="btn btn-accent btn-icon"
+                        >
+                          <i class="czi-help mr-1"></i>
+                          Tickets
+                        </a>
+                      </ng-container>
+                    </div>
+                    <div
+                      class="btn-group mr-2 mb-2"
+                      role="group"
+                      aria-label="Apply settings"
+                      *ngIf="venta.estado == 'Enviado'"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        data-toggle="modal"
+                        [attr.data-target]="'#finalizar'"
+                      >
+                        <i class="czi-check mr-2"></i>
+                        Confirmar entrega
+                      </button>
+
+                      <div
+                        class="modal fade"
+                        id="finalizar"
+                        tabindex="-1"
+                        role="dialog"
+                        style="display: none"
+                        aria-hidden="true"
+                      >
+                        <div
+                          class="modal-dialog modal-dialog-centered"
+                          role="document"
+                        >
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Confirmación</h4>
+                              <button
+                                class="close"
+                                type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <p class="font-size-sm">
+                                Al aceptar estas confimando la recepción de la
+                                compra.
+                              </p>
+                            </div>
+                            <div class="modal-footer">
+                              <button
+                                class="btn btn-secondary btn-sm"
+                                type="button"
+                                data-dismiss="modal"
+                              >
+                                Cerrar
+                              </button>
+                              <button
+                                class="btn btn-primary btn-shadow btn-sm"
+                                type="button"
+                                (click)="finalizar(id)"
+                              >
+                                Confirmar
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-lg-12 form-group"
+                  *ngIf="
+                    !data_cancelacion || data_cancelacion.estado == 'Denegado'
+                  "
+                >
+                  <div class="bg-secondary rounded-lg px-4 pt-4 pb-2">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h4 class="h6">
+                          <span class="czi-home"></span> Envio:
+                        </h4>
+                        <ul class="list-unstyled font-size-sm">
+                          <li>
+                            <span class="text-muted">Destinatario:&nbsp;</span
+                            ><br />{{ venta.destinatario }}
+                          </li>
+                          <li>
+                            <span class="text-muted">Dirección:&nbsp;</span
+                            ><br />{{ venta.direccion }}
+                          </li>
+                          <li>
+                            <span class="text-muted"
+                              >País/Ciudad/ZIP:&nbsp;</span
+                            ><br />{{ venta.pais }}/{{ venta.ciudad }}/{{
+                              venta.zip
+                            }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-sm-6">
+                        <h4 class="h6">
+                          <span class="czi-plane"></span> Medio postal:
+                        </h4>
+                        <ul class="list-unstyled font-size-sm">
+                          <li>
+                            <span class="text-muted">Empresa:&nbsp;</span
+                            ><br />{{ venta.tipo_envio }}
+                          </li>
+                          <li>
+                            <span class="text-muted">Entrega:&nbsp;</span
+                            ><br />{{ venta.tiempo_estimado }}
+                          </li>
+                          <li>
+                            <span class="text-muted"
+                              >Número de track:&nbsp;</span
+                            ><br />
+                            <span *ngIf="venta.tracking_number">{{
+                              venta.tracking_number
+                            }}</span>
+                            <span
+                              *ngIf="!venta.tracking_number"
+                              class="badge badge-dark"
+                              >No disponible</span
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 form-group" *ngIf="data_cancelacion">
+                  <div class="card">
+                    <div class="card-header bg-accent">
+                      <h6 style="margin-bottom: 0px; color: white">
+                        Solicitud de cancelación
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="media-body pt-2">
+                            <h3 class="product-title font-size-base mb-2">
+                              <a href="shop-single-v1.html"> Detalles </a>
+                            </h3>
+                            <div class="font-size-sm">
+                              <span class="text-muted mr-2">Estado:</span>
+                              <span
+                                class="badge badge-danger"
+                                *ngIf="data_cancelacion.estado == 'Reembolsado'"
+                                >{{ data_cancelacion.estado }}</span
+                              >
+                              <span
+                                class="badge badge-accent"
+                                *ngIf="data_cancelacion.estado == 'En espera'"
+                                >{{ data_cancelacion.estado }}</span
+                              >
+                              <span
+                                class="badge badge-primary"
+                                *ngIf="data_cancelacion.estado == 'Denegado'"
+                                >{{ data_cancelacion.estado }}</span
+                              >
+                            </div>
+                            <div class="font-size-sm">
+                              <span class="text-muted mr-2">Fecha:</span>
+                              {{
+                                data_cancelacion.createdAt
+                                  | date: "EEEE, MMMM d, y"
+                              }}
+                            </div>
+                            <div
+                              class="font-size-sm"
+                              *ngIf="data_cancelacion.estado == 'Denegado'"
+                            >
+                              <span class="text-muted mr-2"
+                                >El producto será enviado, no se aceptó la
+                                cancelación.</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <h6>Mensaje:</h6>
+                          <p
+                            class="text-justify"
+                            style="font-size: 13px; margin-bottom: 0px"
+                          >
+                            {{ data_cancelacion.mensaje }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ng-container>
+                  <div class="col-lg-12 mb-4" *ngFor="let item of detalle">
+                    <!-- Horizontal card layout -->
+                    <div class="card">
+                      <div class="row no-gutters">
+                        <div class="col-sm-3">
+                          <img
+                            [src]="
+                              url +
+                              'productos_img_data/resources/thumbnails/' +
+                              item.producto.poster
+                            "
+                            class="rounded-left"
+                            alt="Card image"
+                          />
+                        </div>
+                        <div class="col-sm-9">
+                          <div class="card-body">
+                            <div class="media-body pt-2">
+                              <div class="row">
+                                <div class="col-lg-12">
+                                  <h3 class="product-title font-size-base mb-2">
+                                    <a
+                                      [routerLink]="[
+                                        '/producto/',
+                                        item.producto.slug
+                                      ]"
+                                      >{{ item.producto.titulo }}</a
+                                    >
+                                  </h3>
+                                </div>
+                                <div class="col-lg-6">
+                                  <div class="font-size-sm">
+                                    <span class="text-muted mr-2"
+                                      >Cantidad:</span
+                                    >{{ item.cantidad }}
+                                  </div>
+                                  <div class="font-size-sm">
+                                    <span class="text-muted mr-2"
+                                      >{{
+                                        item.producto.nombre_selector
+                                      }}:</span
+                                    >{{ item.selector }}
+                                  </div>
+                                  <div class="font-size-sm">
+                                    <span class="text-muted mr-2">Color:</span>
+                                    <span
+                                      [ngStyle]="{
+                                        background: item.color,
+                                        color: item.color
+                                      }"
+                                      style="font-weight: 900"
+                                      >||||||||||||||||||||</span
+                                    >
+                                  </div>
+                                  <div class="font-size-lg text-accent">
+                                    <span class="font-size-sm text-muted mr-2"
+                                      >Precio unitario:</span
+                                    ><br />
+                                    ${{ item.precio }}
+                                  </div>
+                                </div>
+                                <div class="col-lg-6">
+                                  <ng-container
+                                    *ngIf="
+                                      venta.estado == 'Finalizado' ||
+                                      venta.estado == 'Enviado'
+                                    "
+                                  >
+                                    <a
+                                      class="dropdown-item"
+                                      (click)="
+                                        modal_data(item.producto._id, item._id)
+                                      "
+                                      data-toggle="modal"
+                                      [attr.data-target]="'#save-' + item._id"
+                                      style="cursor: pointer"
+                                    >
+                                      <i class="czi-star mr-2"></i>
+                                      Emitir comentario
+                                    </a>
+                                  </ng-container>
+                                </div>
+                                <div
+                                  class="modal fade"
+                                  [attr.id]="'save-' + item._id"
+                                  tabindex="-1"
+                                  role="dialog"
+                                  style="display: none"
+                                  aria-hidden="true"
+                                >
+                                  <div
+                                    class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                    role="document"
+                                  >
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h4 class="modal-title">
+                                          Enviar comentario
+                                        </h4>
+                                        <button
+                                          class="close"
+                                          type="button"
+                                          data-dismiss="modal"
+                                          aria-label="Close"
+                                        >
+                                          <span aria-hidden="true">×</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <div
+                                          class="bg-secondary py-grid-gutter px-grid-gutter rounded-lg"
+                                        >
+                                          <form
+                                            #reviewForm="ngForm"
+                                            (ngSubmit)="saveComent(reviewForm)"
+                                          >
+                                            <div
+                                              class="form-group"
+                                              *ngIf="msm_error_review"
+                                            >
+                                              <div
+                                                class="alert alert-danger alert-dismissible fade show"
+                                                role="alert"
+                                              >
+                                                {{ msm_error_review }}
+                                                <button
+                                                  type="button"
+                                                  class="close"
+                                                  (click)="close_alert()"
+                                                  data-dismiss="alert"
+                                                  aria-label="Close"
+                                                >
+                                                  <span aria-hidden="true"
+                                                    >&times;</span
+                                                  >
+                                                </button>
+                                              </div>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="review-rating"
+                                                >Rating<span class="text-danger"
+                                                  >*</span
+                                                ></label
+                                              >
+                                              <select
+                                                class="custom-select"
+                                                required=""
+                                                name="review_estrellas"
+                                                [(ngModel)]="review_estrellas"
+                                              >
+                                                <option
+                                                  value=""
+                                                  selected
+                                                  disabled
+                                                >
+                                                  Selecciona
+                                                </option>
+                                                <option value="5">
+                                                  5 estrellas
+                                                </option>
+                                                <option value="4">
+                                                  4 estrellas
+                                                </option>
+                                                <option value="3">
+                                                  3 estrellas
+                                                </option>
+                                                <option value="2">
+                                                  2 estrellas
+                                                </option>
+                                                <option value="1">
+                                                  1 estrella
+                                                </option>
+                                              </select>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="review-text"
+                                                >Reseña<span class="text-danger"
+                                                  >*</span
+                                                ></label
+                                              >
+                                              <textarea
+                                                class="form-control"
+                                                rows="5"
+                                                required=""
+                                                name="review_comentario"
+                                                [(ngModel)]="review_comentario"
+                                                placeholder="Escribe que tal te parecio el producto."
+                                              ></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="review-pros"
+                                                >Pros</label
+                                              >
+                                              <textarea
+                                                class="form-control"
+                                                rows="2"
+                                                placeholder="Lo bueno"
+                                                name="review_pros"
+                                                [(ngModel)]="review_pros"
+                                              ></textarea>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                              <label for="review-cons"
+                                                >Cons</label
+                                              >
+                                              <textarea
+                                                class="form-control"
+                                                rows="2"
+                                                placeholder="Lo malo"
+                                                name="review_cons"
+                                                [(ngModel)]="review_cons"
+                                              ></textarea>
+                                            </div>
+                                            <button
+                                              class="btn btn-primary btn-shadow btn-block"
+                                              type="submit"
+                                            >
+                                              Enviar reseña
+                                            </button>
+                                          </form>
+                                        </div>
+                                      </div>
+                                      <div class="modal-footer"></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<app-foot></app-foot>

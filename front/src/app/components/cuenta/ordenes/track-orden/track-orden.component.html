@@ -1,0 +1,181 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4" style="background-image: url('assets/img/jumbo-user.png');background-size: 100%;">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/cuenta/ordenes']" routerLinkActive="router-link-active" ><i class="czi-arrow-right text-nowrap"></i>Ordenes</a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Tracking</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 text-light mb-0"><span class="czi-location"></span> Mis direcciones</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mb-2 mb-md-3">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0">
+        <app-aside-cuenta></app-aside-cuenta>
+      </aside>
+      <!-- Content  -->
+      <section class="col-lg-8">
+        <!-- Toolbar-->
+        <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-4">
+          <h6 class="font-size-base text-light mb-0">Mis ordenes:</h6>
+          <button class="btn btn-primary btn-sm" (click)="logout()"><i class="czi-sign-out mr-2"></i>Cerrar Sesión</button>
+        </div>
+        <!-- Addresses list-->
+
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <!-- Steps dark skin  -->
+                <div class="steps steps-dark">
+
+                    <!-- Step: active -->
+                    <a [routerLink]="['/cuenta/ordenes']"  class="step-item active">
+                    <div class="step-progress">
+                        <span class="step-count">1</span>
+                    </div>
+                    <div class="step-label">
+                        <i class="czi-cart"></i>
+                        Compras
+                    </div>
+                    </a>
+                
+                    <!-- Step: active, current -->
+                    <a [routerLink]="['/cuenta/detalles/',venta._id]" class="step-item active">
+                    <div class="step-progress">
+                        <span class="step-count">2</span>
+                    </div>
+                    <div class="step-label">
+                        <i class="czi-user-circle"></i>
+                        Detalles de compra
+                    </div>
+                    </a>
+                
+                    <!-- Step -->
+                    <a class="step-item active" [ngClass]="{current: venta.estado == 'Enviado'}">
+                    <div class="step-progress">
+                        <span class="step-count">3</span>
+                    </div>
+                    <div class="step-label">
+                        <i class="czi-package"></i>
+                        Seguimiento
+                    </div>
+                    </a>
+                
+                    <!-- Step -->
+                    <a class="step-item" [ngClass]="{current: venta.estado == 'Entregado'}">
+                    <div class="step-progress">
+                        <span class="step-count">4</span>
+                    </div>
+                    <div class="step-label">
+                        <i class="czi-card"></i>
+                        Finalizado
+                    </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-12 mb-4">
+                <div class="bg-secondary rounded-lg px-4 pt-4 pb-2">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <h4 class="h6">Datos de envió:</h4>
+                        <ul class="list-unstyled font-size-sm">
+                          <li><span class="text-muted">Medio postal:&nbsp;</span>{{venta.tipo_envio}}</li>
+                          <li><span class="text-muted">Tiempo:&nbsp;</span>{{venta.tiempo_estimado}}</li>
+                          <li><span class="text-muted">Número:&nbsp;</span>{{venta.tracking_number}}</li>
+                        </ul>
+                      </div>
+                      <div class="col-sm-6">
+                        <h4 class="h6">Dirección de envio:</h4>
+                        <ul class="list-unstyled font-size-sm">
+                          <li><span class="text-muted">Destinatario:&nbsp;</span>{{venta.destinatario}}</li>
+                          <li><span class="text-muted">Dirección:&nbsp;</span>{{venta.direccion}}</li>
+                          <li><span class="text-muted">País / Ciudad / ZIP:&nbsp;</span>{{venta.pais}} / {{venta.ciudad}}/ {{venta.zip}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+       
+
+            <h2 class="h3 text-center text-sm-left" style="font-size: 20px;">Destino</h2>
+            
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>  
+                        <th style="width: 150px !important;">Fecha</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+            
+                <ng-container *ngIf="!loading">
+                    <tbody *ngFor="let item of data_destino">
+                        <tr>
+                            <td>{{item.a}}</td>
+                            <td class="text_data_sm">{{item.c}} {{item.d}} {{item.z}}</td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+                <ng-container *ngIf="loading">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <div class="spinner-grow" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+                </table>
+            </div>
+
+            <hr class="pb-4">
+    
+
+  
+            <h2 class="h3 text-center text-sm-left" style="font-size: 20px;">Orígen</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>  
+                        <th style="width: 150px !important;">Fecha</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <ng-container *ngIf="!loading">
+                    <tbody *ngFor="let item of data_origen">
+                        <tr>
+                            <td>{{item.a}}</td>
+                            <td class="text_data_sm">{{item.c}} {{item.d}} {{item.z}}</td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+                <ng-container *ngIf="loading">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <div class="spinner-grow" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+                </table>
+            </div>
+     
+        
+      </section>
+    </div>
+  </div>
+  <app-foot></app-foot>

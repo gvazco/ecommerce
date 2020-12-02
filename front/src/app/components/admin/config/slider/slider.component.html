@@ -1,0 +1,143 @@
+<app-aside></app-aside>
+
+
+<div class="page-title-overlap bg-accent pt-4">
+  <app-jumbo></app-jumbo>
+</div>
+
+<div class="container mb-5 pb-3">
+  <div class="bg-light box-shadow-lg rounded-lg overflow-hidden">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4">
+        <app-menu></app-menu>
+      </aside>
+      <!-- Content-->
+      <section class="col-lg-8 pt-lg-4 mb-3">
+        <div class="pt-2 px-4 pl-lg-0 pr-xl-5">
+          <div class="row">
+
+
+              <div class="col-lg-12">
+                  <div class="border-bottom mt-lg-2 pb-2">
+                      <h1 class="mt-lg-4">Slider</h1>
+                      <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                        <p class="text-muted">Elementos del slider en la página principal.</p>
+                       
+                      </div>
+                      
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 form-group" *ngIf="msm_success">
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          Se actualizó los datos de las configuraciones correctamente.
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group" *ngIf="msm_error">
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          Ocurrió un error al guardar las configuraciones.
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                    </div>
+                      <ng-container *ngFor="let item of sliders">
+                        <div class="col-lg-12 form-group">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                          <img [src]="url+'congeneral/resources/thumbnails/'+item.imagen" style="width:100%">
+                                        </div>
+                                        <div class="col-lg-5">
+                                          <div class="media-body py-4 px-2">
+                                              <h5 class="mb-2">
+                                                  <span class="font-weight-light">{{item.titulo_uno}}</span>
+                                                  <br>{{item.titulo_dos}}<br>
+                                                  {{item.subtitulo}}</h5>
+                                              <div class="text-info font-size-sm">
+                                                  <span *ngIf="item.estado">Activo</span>
+                                                  <span *ngIf="!item.estado">Desactivo</span>
+                                                  <i class="czi-arrow-right font-size-xs ml-1"></i></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                          <div class="btn-group pt-5" role="group" aria-label="Solid button group">
+                                              <button type="button" class="btn btn-primary" (click)="get_select_data(item)">Editar</button>
+                                         
+                                          </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 form-edit ocultar" [attr.id]="'form-'+item._id">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                  <div class="form-group row align-items-center"> 
+                                      <div class="col-md-12">
+                                          <div class="cz-file-drop-area">
+                                              <div class="cz-file-drop-preview img-thumbnail rounded">
+                                                  <img [src]="imgSelect ||url+'congeneral/resources/thumbnails/'+slider.imagen" alt="04.jpg">
+                                              </div>
+                                              
+                                              <input type="file" class="cz-file-drop-input" (change)="imgSelected($event)">
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                                <div class="col-lg-9">
+                                  
+                                    <div class="row">
+                                      <div class="col-lg-6">
+                                        <div class="form-group">
+                                          <label><b>Título superior</b></label>
+                                          <input type="text" class="form-control" [(ngModel)]="slider.titulo_uno" required>
+                                        </div>
+                                        <div class="form-group">
+                                          <label><b>Subtitulo</b></label>
+                                          <input type="text" class="form-control" [(ngModel)]="slider.subtitulo" required>
+                                        </div>
+                                      </div>
+                                      <div class="col-lg-6">
+                                        <div class="form-group">
+                                          <label><b>Título principal</b></label>
+                                          <input type="text" class="form-control" [(ngModel)]="slider.titulo_dos" required>
+                                        </div>
+                                        <div class="form-group">
+                                          <label><b>Estado</b></label>
+                                          <div class="custom-control custom-checkbox">
+                                            <div class="row">
+                                              <div class="col-lg-6">
+                                                <input class="custom-control-input" name="estado" [(ngModel)]="slider.estado" type="checkbox" id="ex-check-1" required>
+                                                <label class="custom-control-label" *ngIf="slider.estado" for="ex-check-1">Activo</label>
+                                                <label class="custom-control-label" *ngIf="!slider.estado" for="ex-check-1">Desactivado</label>
+                                              </div>
+                                              <div class="col-lg-6">
+                                                <button class="btn btn-accent btn-sm" (click)="onSubmit(slider)">Actualizar</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                      </ng-container>
+                     
+                  </div>
+              </div>
+          </div>
+         
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<app-foot></app-foot>

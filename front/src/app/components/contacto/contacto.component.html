@@ -1,0 +1,127 @@
+<app-nav></app-nav>
+<div class="bg-secondary py-4" >
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Contacto</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 mb-0"><span class="czi-earphones"></span> &nbsp; Contacto</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <!-- Contact detail cards-->
+  <section class="container-fluid pt-grid-gutter" >
+    <div class="row">
+      <div class="col-xl-3 col-md-6 mb-grid-gutter">
+          <div class="card">
+            <div class="card-body text-center"><i class="czi-location h3 mt-2 mb-4 text-primary"></i>
+                <h3 class="h6 mb-2">Dirección</h3>
+                <p class="font-size-sm text-muted" id="direcciond"></p>
+                
+              </div>
+          </div>
+        </div>
+      <div class="col-xl-3 col-md-6 mb-grid-gutter">
+        <div class="card">
+          <div class="card-body text-center"><i class="czi-time h3 mt-2 mb-4 text-primary"></i>
+            <h3 class="h6 mb-3">Horarios</h3>
+            <p class="font-size-sm text-muted" id="horariosd" style="    margin-bottom: 9px;"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-grid-gutter" *ngIf="general">
+        <div class="card">
+          <div class="card-body text-center"><i class="czi-phone h3 mt-2 mb-4 text-primary"></i>
+            <h3 class="h6 mb-3">Telefonos</h3>
+            <ul class="list-unstyled font-size-sm mb-0">
+              <li><span class="text-muted mr-1">Para compradores:</span><a class="nav-link-style" href="tel:{{general.telefono_uno}}">{{general.telefono_uno}}</a></li>
+              <li class="mb-0"><span class="text-muted mr-1">Ayuda:</span><a class="nav-link-style" href="tel:{{general.telefono_dos}}">{{general.telefono_dos}}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-md-6 mb-grid-gutter" *ngIf="general">
+        <div class="card">
+          <div class="card-body text-center"><i class="czi-mail h3 mt-2 mb-4 text-primary"></i>
+            <h3 class="h6 mb-3">Correos</h3>
+            <ul class="list-unstyled font-size-sm mb-0">
+              <li><span class="text-muted mr-1">Para compradores:</span><a class="nav-link-style" href="mailto:{{general.email_uno}}">{{general.email_uno}}</a></li>
+              <li class="mb-0"><span class="text-muted mr-1">Ayuda:</span><a class="nav-link-style" href="mailto:{{general.email_dos}}">{{general.email_dos}}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Split section: Map + Contact form-->
+  <div class="container-fluid px-0 mt-4" id="map">
+    <div class="row no-gutters">
+      <div class="col-lg-6 iframe-full-height-wrap" id="iframe_mapa">
+        
+      </div>
+      <div class="col-lg-6 px-4 px-xl-5 py-5 border-top" style="background: white !important;">
+        <h2 class="h4 mb-4">Contacto</h2>
+        <form class="mb-3" #contactoForm="ngForm" (ngSubmit)="onSubmit(contactoForm)">
+          <div class="row">
+            <div class="col-sm-12" *ngIf="msm_success">
+              <div class="alert alert-accent alert-dismissible fade show" role="alert">
+                  Se envió su mensaje a soporte satisfactoriamente.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="col-sm-12" *ngIf="msm_error">
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  Ocurrió un error al enviar la solicitud, vuelva a intentar.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="cf-name">Nombres y apellidos:&nbsp;<span class="text-danger">*</span></label>
+                <input class="form-control" type="text" id="cf-name" placeholder="John Doe" required name="nombres" [(ngModel)]="contacto.nombres">
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="cf-email">Correo:&nbsp;<span class="text-danger">*</span></label>
+                <input class="form-control" type="email" id="cf-email" placeholder="johndoe@email.com" required name="correo" [(ngModel)]="contacto.correo">
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="cf-phone">Telefono:&nbsp;<span class="text-danger">*</span></label>
+                <input class="form-control" type="number" id="cf-phone" placeholder="+1 (212) 00 000 000" required name="telefono" [(ngModel)]="contacto.telefono">
+                
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="cf-subject">Tema:</label>
+                <input class="form-control" type="text" id="cf-subject" placeholder="Tema de tu solicitud" name="tema" [(ngModel)]="contacto.tema">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cf-message">Mensaje:&nbsp;<span class="text-danger">*</span></label>
+            <textarea class="form-control" id="cf-message" rows="6" placeholder="Escribe los detalles de tu solicitud" required name="mensaje" [(ngModel)]="contacto.mensaje"></textarea>
+            
+          </div>
+          <button class="btn btn-primary" type="submit">Enviar mensaje</button>
+        </form>
+      </div>
+    </div>
+  </div>
+<app-foot></app-foot>

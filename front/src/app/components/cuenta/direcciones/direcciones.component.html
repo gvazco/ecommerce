@@ -1,0 +1,233 @@
+<app-nav></app-nav>
+<div class="page-title-overlap bg-dark pt-4" style="background-image: url('assets/img/jumbo-user.png');background-size: 100%;">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+            <li class="breadcrumb-item"><a class="text-nowrap" [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="czi-home"></i>Inicio</a></li>
+            <li class="breadcrumb-item text-nowrap active" aria-current="page"><span class="czi-arrow-right text-nowrap"></span> Mis direcciones</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h1 class="h3 text-light mb-0"><span class="czi-location"></span> Mis direcciones</h1>
+      </div>
+    </div>
+  </div>
+  <!-- Page Content-->
+  <div class="container pb-5 mb-2 mb-md-3">
+    <div class="row">
+      <!-- Sidebar-->
+      <aside class="col-lg-4 pt-4 pt-lg-0">
+        <app-aside-cuenta></app-aside-cuenta>
+      </aside>
+      <!-- Content  -->
+      <section class="col-lg-8">
+        <!-- Toolbar-->
+        <div class="d-none d-lg-flex justify-content-between align-items-center pt-lg-3 pb-4 pb-lg-5 mb-lg-4">
+          <h6 class="font-size-base text-light mb-0">Listado de direcciones registradas:</h6>
+          <button class="btn btn-primary btn-sm" (click)="logout()"><i class="czi-sign-out mr-2"></i>Cerrar Sesión</button>
+        </div>
+        <!-- Addresses list-->
+        <div class="table-responsive font-size-md">
+          <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="msm_success">
+            <span class="font-weight-medium">Mensaje:</span> Se registro la dirección con exito.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th>Nombres</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="direcciones.length <= 0">
+                <tr>
+                  <td colspan="3" class="text-center">No tienes ninguna dirección registrada.</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="direcciones.length >= 1">
+                <tr *ngFor="let item of direcciones; let indice = index">
+                  <td class="py-3 align-middle">
+                    {{item.nombres_completos}}
+                  </td>
+                  <td class="py-3 align-middle">
+                    {{item.direccion}}
+                  </td>
+                  <td class="py-3 align-middle">
+                    <a class="nav-link-style mr-2" data-toggle="modal" (click)="get_direccion(item._id)" [attr.data-target]="'#address-'+item._id" style="cursor:pointer">
+                      <i class="czi-edit"></i>
+                    </a>
+                    <form class="modal fade" method="post" [attr.id]="'address-'+item._id" tabindex="-1" #direccionFormUpdate="ngForm" (ngSubmit)="onUpdate(direccionFormUpdate)">
+                      <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Editar dirección</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          </div>
+                          <div class="modal-body">
+            
+                            <div class="row">
+                              <div class="col-sm-12" *ngIf="msm_error">
+                                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                  <span class="font-weight-medium">Mensaje:</span> Complete correctamente el formulario.
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close_alert()">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                              </div>
+                             
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label for="address-fn">Nombre y apellidos</label>
+                                  <input class="form-control" type="text" id="address-fn" required placeholder="Nombres y apellidos" name="nombres_completos" [(ngModel)]="direccion_data.nombres_completos">
+                                  
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label for="address-ln">País</label>
+                                  <select class="form-control" name="pais" required name="pais" [(ngModel)]="direccion_data.pais">
+                                    <option value="" selected disabled>SELECCIONAR</option>
+                                    <option value="{{item.substr(0,20)}}" *ngFor="let item of data_paises">{{item.substr(0,20)}}</option>
+                                </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label for="address-ln">Dirección</label>
+                                  <textarea class="form-control" placeholder="Ingrese la dirección" required name="direccion" [(ngModel)]="direccion_data.direccion"></textarea>
+                                </div>
+                              </div>
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label for="address-ln">Referencia</label>
+                                  <textarea class="form-control" placeholder="Referencia de su dirección" required name="referencia" [(ngModel)]="direccion_data.referencia"></textarea>
+                                </div>
+                              </div>
+                              
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label for="address-ln" >Ciudad</label>
+                                  <input class="form-control" type="text" id="address-fn" required placeholder="Ciudad" name="ciudad" [(ngModel)]="direccion_data.ciudad">
+                                </div>
+                              </div>
+                              <div class="col-sm-6">
+                                <div class="form-group">
+                                  <label for="address-ln">ZIP</label>
+                                  <input class="form-control" type="text" id="address-fn" required placeholder="Código Postal" name="zip" [(ngModel)]="direccion_data.zip">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+                            <button class="btn btn-primary btn-shadow" type="submit">Actualizar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+  
+                    <a class="nav-link-style text-danger" data-toggle="modal" [attr.data-target]="'#delete-'+item._id" style="cursor:pointer">
+                      <div class="czi-trash"></div>
+                    </a>
+                    <div class="modal fade" [attr.id]="'delete-'+item._id" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Confirmación</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                          </div>
+                          <div class="modal-body">
+                            <p class="font-size-sm">¿Desea eliminar definitivamente el regsitro?</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary btn-shadow btn-sm" type="button" (click)="eliminar(item._id)">Suprimir</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+             
+            </tbody>
+          </table>
+        </div>
+        <hr class="pb-4">
+        <div class="text-sm-right">
+          <button class="btn btn-primary" data-toggle="modal" data-target="#add-address">Agregar dirección</button>
+
+          
+        </div>
+        <form class="modal fade" method="post" id="add-address" tabindex="-1" #direccionForm="ngForm" (ngSubmit)="onSubmit(direccionForm)">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Agregar una nueva dirección</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+
+                <div class="row">
+                  
+                 
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="address-fn">Nombre y apellidos</label>
+                      <input class="form-control" type="text" id="address-fn" required placeholder="Nombres y apellidos" name="nombres_completos" [(ngModel)]="direccion.nombres_completos">
+                      
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="address-ln">País</label>
+                      <select class="form-control" name="pais" required name="pais" [(ngModel)]="direccion.pais">
+                        <option value="" selected disabled>SELECCIONAR</option>
+                        <option value="{{item.substr(0,20)}}" *ngFor="let item of data_paises">{{item.substr(0,20)}}</option>
+                    </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="address-ln">Dirección</label>
+                      <textarea class="form-control" placeholder="Ingrese la dirección" required name="direccion" [(ngModel)]="direccion.direccion"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="address-ln">Referencia</label>
+                      <textarea class="form-control" placeholder="Referencia de su dirección" required name="referencia" [(ngModel)]="direccion.referencia"></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="address-ln" >Ciudad</label>
+                      <input class="form-control" type="text" id="address-fn" required placeholder="Ciudad" name="ciudad" [(ngModel)]="direccion.ciudad">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="address-ln">ZIP</label>
+                      <input class="form-control" type="text" id="address-fn" required placeholder="Código Postal" name="zip" [(ngModel)]="direccion.zip">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary btn-shadow" type="submit">Agregar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+  <app-foot></app-foot>

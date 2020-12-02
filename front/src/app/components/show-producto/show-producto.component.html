@@ -1,0 +1,552 @@
+<app-nav ></app-nav>
+<div class="page-title-overlap bg-dark pt-4">
+    <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+      
+      <div class="order-lg-1 pr-lg-4 text-center text-lg-left">
+        <h2 class="h3 text-light mb-0" id="title-show-product">{{producto.titulo}}</h2>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Gallery + details-->
+    <div class="bg-light box-shadow-lg rounded-lg px-4 py-3 mb-5">
+      <div class="px-lg-3">
+        <div class="row">
+          <div class="toast-container toast-top-right">
+            <div class="toast mb-3 fade hide" id="dark-toast" data-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header bg-accent text-white"><i class="czi-cart mr-2"></i>
+                <h6 class="font-size-sm text-white mb-0 mr-auto">Notificación</h6>
+                <button class="close text-white ml-2 mb-1" type="button" data-dismiss="toast" aria-label="Close" (click)="close_toast()"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="toast-body text-accent">Se agrego el producto al carrito.</div>
+            </div>
+          </div>
+          <!-- Product gallery-->
+          <div class="col-lg-7 pr-lg-0 pt-lg-4">
+            <div class="cz-product-gallery">
+              <div class="cz-preview order-sm-2">
+                
+                  <div class="cz-preview-item active"  >
+                    
+                    <img class="cz-image-zoom" id="active_img_thumb" [src]="url+'/galeria/resources/thumbnails/'+first_img" [attr.data-zoom]="url+'/galeria/resources/thumbnails/'+first_img" alt="Product image">
+                    <div class="cz-image-zoom-pane"></div>
+                  </div>
+               
+              
+              </div>
+              <div class="cz-thumblist order-sm-1">
+                <ng-container *ngFor="let imagen of galeria;let primero = first;let indice=index">
+                  <a class="cz-thumblist-item active" [attr.id]="'img_'+indice" (click)="click_img(imagen.imagen,'img_'+indice)" *ngIf="primero">
+                    <img class="thumb-show" [src]="url+'/galeria/resources/thumbnails/'+imagen.imagen" alt="Product thumb">
+                  </a>
+                  <a class="cz-thumblist-item" [attr.id]="'img_'+indice" (click)="click_img(imagen.imagen,'img_'+indice)" *ngIf="!primero">
+                    <img class="thumb-show" [src]="url+'/galeria/resources/thumbnails/'+imagen.imagen" alt="Product thumb">
+                  </a>
+                </ng-container>
+                
+                <a class="cz-thumblist-item video-item" data-toggle="modal" data-target="#video_modal" >
+                  <div class="cz-thumblist-item-text">
+                    <i class="czi-video"></i>
+                    Video
+                  </div>
+                </a>
+
+                <div class="modal fade" id="video_modal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 750px;">
+                    <div class="modal-content" id="video_iframe">
+                      <div class="modal-header">
+                        <h4 class="modal-title"></h4>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Product details-->
+          <div class="col-lg-5 pt-4 pt-lg-0" id="preview-img">
+            <div class="product-details ml-auto pb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <a href="#reviews" data-scroll="">
+                  <div class="star-rating" *ngIf="raiting_puntos == 5">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="raiting_puntos >= 4 && raiting_puntos < 5">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="raiting_puntos >= 3 && raiting_puntos < 4">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="raiting_puntos >= 2 && raiting_puntos < 3">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="raiting_puntos >= 1 && raiting_puntos < 2">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="raiting_puntos >= 0 && raiting_puntos < 1">
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <span class="d-inline-block font-size-sm text-body align-middle mt-1 ml-1">{{comentarios.length}} 
+                    <span *ngIf="comentarios.length == 1">Reseña</span>
+                    <span *ngIf="comentarios.length != 1">Reseñas</span>
+                  </span></a>
+                <button class="btn-wishlist mr-0 mr-lg-n3" type="button" data-toggle="tooltip" title="" data-original-title="Add to wishlist"><i class="czi-heart"></i></button>
+              </div>
+              <div class="mb-3"><span class="h3 font-weight-normal text-accent mr-1">${{producto.precio_ahora}}</span>
+                <del class="text-muted font-size-lg mr-3">${{producto.precio_antes}}</del>
+                <span class="badge badge-danger badge-shadow align-middle mt-n2">Oferta</span>
+              </div>
+              <div class="font-size-sm">
+                  <span class="text-heading font-weight-medium mr-1">
+                  Colores:</span>
+                  <span class="text-muted" id="colorOption">
+                    <ng-container *ngFor="let color of colores; let indice = first">
+                      <ng-container *ngIf="indice">{{color.titulo}}</ng-container>
+                      <ng-container *ngIf="!indice"> / {{color.titulo}}</ng-container>
+                    </ng-container>
+                  </span>
+              </div>
+              <div class="font-size-sm mb-4">
+                <span class="text-heading font-weight-medium mr-1">
+                Stock:</span>
+                <span class="text-muted">
+                    {{producto.stock}}
+                </span>
+            </div>
+              <div class="position-relative mr-n4 mb-3">
+                <ng-container *ngFor="let color of colores; let indice = index">
+                  <div class="custom-control custom-option custom-control-inline mb-2">
+                    <ng-container *ngIf="color.color == color_to_cart">
+                      <input class="custom-control-input" type="radio" name="color_to_cart" [attr.id]="'color-'+indice" data-label="colorOption" checked (change)="get_color($event,color)">
+                      <label class="custom-option-label rounded-circle" [attr.for]="'color-'+indice" ><span class="custom-option-color rounded-circle" [ngStyle]="{'background': color.color}"></span></label>
+                    </ng-container>
+                    <ng-container *ngIf="color.color != color_to_cart">
+                      <input class="custom-control-input" type="radio" name="color_to_cart" [attr.id]="'color-'+indice" data-label="colorOption" (change)="get_color($event,color)">
+                      <label class="custom-option-label rounded-circle" [attr.for]="'color-'+indice" ><span class="custom-option-color rounded-circle" [ngStyle]="{'background': color.color}"></span></label>
+                    </ng-container>
+                  </div>
+                </ng-container>
+                
+                <div class="product-badge product-available mt-n1"><i class="czi-security-check"></i>Compra segura</div>
+              </div>
+              <form class="mb-grid-gutter" #carritoForm="ngForm" (ngSubmit)="add_to_cart(carritoForm)">
+                <div class="form-group">
+                  <div class="d-flex justify-content-between align-items-center pb-1" >
+                    <label class="font-weight-medium" for="product-size">{{producto.nombre_selector}}:</label>
+                    <a class="nav-link-style font-size-sm" *ngIf="producto.subcategoria == 'Calzado'"  data-toggle="modal" data-target="#sizes-modal" style="cursor: pointer;"><i class="czi-ruler lead align-middle mr-1 mt-n1"></i>Formato de tallas</a>
+                  </div>
+                  <select class="custom-select" required="" id="product-size" name="selector_to_cart" [(ngModel)]="selector_to_cart">
+                    <option value=" " selected disabled>Selecciona</option>
+                    <option value="{{selector.titulo}}" *ngFor="let selector of selectores" >{{selector.titulo}}</option>
+                  
+                  </select>
+                  <div class="invalid-tooltip" style="display: block;" *ngIf="selector_error">Selecciona alguna opción por favor.</div>
+                </div>
+                <div class="form-group d-flex align-items-center">
+                  <input type="number" class="form-control mr-3" min="1" [attr.max]="producto.stock" name="cantidad_to_cart" [(ngModel)]="cantidad_to_cart" style="width: 5rem;">
+                  <button class="btn btn-primary btn-shadow btn-block" disabled *ngIf="!identity" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button> 
+                  <button class="btn btn-primary btn-shadow btn-block" *ngIf="identity" type="submit"><i class="czi-cart font-size-lg mr-2"></i>Agregar al carrito</button>
+                </div>
+                <div class="invalid-feedback" *ngIf="err_stock" style="display: block;">{{err_stock}}</div>
+              </form>
+              <!-- Product panels-->
+              <div class="accordion mb-4" id="productPanels">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="accordion-heading"><a href="#productInfo" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="productInfo"><i class="czi-list text-muted font-size-lg align-middle mt-n1 mr-2"></i>Descripción<span class="accordion-indicator"><i data-feather="chevron-up"></i></span></a></h3>
+                  </div>
+                  <div class="collapse show" id="productInfo" data-parent="#productPanels">
+                    <div class="card-body">
+                      
+                      <p class="text-justify" style="font-size: 14px;">{{producto.info_short}}</p>
+                       
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="accordion-heading"><a class="collapsed" href="#shippingOptions" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="shippingOptions"><i class="czi-delivery text-muted lead align-middle mt-n1 mr-2"></i>Opciones de envío<span class="accordion-indicator"><i data-feather="chevron-up"></i></span></a></h3>
+                  </div>
+                  <div class="collapse" id="shippingOptions" data-parent="#productPanels">
+                    <div class="card-body font-size-sm">
+
+                      <ng-container *ngFor="let item of postales;let primero = first; let ultimo = last">
+                        <div class="d-flex justify-content-between border-bottom pb-2" *ngIf="primero">
+                          <div>
+                            <div class="font-weight-semibold text-dark">{{item.titulo}}</div>
+                            <div class="font-size-sm text-muted">{{item.tiempo}}</div>
+                          </div>
+                          <div>${{item.precio}}</div>
+                        </div>
+                        <div class="d-flex justify-content-between border-bottom py-2" *ngIf="!primero && !ultimo ">
+                          <div>
+                            <div class="font-weight-semibold text-dark">{{item.titulo}}</div>
+                            <div class="font-size-sm text-muted">{{item.tiempo}}</div>
+                          </div>
+                          <div>${{item.precio}}</div>
+                        </div>
+                        <div class="d-flex justify-content-between py-2" *ngIf="ultimo ">
+                          <div>
+                            <div class="font-weight-semibold text-dark">{{item.titulo}}</div>
+                            <div class="font-size-sm text-muted">{{item.tiempo}}</div>
+                          </div>
+                          <div>${{item.precio}}</div>
+                        </div>
+                      </ng-container>
+                      
+                     
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <!-- Sharing-->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Product description section 1-->
+    <div id="detalle" class="pb-4">
+      <!-- CONTENIDO DEL PRODUCTO -->
+    </div>
+  </div>
+  <div class="border-top border-bottom my-lg-3 py-5">
+    <div class="container pt-md-2" id="reviews">
+      <div class="row pb-3">
+        <div class="col-lg-4 col-md-5">
+          <h2 class="h3 mb-4">{{comentarios.length}} 
+            <span *ngIf="comentarios.length == 1">Reseña</span>
+            <span *ngIf="comentarios.length != 1">Reseñas</span>
+          </h2>
+          <div class="star-rating mr-2" *ngIf="raiting_puntos == 5">
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+          </div>
+          <div class="star-rating mr-2" *ngIf="raiting_puntos >= 4 && raiting_puntos < 5">
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+          </div>
+          <div class="star-rating mr-2" *ngIf="raiting_puntos >= 3 && raiting_puntos < 4">
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+          </div>
+          <div class="star-rating mr-2" *ngIf="raiting_puntos >= 2 && raiting_puntos < 3">
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+          </div>
+          <div class="star-rating mr-2" *ngIf="raiting_puntos >= 1 && raiting_puntos < 2">
+            <i class="czi-star-filled font-size-sm text-accent mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+          </div>
+          <div class="star-rating mr-2" *ngIf="raiting_puntos >= 0 && raiting_puntos < 1">
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+            <i class="czi-star font-size-sm text-muted mr-1"></i>
+          </div>
+          <span class="d-inline-block align-middle">{{raiting_puntos.toFixed(1)}} Rating general</span>
+          <p class="pt-3 font-size-sm text-muted">{{total_puntos}} de {{max_puntos}} puntos ({{raiting_porcent}}%)<br>
+          <span class="badge badge-accent" style="background: #EABE3F;" *ngIf="raiting_porcent >= 80">
+            Los compradores recomiendan el producto.
+          </span>
+          </p>
+        </div>
+        <div class="col-lg-8 col-md-7">
+          <div class="d-flex align-items-center mb-2">
+            <div class="text-nowrap mr-3"><span class="d-inline-block align-middle text-muted">5</span><i class="czi-star-filled font-size-xs ml-1"></i></div>
+            <div class="w-100">
+              <div class="progress" style="height: 4px;">
+                <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width': cinco_porcent+'%'}" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div><span class="text-muted ml-3">{{cinco_estrellas}}</span>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <div class="text-nowrap mr-3"><span class="d-inline-block align-middle text-muted">4</span><i class="czi-star-filled font-size-xs ml-1"></i></div>
+            <div class="w-100">
+              <div class="progress" style="height: 4px;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': cuatro_porcent+'%'}" style="background-color: #a7e453;" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div><span class="text-muted ml-3">{{cuatro_estrellas}}</span>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <div class="text-nowrap mr-3"><span class="d-inline-block align-middle text-muted">3</span><i class="czi-star-filled font-size-xs ml-1"></i></div>
+            <div class="w-100">
+              <div class="progress" style="height: 4px;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': tres_porcent+'%'}" style="background-color: #ffda75;" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div><span class="text-muted ml-3">{{tres_estrellas}}</span>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <div class="text-nowrap mr-3"><span class="d-inline-block align-middle text-muted">2</span><i class="czi-star-filled font-size-xs ml-1"></i></div>
+            <div class="w-100">
+              <div class="progress" style="height: 4px;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{'width': dos_porcent+'%'}" style="background-color: #fea569;" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div><span class="text-muted ml-3">{{dos_estrellas}}</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="text-nowrap mr-3"><span class="d-inline-block align-middle text-muted">1</span><i class="czi-star-filled font-size-xs ml-1"></i></div>
+            <div class="w-100">
+              <div class="progress" style="height: 4px;">
+                <div class="progress-bar bg-danger" role="progressbar" [ngStyle]="{'width': uno_porcent+'%'}" style="width: 4%;" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div><span class="text-muted ml-3">{{una_estrella}}</span>
+          </div>
+        </div>
+      </div>
+      <hr class="mt-4 pb-4 mb-3">
+      <div class="row" >
+        <!-- Reviews list-->
+        <div class="col-md-7" *ngIf="comentarios.length != 0">
+          <div class="d-flex justify-content-end pb-4">
+            <div class="form-inline flex-nowrap">
+              <label class="text-muted text-nowrap mr-2 d-none d-sm-block" for="sort-reviews">Ordenar por:</label>
+              <select class="custom-select custom-select-sm" (change)="sort_coments()" [(ngModel)]="sort_data_coment">
+                <option value="fecha">Fecha</option>
+                <option value="raiting">Popular</option>
+                <option value="-raiting">Bajo rating</option>
+              </select>
+            </div>
+          </div>
+          <!-- Review-->
+
+          <ng-container *ngFor="let item of comentarios| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+            <div class="product-review pb-4 mb-4 border-bottom">
+              <div class="d-flex mb-3">
+                <div class="media media-ie-fix align-items-center mr-4 pr-2">
+                  <img class="rounded-circle" width="50" [src]="url+'user/data/'+item.user.perfil" alt="Rafael Marquez">
+                  <div class="media-body pl-3">
+                    <h6 class="font-size-sm mb-0">{{item.user.first_name}} {{item.user.last_name}}</h6><span class="font-size-ms text-muted">{{ item.createdAt | date:'MMM d, y' }}</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="star-rating" *ngIf="item.estrellas == 5">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="item.estrellas >= 4 && item.estrellas < 5">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="item.estrellas >= 3 && item.estrellas < 4">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="item.estrellas >= 2 && item.estrellas < 3">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="item.estrellas >= 1 && item.estrellas < 2">
+                    <i class="sr-star czi-star-filled active"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="star-rating" *ngIf="item.estrellas >= 0 && item.estrellas < 1">
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                    <i class="sr-star czi-star-filled"></i>
+                  </div>
+                  <div class="font-size-ms text-muted">{{item.estrellas}} de 5 estrellas para el cliente.</div>
+                </div>
+              </div>
+              <p class="font-size-md mb-2">{{item.comentario}}</p>
+              <ul class="list-unstyled font-size-ms pt-1">
+                <li class="mb-1"><span class="font-weight-medium">Lo bueno:&nbsp;</span>{{item.pros}}</li>
+                <li class="mb-1"><span class="font-weight-medium">Lo malo:&nbsp;</span>{{item.cons}}</li>
+              </ul>
+              <div class="text-nowrap" *ngIf="identity">
+                <button class="btn-like" (click)="add_likes(item._id)" type="button">{{item.likes}}</button>
+                <button class="btn-dislike" (click)="add_dislikes(item._id)" type="button">{{item.dislikes}}</button>
+              </div>
+              <div class="text-nowrap" *ngIf="!identity">
+                <button class="btn-like" type="button">{{item.likes}}</button>
+                <button class="btn-dislike" type="button">{{item.dislikes}}</button>
+              </div>
+            </div>
+          </ng-container>
+        
+          <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="count_cat"></ngb-pagination>
+        </div>
+        <div class="col-md-7" *ngIf="comentarios.length == 0">
+          <h3 class="pt-3"><i class="czi-orange"></i> No existe aún ninguna reseña.</h3>
+        </div>
+        <!-- Leave review form-->
+        <div class="col-md-5 mt-2 pt-4 mt-md-0 pt-md-0">
+          <div class="bg-secondary py-grid-gutter px-grid-gutter rounded-lg" style="background: white !important;">
+            <h3 class="h4 pb-2">Escribir reseña</h3>
+            <form #reviewForm="ngForm" (ngSubmit)="saveComent(reviewForm)">
+              <div class="form-group" *ngIf="msm_error_review">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                 {{msm_error_review}}
+                  <button type="button" class="close" (click)="close_alert()" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="review-rating">Rating<span class="text-danger">*</span></label>
+                <select class="custom-select" required="" name="review_estrellas" [(ngModel)]="review_estrellas">
+                  <option value="" selected disabled>Selecciona</option>
+                  <option value="5">5 estrellas</option>
+                  <option value="4">4 estrellas</option>
+                  <option value="3">3 estrellas</option>
+                  <option value="2">2 estrellas</option>
+                  <option value="1">1 estrella</option>
+                </select>
+             
+              </div>
+              <div class="form-group">
+                <label for="review-text">Reseña<span class="text-danger">*</span></label>
+                <textarea class="form-control" rows="5" required="" name="review_comentario" [(ngModel)]="review_comentario" placeholder="Escribe que tal te parecio el producto."></textarea>
+                
+              </div>
+              <div class="form-group">
+                <label for="review-pros">Pros</label>
+                <textarea class="form-control" rows="2" placeholder="Lo bueno" name="review_pros" [(ngModel)]="review_pros"></textarea>
+              </div>
+              <div class="form-group mb-4">
+                <label for="review-cons">Cons</label>
+                <textarea class="form-control" rows="2" placeholder="Lo malo" name="review_cons" [(ngModel)]="review_cons"></textarea>
+              </div>
+              <ng-container *ngIf="identity">
+                <button *ngIf="get_state_user_producto_coment" class="btn btn-primary btn-shadow btn-block" type="submit" >Enviar reseña</button>
+                <span *ngIf="!get_state_user_producto_coment"><h6 class="text-center">Debe comprar el producto, para emitir una reseña</h6></span>
+              </ng-container>
+              
+              <button class="btn btn-primary btn-shadow btn-block" disabled *ngIf="!identity">No autenticado</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container pt-5 pb-5" >
+    <h2 class="h3 text-center pb-4">Productos nuevos</h2>
+    <div class="row">
+      <div class="col" *ngFor="let slide of news_productos; let indice = index">
+     
+        <div class="card product-card card-static">
+          <button class="btn-wishlist btn-sm" type="button" data-toggle="tooltip" data-placement="left" title="" data-original-title="Add to wishlist"><i class="czi-heart"></i></button>
+          <a class="card-img-top d-block overflow-hidden" [routerLink]="['/producto/',slide.slug]">
+            <img [src]="url+'productos_img_data/resources/thumbnails/'+slide.poster" [title]="slide.title">
+          </a>
+          <div class="card-body py-2"><a class="product-meta d-block font-size-xs pb-1" [routerLink]="['/producto/',slide.slug]">{{slide.categoria.nombre}} - {{slide.subcategoria}}s</a>
+            <h3 class="product-title font-size-sm"><a [routerLink]="['/producto/',slide.slug]">{{slide.titulo.substr(0,60)}}...</a></h3>
+            <div class="d-flex justify-content-between">
+              <div class="product-price text-accent">${{slide.precio_antes}}</div>
+              <div class="star-rating" *ngIf="slide.stars == 5">
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+              </div>
+              <div class="star-rating" *ngIf="slide.stars >= 4 && slide.stars < 5">
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled"></i>
+              </div>
+              <div class="star-rating" *ngIf="slide.stars >= 3 && slide.stars < 4">
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+              </div>
+              <div class="star-rating" *ngIf="slide.stars >= 2 && slide.stars < 3">
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+              </div>
+              <div class="star-rating" *ngIf="slide.stars >= 1 && slide.stars < 2">
+                <i class="sr-star czi-star-filled active"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+              </div>
+              <div class="star-rating" *ngIf="slide.stars >= 0 && slide.stars < 1">
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+                <i class="sr-star czi-star-filled"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+  
+<app-foot></app-foot>
